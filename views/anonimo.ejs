@@ -1,13 +1,12 @@
-<!-- <script src='http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js'></script> -->
- <script src="http://cdn.jquerytools.org/1.2.7/full/jquery.tools.min.js"></script>
+<script src='http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js'></script>
 <script src='http://datejs.googlecode.com/svn/trunk/build/date.js'></script>
 <script src="/socket.io/socket.io.js"></script>
-<script src="/client.js"></script>
+<script src="/anonimo.js"></script>
 <link rel="stylesheet" href="/client.css"/>
 </head>
 <body>
-<h1>Admin - Todas las conversaciones</h1>
-<b>Server: </b><%= server %>
+<b>Server: </b><%= server %><br/>
+<b>Title: </b><%= title %>
 <br/>
 <% if(user) { %>
 <b>User: </b> <label id="user"><%= user %></label> <a href="/logout" style='color:blue;text-decoration: underline'> Log out</a>
@@ -18,16 +17,9 @@
     Name: <input type="text" id="name"/> <a href="#"><span class="join">Join!</span></a>
 </div>
 <div id="channel" class="bordered" style="display: none;">
-<h4>Server: <%= server %> - conectado como  <%= user %></h4>
-
- <ul class="tabs">
-    
-  </ul>
 
     <div id="msgs">
-        <div class="panes">
-    
-  </div>
+        <h4>Server: <%= server %></h4>
 
         <ul>
             <li class="message" style="display: none">
@@ -45,12 +37,5 @@
     </div>
 </div>
 
-
-<!-- the tabs -->
- 
- 
-  <!-- tab "panes" -->
-  
-  <script>$("ul.tabs").tabs("div.panes > div");</script>
 </body>
 </html>

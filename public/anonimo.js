@@ -86,7 +86,7 @@ $(document).ready(function () {
         $.post('/user', {"user":name})
             .success(function () {
                 // send join message
-                socket.emit('join', JSON.stringify({chat_to: "Nicolas"}));
+                socket.emit('join', JSON.stringify({}));
             }).error(function () {
                 console.log("error");
             });
@@ -97,16 +97,9 @@ $(document).ready(function () {
          When a message comes from the server, format, colorize it etc. and display in the chat widget
          */
         socket.on('chat', function (msg) {
-
             var message = JSON.parse(msg);
-            // si el mensaje es para mi o si yo lo escribi entonces que si lo muestre.
-            if(message.chat_to==user || message.chat_from==user ){
-                             console.log("el chat_to es:"+message.chat_to+" y el user es: "+user);
-
-                             
-                        }else{
-                            console.log("no era para mi");return;
-                        }
+            if(message.chat_to==user || message.chat_from==user){console.log("es para mi."+message.chat_to);}else{
+                console.log("no es para mi."+message.chat_to);return;}
             var action = message.action;
             var struct = container.find('li.' + action + ':first');
 
@@ -130,7 +123,6 @@ $(document).ready(function () {
                         messageView.find('.user').css('font-weight', 'bold');
                         // normal chat message
                     } else {
-                        
                         messageView.find('.user').text(message.user);
                         messageView.find('.message').text(': ' + message.msg);
                     }
@@ -143,50 +135,11 @@ $(document).ready(function () {
             }
 
             // color own user:
-            if (message.user == name) 
-
-                {messageView.find('.user').addClass('self');
-            console.log("la que mando este mensaje es:"+user);
-             element_insert = $("div.panes div."+message.chat_to+" ul");
-             element_insert.append(messageView.show());
-            console.log("hace el append!!!"+messageView.show());
-            //$("ul.tabs a."+message.chat_from).click();
-            container.scrollTop(element_insert.innerHeight());
-            return;
-        }
+            if (message.user == name) messageView.find('.user').addClass('self');
 
             // append to container and scroll
-            cant_tabs_user = $("ul.tabs a."+message.chat_from).length;
-            if((cant_tabs_user == 0 && message.chat_from!=user)){
-                //entonces agrega un tab
-                console.log("Entro al IFF!!");
-                //var tabs = $("ul.tabs").tabs("div.panes > div");
-                $("ul.tabs").append("<li><a class='"+message.chat_from+"' href='#'>"+message.chat_from+"</a></li>");
-                //agrego un DIV
-                $("div.panes").append("<div class='"+message.chat_from+"'><ul></ul></div>");
-                //tabs.tabs( "refresh" );
-                $("ul.tabs").tabs("div.panes > div");
-            }else{
-                console.log("no entro al iff. User:"+user+". message.chat_from:"+message.chat_from+ ".cant_tabs_user:"+cant_tabs_user);
-            }
-            console.log("chat_to:"+message.chat_from+". y user:"+user);
-            
-            element_insert = $("div.panes div."+message.chat_from+" ul");
-            element_insert.append(messageView.show());
-            console.log("hace el append!!!"+messageView.show());
-            //$("ul.tabs a."+message.chat_from).click();
-            container.scrollTop(element_insert.innerHeight());
-            if(!$("ul.tabs a."+message.chat_from).hasClass("current")){
-                $("ul.tabs a."+message.chat_from).css("color","red");
-            }
-            
-            //container.find('ul').append(messageView.show());
-            //container.scrollTop(container.find('ul').innerHeight());
-
-
-
-
-
+            container.find('ul').append(messageView.show());
+            container.scrollTop(container.find('ul').innerHeight());
         });
 
         /*
@@ -195,27 +148,11 @@ $(document).ready(function () {
         $('#channel form').submit(function (event) {
             event.preventDefault();
             var input = $(this).find(':input');
+            var chat_to = input.attr("data-chat-to");
             var msg = input.val();
-            actual_tab = $("ul.tabs a.current").html();
-            if(actual_tab!=null){
-                //si hay un current seleccionado
-                $("#message").attr("data-chat-to",actual_tab);
-                }else{
-                    //no hay ninguno current seleccionado
-                    $("#message").attr("data-chat-to",'');
-                }
-            var chat_to = $("#message").attr("data-chat-to");
-            console.log("manda el mensaje con el chat_to = "+chat_to);
-            if(chat_to==''){ input.val('');return;}
-            socket.emit('chat', JSON.stringify({action:'message', msg:msg,chat_to:chat_to,chat_from:user}));
+            socket.emit('chat', JSON.stringify({action:'message', msg:msg,chat_to:chat_to,chat_from:user }));
             input.val('');
         });
 
     }
-    $("ul.tabs").on('click','a',function(e){
-    e.preventDefault();
-    $(this).css("color","black");
-    $("#message").attr("data-chat-to",$(this).html());
 });
-});
-

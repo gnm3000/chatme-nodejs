@@ -71,6 +71,19 @@ app.configure('development', function () {
 });
 
 app.get('/', routes.index);
+app.get('/nick/:nick', function (req, res) {
+    //save user from previous session (if it exists)
+    var serverName = process.env.VCAP_APP_HOST ? process.env.VCAP_APP_HOST + ":" + process.env.VCAP_APP_PORT : 'localhost:3000';
+
+    var user = req.session.user;
+    //regenerate new session & store user from previous session (if it exists)
+    req.session.regenerate(function (err) {
+        req.session.user = user;
+        res.render('anonimo', { title:'Chat anonimo con '+req.params.nick, 
+            server:serverName, user:req.session.user
+            ,nick:req.params.nick});
+    });
+});
 
 app.get('/logout', function(req, res) {
     req.session.destroy();
@@ -102,7 +115,7 @@ sessionSockets.on('connection', function (err, socket, session) {
      */
     socket.on('chat', function (data) {
         var msg = JSON.parse(data);
-        var reply = {action: 'message', user: session.user, msg: msg.msg };
+        var reply = {action: 'message', user: session.user, msg: msg.msg, chat_to:msg.chat_to,chat_from:session.user };
         chatExchange.publish('', reply);
     });
 
@@ -134,6 +147,7 @@ sessionSockets.on('connection', function (err, socket, session) {
         //Subscribe When a message comes, send it back to browser
         q.subscribe(function (message) {
             socket.emit('chat', JSON.stringify(message));
+            console.log("mensaje:"+JSON.stringify(message));
         });
     });
 });
