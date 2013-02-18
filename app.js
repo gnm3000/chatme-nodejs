@@ -5,8 +5,8 @@ var express = require('express')
     , redis = require('redis')
     , amqp = require('amqp');
 
-
-var rabbitConn = amqp.createConnection({});
+var url_rabbit = process.env.CLOUDAMQP_URL || "amqp://localhost"; // default to localhost
+var rabbitConn = amqp.createConnection({url: url_rabbit});
 var chatExchange;
 rabbitConn.on('ready', function () {
     chatExchange = rabbitConn.exchange('chatExchange', {'type': 'fanout'});
@@ -30,9 +30,16 @@ io.set('log level', 1);
 /*
  Also use Redis for Session Store. Redis will keep all Express sessions in it.
  */
-var RedisStore = require('connect-redis')(express),
-    rClient = redis.createClient(),
-    sessionStore = new RedisStore({client: rClient});
+var RedisStore = require('connect-redis')(express);
+if(process.env.REDISCLOUD_URL){
+    var redisURL = require('url').parse(process.env.REDISCLOUD_URL);
+var rClient = redis.createClient(redisURL.port, redisURL.hostname, {no_ready_check: true});
+rClient.auth(redisURL.auth.split(":")[1]);
+}else{
+    rClient = redis.createClient();
+}
+
+var sessionStore = new RedisStore({client: rClient});
 
 var cookieParser = express.cookieParser('your secret here');
 
