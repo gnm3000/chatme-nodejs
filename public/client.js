@@ -23,6 +23,7 @@ $(document).ready(function () {
      */
     $('#ask a').click(function () {
         join($('#ask input').val());
+        location.reload();
     });
 
     function join(name) {
@@ -210,7 +211,7 @@ $(document).ready(function () {
             socket.emit('chat', JSON.stringify({action:'message', msg:msg,chat_to:chat_to,chat_from:user}));
             input.val('');
         });
-
+        //
     }
     $("ul.tabs").on('click','a',function(e){
     e.preventDefault();
