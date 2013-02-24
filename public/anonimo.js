@@ -23,7 +23,6 @@ $(document).ready(function () {
      */
     $('#ask a').click(function () {
         join($('#ask input').val());
-        location.reload();
     });
 
     function join(name) {
