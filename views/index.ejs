@@ -12,10 +12,6 @@
 <% if(user) { %>
 <b>User: </b> <label id="user"><%= user %></label> <a href="/logout" style='color:blue;text-decoration: underline'> Log out</a>
 <h4 style='text-align:center'>Comparti este link en las redes sociales: <br/><b>http://rabbit-chat3.herokuapp.com/nick/<%= user %></b></h4>
-<% }else{%>
-    <script>
-     location.reload();
-     </script>
 <% } %>
 
 
