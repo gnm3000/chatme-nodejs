@@ -23,7 +23,7 @@ $(document).ready(function () {
      */
     $('#ask a').click(function () {
         join($('#ask input').val());
-       
+        setTimeout("window.reload();",2000);
     });
 
     function join(name) {
@@ -88,7 +88,7 @@ $(document).ready(function () {
             .success(function () {
                 // send join message
                 socket.emit('join', JSON.stringify({chat_to: "Nicolas"}));
-                 location.reload();
+
             }).error(function () {
                 console.log("error");
             });
