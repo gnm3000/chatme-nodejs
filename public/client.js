@@ -23,7 +23,7 @@ $(document).ready(function () {
      */
     $('#ask a').click(function () {
         join($('#ask input').val());
-        setTimeout("window.reload();",2000);
+        setTimeout("$(window).reload();",2000);
     });
 
     function join(name) {
