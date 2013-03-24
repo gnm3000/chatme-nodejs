@@ -61,6 +61,7 @@ div.bordered {
 div#msgs {
     overflow-y: scroll;
     height: 400px;
+    background-color: #FFF;
 }
 
 div#msgs ul {
@@ -96,6 +97,7 @@ div#msgs li.control {
 
 div#msgs li.control span.message {
     color: #aaa;
+
 }
 
 div#input {
@@ -108,4 +110,8 @@ div#input #message {
     border: 5px solid #bbb;
     -webkit-border-radius: 3px;
     font-size: 30pt;
+    height: 50px;
+}
+li.message{
+    margin-left:-350px;
 }

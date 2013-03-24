@@ -146,7 +146,8 @@ $(document).ready(function () {
             // color own user:
             if (message.user == name) 
 
-                {messageView.find('.user').addClass('self');
+                {
+                    messageView.find('.user').addClass('self');
             console.log("la que mando este mensaje es:"+user);
              element_insert = $("div.panes div."+message.chat_to+" ul");
              element_insert.append(messageView.show());
@@ -157,24 +158,31 @@ $(document).ready(function () {
         }
 
             // append to container and scroll
-            cant_tabs_user = $("ul.tabs a."+message.chat_from).length;
+            //cant_tabs_user = $("ul.tabs a."+message.chat_from).length;
+            cant_tabs_user = $("div.tab-pane[id="+message.chat_from+"]").length;
             if((cant_tabs_user == 0 && message.chat_from!=user)){
                 //entonces agrega un tab
                 console.log("Entro al IFF!!");
                 //var tabs = $("ul.tabs").tabs("div.panes > div");
-                $("ul.tabs").append("<li><a class='"+message.chat_from+"' href='#'>"+message.chat_from+"</a></li>");
-                //agrego un DIV
-                $("div.panes").append("<div class='"+message.chat_from+"'><ul></ul></div>");
+                //agrego el tab
+                //$("ul.tabs").append("<li><a class='"+message.chat_from+"' href='#'>"+message.chat_from+"</a></li>");
+                $("#myTab").append("<li><a data-toggle='tab' href='#"+message.chat_from+"'>"+message.chat_from+"</a></li>");
+                $("div.tab-content").append("<div class='tab-pane' id='"+message.chat_from+"'>"+message.chat_from+"</div>");
+                //agrego un DIV - content del tab
+                //$("div.panes").append("<div class='"+message.chat_from+"'><ul></ul></div>");
                 //tabs.tabs( "refresh" );
-                $("ul.tabs").tabs("div.panes > div");
+                //$("ul.tabs").tabs("div.panes > div");
+                $("#myTab a[href=#"+message.chat_from+"]").click();
             }else{
                 console.log("no entro al iff. User:"+user+". message.chat_from:"+message.chat_from+ ".cant_tabs_user:"+cant_tabs_user);
             }
             console.log("chat_to:"+message.chat_from+". y user:"+user);
             
-            element_insert = $("div.panes div."+message.chat_from+" ul");
+            //element_insert = $("div.panes div."+message.chat_from+" ul");
+            element_insert = $("div.tab-pane[id="+message.chat_from+"]");
+           //alert("element_insert="+element_insert);
             element_insert.append(messageView.show());
-            console.log("hace el append!!!"+messageView.show());
+            console.log("hace el append!!!"+messageView.show().html());
             //$("ul.tabs a."+message.chat_from).click();
             container.scrollTop(element_insert.innerHeight());
             if(!$("ul.tabs a."+message.chat_from).hasClass("current")){
@@ -197,6 +205,7 @@ $(document).ready(function () {
             event.preventDefault();
             var input = $(this).find(':input');
             var msg = input.val();
+            //actual_tab es el tab con el usuario seleccionado.
             actual_tab = $("ul.tabs a.current").html();
             if(actual_tab!=null){
                 //si hay un current seleccionado

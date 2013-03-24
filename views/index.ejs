@@ -1,33 +1,110 @@
+<html>
+<head>
+    
+
 <!-- <script src='http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js'></script> -->
  <script src="http://cdn.jquerytools.org/1.2.7/full/jquery.tools.min.js"></script>
 <script src='http://datejs.googlecode.com/svn/trunk/build/date.js'></script>
 <script src="/socket.io/socket.io.js"></script>
 <script src="/client.js"></script>
+  <script src="http://twitter.github.com/bootstrap/assets/js/bootstrap-tab.js"></script>
 <link rel="stylesheet" href="/client.css"/>
+
+    <link href="http://wbpreview.com/previews/WB00B8422/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="http://wbpreview.com/previews/WB00B8422/css/bootstrap-responsive.min.css" rel="stylesheet" />
+    <link href="http://wbpreview.com/previews/WB00B8422/css/social-buttons.css" rel="stylesheet" />
+    <link href="http://fonts.googleapis.com/css?family=Lobster" rel="stylesheet" />
+    <link href="http://wbpreview.com/previews/WB00B8422/css/style.css" rel="stylesheet" />
+    <link href="http://wbpreview.com/previews/WB00B8422/css/custom.css" rel="stylesheet" />
+     <link href="http://wbpreview.com/previews/WB009X3K4/buttons.css" rel="stylesheet" />
+    
+<style type="text/css">
+    body{padding-top: 10px;}
+    h1,h2,h3{color: rgb(41, 70, 125); }
+</style>
+
 </head>
 <body>
-<h1>Admin - Todas las conversaciones</h1>
-<b>Server: </b><%= server %>
-<br/>
-<% if(user) { %>
-<b>User: </b> <label id="user"><%= user %></label> <a href="/logout" style='color:blue;text-decoration: underline'> Log out</a>
-<h4 style='text-align:center'>Comparti este link en las redes sociales: <br/><b>http://chat123.com.ar/nick/<%= user %></b></h4>
-<% } %>
+      <div id='fb-root'></div>
+    <script src='http://connect.facebook.net/en_US/all.js'></script>
+    
 
+    <script> 
+      FB.init({appId: "275093569291809", status: true, cookie: true});
+
+      function postToFeed() {
+
+        // calling the API ...
+        var obj = {
+          method: 'feed',
+          redirect_uri: 'http://chat123.com.ar',
+          link: 'http://chat123.com.ar/nick/<%= user %>',
+          picture: 'http://www.marketlikeachick.com/wp-content/uploads/2009/06/chat-bubbles-150x150.png',
+          name: 'Wow! Te animas a hablarme?',
+          caption: 'Chatea anonimamente conmigo en chat123!'
+          //description: 'Using Dialogs to interact with users.'
+        };
+
+        function callback(response) {
+          //document.getElementById('msg').innerHTML = "Post ID: " + response['post_id'];
+        }
+
+        FB.ui(obj, callback);
+      }
+        ////////////////////////////////////
+
+     
+    </script>
+<h1>Chat123</h1>
+ <!-- <b>Server: </b><%= server %> -->
+ 
+
+ 
+<% if(user) { %>
+<b>User: </b> 
+<span id="user"><%= user %></span> 
+<a href="/logout" style='color:blue;text-decoration: underline'> Log out</a>
+
+
+<p style="text-align:center">
+
+    
+    Comparti este link en las redes sociales: <b>http://chat123.com.ar/nick/<%= user %></b><br/>
+    <a class="btn" style='text-align:center' onclick='postToFeed(); return false;'>Click para postear en tu muro el link!</a>
+</p>
+<% }else{ %>
+<div class="row-fluid">
+    <div class="span12 pagination-centered">
+   <a id="login_fb" class="btn btn-large btn-brand-facebook">
+    Entrar con Facebook ahora!
+   </a></div>
+</div>
+<% } %> 
 
 <div id="ask" class="bordered" style="display: none;">
-    Name: <input type="text" id="name"/> <a href="#"><span class="join">Join!</span></a>
+     <input style="height:50px;display:none" type="text" id="name"/> <a href="#"><span style="display:none" class="btn join">Join!</span></a>
 </div>
 <div id="channel" class="bordered" style="display: none;">
-<h4>Server: <%= server %> - conectado como  <%= user %></h4>
+<!-- <h4>Server: <%= server %> - conectado como  <%= user %></h4> -->
+<ul class="nav nav-tabs" id="myTab">
+  
+</ul>
 
+<script>
+  $('#myTab a').click(function (e) {
+  e.preventDefault();
+  $(this).tab('show');
+})
+</script>
  <ul class="tabs">
     
   </ul>
 
     <div id="msgs">
         <div class="panes">
-    
+        <div class="tab-content">
+ 
+</div>
   </div>
 
         <ul>
@@ -53,5 +130,63 @@
   <!-- tab "panes" -->
   
   <script>$("ul.tabs").tabs("div.panes > div");</script>
+<script type="text/javascript">
+    
+
+      $("#login_fb").click(function(e){
+        e.preventDefault();
+            //alert("login");
+               FB.login(function(response) {
+                   if (response.authResponse) {
+                    //alert(response.authResponse);
+                    //alert('Welcome!  Fetching your information.... ');
+                     FB.api('/me', function(response) {
+                        $("#name").val(response.username);
+                        $("#ask a").click();
+
+                       //  alert('Good to see you, ' + response.username + '.');
+                       // alert(response.name);
+                     });
+                   } else {
+                     console.log('User cancelled login or did not fully authorize.');
+                   }
+                 });
+
+        });
+</script>
+<style type="text/css">
+   
+.login_facebook {
+    -moz-box-shadow:inset 0px 1px 0px 0px #bee2f9;
+    -webkit-box-shadow:inset 0px 1px 0px 0px #bee2f9;
+    box-shadow:inset 0px 1px 0px 0px #bee2f9;
+    background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #63b8ee), color-stop(1, #468ccf) );
+    background:-moz-linear-gradient( center top, #63b8ee 5%, #468ccf 100% );
+    filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#63b8ee', endColorstr='#468ccf');
+    background-color:#63b8ee;
+    -moz-border-radius:6px;
+    -webkit-border-radius:6px;
+    border-radius:6px;
+    border:1px solid #3866a3;
+    display:inline-block;
+    color:#ffffff;
+    font-family:arial;
+    font-size:28px;
+    font-weight:bold;
+    padding:6px 24px;
+    text-decoration:none;
+    text-shadow:1px 1px 0px #7cacde;
+}.login_facebook:hover {
+    background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #468ccf), color-stop(1, #63b8ee) );
+    background:-moz-linear-gradient( center top, #468ccf 5%, #63b8ee 100% );
+    filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#468ccf', endColorstr='#63b8ee');
+    background-color:#468ccf;
+}.login_facebook:active {
+    position:relative;
+    top:1px;
+}
+/* This imageless css button was generated by CSSButtonGenerator.com */
+
+</style>
 </body>
 </html>
