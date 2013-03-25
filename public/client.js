@@ -150,7 +150,8 @@ $(document).ready(function () {
                 {
                     messageView.find('.user').addClass('self');
             console.log("la que mando este mensaje es:"+user);
-             element_insert = $("div.panes div."+message.chat_to+" ul");
+             //element_insert = $("div.panes div."+message.chat_to+" ul");
+             element_insert = $("div.tab-pane[id="+message.chat_to+"]");
              element_insert.append(messageView.show());
             console.log("hace el append!!!"+messageView.show());
             //$("ul.tabs a."+message.chat_from).click();
@@ -207,7 +208,8 @@ $(document).ready(function () {
             var input = $(this).find(':input');
             var msg = input.val();
             //actual_tab es el tab con el usuario seleccionado.
-            actual_tab = $("ul.tabs a.current").html();
+            actual_tab = $("#myTab li.active a").html();
+
             if(actual_tab!=null){
                 //si hay un current seleccionado
                 $("#message").attr("data-chat-to",actual_tab);
@@ -223,9 +225,10 @@ $(document).ready(function () {
         });
         //
     }
-    $("ul.tabs").on('click','a',function(e){
+    $("#myTab").on('click','a',function(e){
     e.preventDefault();
     $(this).css("color","black");
+    //alert($(this).html());
     $("#message").attr("data-chat-to",$(this).html());
 });
 });
