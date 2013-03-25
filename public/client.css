@@ -73,6 +73,9 @@ div#msgs ul {
 
 div#msgs li {
     line-height: 20px;
+width: 550px;
+margin-left: 20px;
+text-align: left;
 }
 
 div#msgs li span.user {
