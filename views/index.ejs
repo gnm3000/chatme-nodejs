@@ -1,9 +1,8 @@
 <html>
 <head>
     
-
-<!-- <script src='http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js'></script> -->
- <script src="http://cdn.jquerytools.org/1.2.7/full/jquery.tools.min.js"></script>
+<script src='http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js'></script>
+<!--script src="http://cdn.jquerytools.org/1.2.7/full/jquery.tools.min.js"></script> -->
 <script src='http://datejs.googlecode.com/svn/trunk/build/date.js'></script>
 <script src="/socket.io/socket.io.js"></script>
 <script src="/client.js"></script>
@@ -129,7 +128,6 @@
  
   <!-- tab "panes" -->
   
-  <script>$("ul.tabs").tabs("div.panes > div");</script>
 <script type="text/javascript">
     
 
@@ -141,16 +139,24 @@
                     //alert(response.authResponse);
                     //alert('Welcome!  Fetching your information.... ');
                      FB.api('/me', function(response) {
-                        $("#name").val(response.username);
-                        $("#ask a").click();
-
-                       //  alert('Good to see you, ' + response.username + '.');
+                      $.ajax( { url: "https://api.mongolab.com/api/1/databases/heroku_app12042861/collections/users?apiKey=ow2pQfeu77QiWIfth6rKt1C0wReEOct6",
+                          data: JSON.stringify( response ),
+                          type: "POST",
+                          contentType: "application/json" } ).done(function(data){
+                               //alert('Good to see you, ' + response.username + '.');
+                              $("#name").val(response.username);
+                              $("#ask a").click();
+                          });
+                       
+                        //mongo key = ow2pQfeu77QiWIfth6rKt1C0wReEOct6
+                        //https://api.mongolab.com/api/1/databases?apiKey=<your-api-key>
+                        
                        // alert(response.name);
                      });
                    } else {
                      console.log('User cancelled login or did not fully authorize.');
                    }
-                 });
+                 },{scope:"email"});
 
         });
 </script>

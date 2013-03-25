@@ -25,7 +25,13 @@ $(document).ready(function () {
         join($('#ask input').val());
         setTimeout("location.reload();",2000);
     });
-
+    $(".tab-content").on("click",".close_chat",function(e){
+          e.preventDefault();
+                    var usuario = $(this).data("user");
+                    $("#myTab li."+usuario).remove();
+                    $("div.tab-pane[id="+usuario+"]").remove();
+    });
+     
     function join(name) {
         $('#ask').hide();
         $('#channel').show();
@@ -167,14 +173,15 @@ $(document).ready(function () {
                 console.log("Entro al IFF!!");
                 //var tabs = $("ul.tabs").tabs("div.panes > div");
                 //agrego el tab
+
                 //$("ul.tabs").append("<li><a class='"+message.chat_from+"' href='#'>"+message.chat_from+"</a></li>");
-                $("#myTab").append("<li><a data-toggle='tab' href='#"+message.chat_from+"'>"+message.chat_from+"</a></li>");
-                $("div.tab-content").append("<div class='tab-pane' id='"+message.chat_from+"'>"+message.chat_from+"</div>");
+                $("#myTab").append("<li class='"+message.chat_from+"'><a data-toggle='tab' class='"+message.chat_from+"' href='#"+message.chat_from+"'>"+message.chat_from+"</a></li>");
+                $("div.tab-content").append("<div class='tab-pane' id='"+message.chat_from+"'>"+message.chat_from+" <a class='close_chat' data-user='"+message.chat_from+"'>Cerrar</a></div>");
                 //agrego un DIV - content del tab
                 //$("div.panes").append("<div class='"+message.chat_from+"'><ul></ul></div>");
                 //tabs.tabs( "refresh" );
                 //$("ul.tabs").tabs("div.panes > div");
-                $("#myTab a[href=#"+message.chat_from+"]").click();
+                $("#myTab a."+message.chat_from).click();
             }else{
                 console.log("no entro al iff. User:"+user+". message.chat_from:"+message.chat_from+ ".cant_tabs_user:"+cant_tabs_user);
             }
@@ -228,7 +235,7 @@ $(document).ready(function () {
     $("#myTab").on('click','a',function(e){
     e.preventDefault();
     $(this).css("color","black");
-    //alert($(this).html());
+    
     $("#message").attr("data-chat-to",$(this).html());
 });
 });

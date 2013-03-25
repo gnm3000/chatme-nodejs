@@ -135,7 +135,10 @@ $(document).ready(function () {
             }
 
             // color own user:
-            if (message.user == name) messageView.find('.user').addClass('self');
+            if (message.user == name) {
+                 messageView.find('.user').addClass('self');
+                 messageView.find('.user').text("anonimo");
+            }
 
             // append to container and scroll
             container.find('ul').append(messageView.show());

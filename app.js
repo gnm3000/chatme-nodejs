@@ -74,18 +74,20 @@ app.get('/', routes.index);
 app.get('/nick/:nick', function (req, res) {
     //save user from previous session (if it exists)
     var serverName = process.env.VCAP_APP_HOST ? process.env.VCAP_APP_HOST + ":" + process.env.VCAP_APP_PORT : 'localhost:3000';
-    if(!req.cookies.nick){
+    // if(!req.cookies.nick){
          var nick_rand = "user-"+Math.floor((Math.random()*10000)+1);
-         res.cookie('nick', nick_rand, {maxAge: 900000, httpOnly: true});
-    }
-    var user = req.session.user;
+    //      res.cookie('nick', nick_rand, {maxAge: 900000, httpOnly: true});
+    // }
+    //var user = req.session.user;
+
     //regenerate new session & store user from previous session (if it exists)
-    req.session.regenerate(function (err) {
-        req.session.user = user;
+    // req.session.regenerate(function (err) {
+    //     req.session.user = user;
+        
+    // });
         res.render('anonimo', { title:'Chat anonimo con '+req.params.nick, 
-            server:serverName, user:req.cookies.nick
+            server:serverName, user:nick_rand 
             ,nick:req.params.nick});
-    });
 });
 
 app.get('/logout', function(req, res) {

@@ -38,14 +38,15 @@
 
 </head>
 <body>
-<b>Server: </b><%= server %><br/>
-<b>Title: </b><%= title %>
-<br/>
+
+<div class="row"><div class="span12 pagination-centered">
+<h1><%= title %></h1>    
+</div></div>
 <% if(user) { %>
-<b>User: </b> <label id="user"><%= user %></label> <a href="/logout" style='color:blue;text-decoration: underline'> Log out</a>
+<b>User: </b> <label id="user"><%= user %></label> <!-- <a href="/logout" style='color:blue;text-decoration: underline'> Log out</a> -->
 <% }else{%>
     <script>
-     location.reload();
+     //location.reload();
      </script>
 <% } %>
 
@@ -67,7 +68,7 @@
         </ul>
     </div>
     <div id="input">
-        <form><input type="text" data-chat-to="<%= nick %>" id="message"/></form>
+        <form id="form-message"><input type="text" data-chat-to="<%= nick %>" id="message"/></form>
     </div>
 </div>
 
