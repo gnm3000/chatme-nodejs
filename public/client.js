@@ -194,8 +194,9 @@ $(document).ready(function () {
             console.log("hace el append!!!"+messageView.show().html());
             //$("ul.tabs a."+message.chat_from).click();
             container.scrollTop(element_insert.innerHeight());
-            if(!$("ul.tabs a."+message.chat_from).hasClass("current")){
-                $("ul.tabs a."+message.chat_from).css("color","red");
+
+            if(!$("#myTab li."+message.chat_from).hasClass("active")){
+                $("#myTab a."+message.chat_from).css("color","red");
             }
             
             //container.find('ul').append(messageView.show());
