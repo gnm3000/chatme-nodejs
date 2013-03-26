@@ -75,19 +75,24 @@ app.get('/nick/:nick', function (req, res) {
     //save user from previous session (if it exists)
     var serverName = process.env.VCAP_APP_HOST ? process.env.VCAP_APP_HOST + ":" + process.env.VCAP_APP_PORT : 'localhost:3000';
     // if(!req.cookies.nick){
-         var nick_rand = "user-"+Math.floor((Math.random()*10000)+1);
+         //var nick_rand = "user-"+Math.floor((Math.random()*10000)+1);
     //      res.cookie('nick', nick_rand, {maxAge: 900000, httpOnly: true});
     // }
-    //var user = req.session.user;
+    if(!req.session.user_anon){
+        req.session.user_anon="user-"+Math.floor((Math.random()*10000)+1);
+    }
+
+    var user_anon = req.session.user_anon;
 
     //regenerate new session & store user from previous session (if it exists)
-    // req.session.regenerate(function (err) {
-    //     req.session.user = user;
-        
-    // });
+    req.session.regenerate(function (err) {
+        req.session.user_anon = user_anon;
         res.render('anonimo', { title:'Chat anonimo con '+req.params.nick, 
-            server:serverName, user:nick_rand 
+            server:serverName, user:user_anon
             ,nick:req.params.nick});
+        
+    });
+        
 });
 
 app.get('/logout', function(req, res) {
@@ -103,7 +108,10 @@ app.post('/user', function (req, res) {
     req.session.user = req.body.user;
     res.json({"error": ""});
 });
-
+app.post('/user_anon', function (req, res) {
+    req.session.user_anon = req.body.user_anon;
+    res.json({"error": ""});
+});
 /*
  Use SessionSockets so that we can exchange (set/get) user data b/w sockets and http sessions
  Pass 'jsessionid' (custom) cookie name that we are using to make use of Sticky sessions.
@@ -120,7 +128,12 @@ sessionSockets.on('connection', function (err, socket, session) {
      */
     socket.on('chat', function (data) {
         var msg = JSON.parse(data);
-        var reply = {action: 'message', user: session.user, msg: msg.msg, chat_to:msg.chat_to,chat_from:session.user };
+        if(msg.anon=='1'){chat_from = msg.chat_from;}else{chat_from=session.user;}
+        var reply = {action: 'message', 
+                    user: chat_from,
+                    chat_form:chat_from, 
+                    msg: msg.msg, 
+                    chat_to:msg.chat_to };
         chatExchange.publish('', reply);
     });
 
@@ -130,8 +143,10 @@ sessionSockets.on('connection', function (err, socket, session) {
      *
      * Note: that we are getting user's name from session.
      */
-    socket.on('join', function () {
-        var reply = {action: 'control', user: session.user, msg: ' joined the channel' };
+    socket.on('join', function (data) {
+        var msg = JSON.parse(data);
+         if(msg.anon=='1'){chat_from = msg.chat_from;}else{chat_from=session.user;}
+        var reply = {action: 'control', user: chat_from, msg: ' joined the channel' };
         chatExchange.publish('', reply);
     });
 

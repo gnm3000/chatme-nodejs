@@ -83,10 +83,11 @@ $(document).ready(function () {
         /*
          When the user Logs in, send a HTTP POST to server w/ user name.
          */
-        $.post('/user', {"user":name})
+
+        $.post('/user_anon', {"user_anon":name})
             .success(function () {
                 // send join message
-                socket.emit('join', JSON.stringify({}));
+                socket.emit('join', JSON.stringify({chat_from:name,anon:"1"}));
             }).error(function () {
                 console.log("error");
             });
@@ -98,7 +99,7 @@ $(document).ready(function () {
          */
         socket.on('chat', function (msg) {
             var message = JSON.parse(msg);
-            if(message.chat_to==user || message.chat_from==user){console.log("es para mi."+message.chat_to);}else{
+            if(message.chat_to==user || message.user==user){console.log("es para mi."+message.chat_to);}else{
                 console.log("no es para mi."+message.chat_to);return;}
             var action = message.action;
             var struct = container.find('li.' + action + ':first');
@@ -153,7 +154,8 @@ $(document).ready(function () {
             var input = $(this).find(':input');
             var chat_to = input.attr("data-chat-to");
             var msg = input.val();
-            socket.emit('chat', JSON.stringify({action:'message', msg:msg,chat_to:chat_to,chat_from:user }));
+            console.log("envio el mensaje desde anonimo:"+JSON.stringify({action:'message', msg:msg,chat_to:chat_to,chat_from:user,anon:'1' }));
+            socket.emit('chat', JSON.stringify({action:'message', msg:msg,chat_to:chat_to,chat_from:user,anon:'1' }));
             input.val('');
         });
 
