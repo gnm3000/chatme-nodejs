@@ -77,6 +77,28 @@
    <a id="login_fb" class="btn btn-large btn-brand-facebook">
     Entrar con Facebook ahora!
    </a></div>
+
+
+
+  
+    
+
+
+
+
+
+</div>
+<div class="row" >
+  <div class="span12">
+    <h2> Chatea con mas de <%= users.length %> Usuario en Chat123</h2>
+  </div>
+  <div class="span3">
+      <% for(var i=0; i<users.length; i++) { %>
+    <a target="_blank" href="/nick/<%= users[i].username %>">
+    <img  class="img-polaroid" src="https://graph.facebook.com/<%= users[i].id %>/picture?width=150&height=150" />
+    </a>
+    <% } %>
+  </div>
 </div>
 <% } %> 
 
@@ -129,7 +151,7 @@
   <!-- tab "panes" -->
   
 <script type="text/javascript">
-    
+   
 
       $("#login_fb").click(function(e){
         e.preventDefault();
@@ -139,19 +161,36 @@
                     //alert(response.authResponse);
                     //alert('Welcome!  Fetching your information.... ');
                      FB.api('/me', function(response) {
-                      $.ajax( { url: "https://api.mongolab.com/api/1/databases/heroku_app12042861/collections/users?apiKey=ow2pQfeu77QiWIfth6rKt1C0wReEOct6",
-                          data: JSON.stringify( response ),
-                          type: "POST",
-                          contentType: "application/json" } ).done(function(data){
-                               //alert('Good to see you, ' + response.username + '.');
-                              $("#name").val(response.username);
-                              $("#ask a").click();
-                          });
-                       
-                        //mongo key = ow2pQfeu77QiWIfth6rKt1C0wReEOct6
-                        //https://api.mongolab.com/api/1/databases?apiKey=<your-api-key>
-                        
-                       // alert(response.name);
+                                  var cover = "";
+                                  
+
+                                  FB.api('/me?fields=cover', function(response2) {
+                                                  var response_json= response ;
+                                                  cover_source= response2.cover.source;
+                                                  //alert("cover=="+cover_source);
+                                                  response_json.cover_source = cover_source;
+                                                  
+                                                  $.ajax( { url: "https://api.mongolab.com/api/1/databases/heroku_app12042861/collections/users?apiKey=ow2pQfeu77QiWIfth6rKt1C0wReEOct6",
+                                                      data: JSON.stringify(response_json),
+                                                      type: "POST",
+                                                      contentType: "application/json" } ).done(function(data){
+                                                           //alert('Good to see you, ' + response.name + '.');
+                                                           //alert(getCover());return false;
+
+                                                           //return false;
+                                                          $("#name").val(response.username);
+                                                          $("#ask a").click();
+                                                          //return false;
+                                                      });
+
+
+                                  });
+                                 
+                                   
+                                    //mongo key = ow2pQfeu77QiWIfth6rKt1C0wReEOct6
+                                    //https://api.mongolab.com/api/1/databases?apiKey=<your-api-key>
+                                    
+                                   // alert(response.name);
                      });
                    } else {
                      console.log('User cancelled login or did not fully authorize.');

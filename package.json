@@ -16,6 +16,7 @@
         "session.socket.io":"*",
         "redis": "*",
         "connect-redis": "*",
-        "amqp": "*"
+        "amqp": "*",
+        "mongodb":"*"
     }
 }

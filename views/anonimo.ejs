@@ -14,8 +14,8 @@
     <link href="http://wbpreview.com/previews/WB00B8422/css/bootstrap-responsive.min.css" rel="stylesheet" />
     <link href="http://wbpreview.com/previews/WB00B8422/css/social-buttons.css" rel="stylesheet" />
     <link href="http://fonts.googleapis.com/css?family=Lobster" rel="stylesheet" />
-    <link href="http://wbpreview.com/previews/WB00B8422/css/style.css" rel="stylesheet" />
-    <link href="http://wbpreview.com/previews/WB00B8422/css/custom.css" rel="stylesheet" />
+    <link href="/style.css" rel="stylesheet" />
+    
      <link href="http://wbpreview.com/previews/WB009X3K4/buttons.css" rel="stylesheet" />
     
 <style type="text/css">
@@ -39,16 +39,143 @@
 </head>
 <body>
 
-<div class="row"><div class="span12 pagination-centered">
-<h1><%= title %></h1>    
-</div></div>
-<% if(user) { %>
-<b>User: </b> <label id="user"><%= user %></label> <!-- <a href="/logout" style='color:blue;text-decoration: underline'> Log out</a> -->
-<% }else{%>
-    <script>
-     //location.reload();
-     </script>
-<% } %>
+<!--- PROBAMOS-->
+<style>
+  #menu{
+    display: block;
+width: 100%;
+height: 42px;
+margin: auto;
+padding: 0px;
+position: fixed;
+z-index: 8000;
+background-image: url("http://ask.fm/images/bg-menu-blue-vintage.png");
+background-repeat: repeat-x;
+background-position: top left;
+  }
+#logo{
+ /* display: block;*/
+display:none;
+width: 98px;
+height: 40px;
+margin-top: 0px;
+margin-bottom: 0px;
+margin-left: 0px;
+margin-right: 0px;
+padding-bottom: 0px;
+padding-top: 0px;
+padding-left: 28px;
+padding-right: 0px;
+border: none;
+background-image: url("http://ask.fm/images/logo-green.png");
+background-position: top center;
+background-repeat: no-repeat;
+float: left;
+}
+#menuCenter {
+display: block;
+position: relative;
+width: 716px;
+height: 42px;
+margin-top: 0px;
+margin-bottom: 0px;
+margin-left: auto;
+margin-right: auto;
+padding-right: 17px;
+padding-left: 0px;
+padding-bottom: 0px;
+padding-top: 0px;
+}
+.menu-top {
+top: 0px;
+left: 0px;
+}
+a.link-login {
+display: block;
+padding-left: 20px;
+padding-right: 20px;
+padding-top: 4px;
+padding-bottom: 4px;
+margin-right: 0px;
+margin-left: 10px;
+margin-bottom: 0px;
+margin-top: 9px;
+text-align: center;
+font-weight: normal;
+font-size: 12px;
+line-height: 14px;
+border-radius: 5px;
+-moz-border-radius: 5px;
+color: white;
+text-decoration: none;
+cursor: pointer;
+float: right;
+background-color: #2D4D71;
+}
+.bordered-css{
+ -webkit-border-radius: 20px;
+-moz-border-radius: 20px;
+border-radius: 20px;
+}
+</style>
+<div id="menu" class="menu-top">
+      <div id="menuCenter">
+
+        <a href="/">
+          <div id="logo"></div>
+        </a>
+
+        
+
+          <a href="/" class="link-login">
+            Entrar
+          </a>
+
+          
+          <a href="/" class="link-login" id="create_account_link" style="display:block">Crear una cuenta</a>
+
+          
+            
+          
+        
+
+      </div>
+    </div>
+<!--END PROBAMOS -->
+
+
+  <style>
+  body { background: white url("<%= fb_user.cover_source %>");
+       background-attachment: fixed }
+
+  </style>
+<div class="row" style="margin-top:50px;">
+  <div class="span8 offset3 bordered-css " style="background-color:white;">
+      <div class="row-fluid">
+       <div class="span4">
+         
+<img  class="bordered-css" src="https://graph.facebook.com/<%= fb_user.id %>/picture?width=150&height=150" />
+       </div>
+       <div class="span4">
+         <h3><%= fb_user.name %></h3>
+         <p><%= fb_user.link %></p>
+       </div>
+       <div class="span4 pagination-centered">
+         <button class="btn btn-primary" onclick="alert('En pocos dias disponible!')" style="margin-top:50px">Seguir</button>
+       </div>
+    </div>
+      <div style="display:none">
+      <% if(user) { %>
+      <b>User: </b> <label id="user"><%= user %></label> <!-- <a href="/logout" style='color:blue;text-decoration: underline'> Log out</a> -->
+      <% }else{%>
+          <script>
+           //location.reload();
+           </script>
+      <% } %></div>
+</div>
+
+
+</div>
 
 
 <div id="channel" class="bordered">

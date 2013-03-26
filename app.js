@@ -1,8 +1,9 @@
 var express = require('express')
-    , routes = require('./routes')
+    
     , http = require('http')
     , path = require('path')
     , redis = require('redis')
+    ,mongo = require('mongodb')
     , amqp = require('amqp');
 
 var url_rabbit = process.env.CLOUDAMQP_URL || "amqp://localhost"; // default to localhost
@@ -11,8 +12,7 @@ var chatExchange;
 rabbitConn.on('ready', function () {
     chatExchange = rabbitConn.exchange('chatExchange', {'type': 'fanout'});
 });
-
-
+var mongoUri = 'mongodb://heroku_app12042861:clfom3dnopr5phrqi94n22kgd7@dbh75.mongolab.com:27757/heroku_app12042861'; 
 /*
  Setup Express & Socket.io
  */
@@ -70,7 +70,30 @@ app.configure('development', function () {
     app.use(express.errorHandler());
 });
 
-app.get('/', routes.index);
+app.get('/', function(req,res){
+
+    var serverName = process.env.VCAP_APP_HOST ? process.env.VCAP_APP_HOST + ":" + process.env.VCAP_APP_PORT : 'localhost:3000';
+ //save user from previous session (if it exists)
+    
+    var user = req.session.user;
+    //regenerate new session & store user from previous session (if it exists)
+    req.session.regenerate(function (err) {
+        req.session.user = user;
+         mongo.Db.connect(mongoUri, function (err, db) {
+                                  db.collection('users', function(er, collection) {
+                                    // collection.insert({'mykey': 'myvalue'}, {safe: true}, function(er,rs) {
+                                    //     console.log("mongoDB"+er);
+                                    // });
+                                  collection.find().toArray(function(err, items) {
+                                         res.render('index', { title:'Express', server:serverName, 
+                                            user:req.session.user,users:items});
+                                 
+                                    });
+                                  });
+                                });
+        
+    });
+});
 app.get('/nick/:nick', function (req, res) {
     //save user from previous session (if it exists)
     var serverName = process.env.VCAP_APP_HOST ? process.env.VCAP_APP_HOST + ":" + process.env.VCAP_APP_PORT : 'localhost:3000';
@@ -81,15 +104,27 @@ app.get('/nick/:nick', function (req, res) {
     if(!req.session.user_anon){
         req.session.user_anon="user-"+Math.floor((Math.random()*10000)+1);
     }
+   
+    
 
     var user_anon = req.session.user_anon;
 
     //regenerate new session & store user from previous session (if it exists)
     req.session.regenerate(function (err) {
         req.session.user_anon = user_anon;
-        res.render('anonimo', { title:'Chat anonimo con '+req.params.nick, 
-            server:serverName, user:user_anon
-            ,nick:req.params.nick});
+                                 mongo.Db.connect(mongoUri, function (err, db) {
+                                  db.collection('users', function(er, collection) {
+                                    // collection.insert({'mykey': 'myvalue'}, {safe: true}, function(er,rs) {
+                                    //     console.log("mongoDB"+er);
+                                    // });
+                                  collection.findOne({username:req.params.nick},function(err,doc){
+                                    res.render('anonimo', { title:'Chat anonimo con '+req.params.nick, 
+                                    server:serverName, user:user_anon, fb_user:doc
+                                    ,nick:req.params.nick});
+                                  })
+                                  });
+                                });
+                                
         
     });
         
