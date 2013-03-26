@@ -166,31 +166,32 @@
 
                                   FB.api('/me?fields=cover', function(response2) {
                                                   var response_json= response ;
-                                                  cover_source= response2.cover.source;
+                                                  if (typeof(response2.cover) == "undefined"){
+                                                     cover_source= 'http://bit.ly/10gArc9';
+                                                  }else{
+                                                     cover_source= response2.cover.source;
+                                                  }
+                                                 
                                                   //alert("cover=="+cover_source);
                                                   response_json.cover_source = cover_source;
-                                                  
-                                                  $.ajax( { url: "https://api.mongolab.com/api/1/databases/heroku_app12042861/collections/users?apiKey=ow2pQfeu77QiWIfth6rKt1C0wReEOct6",
-                                                      data: JSON.stringify(response_json),
-                                                      type: "POST",
-                                                      contentType: "application/json" } ).done(function(data){
-                                                           //alert('Good to see you, ' + response.name + '.');
-                                                           //alert(getCover());return false;
-
-                                                           //return false;
-                                                          $("#name").val(response.username);
+                                                  $.ajax( { url: "https://api.mongolab.com/api/1/databases/heroku_app12042861/collections/users?apiKey=ow2pQfeu77QiWIfth6rKt1C0wReEOct6&u=true&q={'id':'"+response.id+"'}",
+                                                        
+                                                        data: JSON.stringify( { "$set" : response_json} ),
+                                                        type: "PUT",
+                                                        contentType: "application/json" } ).done(function(data){
+                                                          //alert(JSON.stringify(data));
+                                                           $("#name").val(response.username);
                                                           $("#ask a").click();
-                                                          //return false;
+                                                          
                                                       });
+                                                      //end
+
 
 
                                   });
                                  
                                    
-                                    //mongo key = ow2pQfeu77QiWIfth6rKt1C0wReEOct6
-                                    //https://api.mongolab.com/api/1/databases?apiKey=<your-api-key>
-                                    
-                                   // alert(response.name);
+                                 
                      });
                    } else {
                      console.log('User cancelled login or did not fully authorize.');

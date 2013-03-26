@@ -69,6 +69,11 @@ $(document).ready(function () {
         socket.on('reconnecting', function () {
             console.log('reconnecting');
         });
+        var notification_online = function(){
+            socket.emit('notification_online', JSON.stringify({"user":name}));
+            console.log("se envia la notificacion");
+        }
+        setInterval(notification_online,1000*5); //cada 60 segundos;
 
         var tryReconnect = function () {
             ++reconnectCount;
@@ -100,7 +105,11 @@ $(document).ready(function () {
             });
 
         var container = $('div#msgs');
+socket.on('notification_online', function (msg) {
+    var mensaje = JSON.stringify(msg);
+    console.log("esta online:"+mensaje);
 
+});
         /*
          When a message comes from the server, format, colorize it etc. and display in the chat widget
          */

@@ -45,6 +45,7 @@ $(document).ready(function () {
         });
         socket.on('disconnect', function () {
             console.log('disconnect');
+            socket.emit('disconnect', JSON.stringify({action:'disconnect' }));
             intervalID = setInterval(tryReconnect, 4000);
         });
         socket.on('connect_failed', function () {

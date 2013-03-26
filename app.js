@@ -161,6 +161,9 @@ sessionSockets.on('connection', function (err, socket, session) {
      *
      * Notice that we are getting user's name from session.
      */
+     socket.on('disconnect', function (data) {
+        console.log("el usuario se desconecto"+data);
+     });
     socket.on('chat', function (data) {
         var msg = JSON.parse(data);
         if(msg.anon=='1'){chat_from = msg.chat_from;}else{chat_from=session.user;}
@@ -184,8 +187,15 @@ sessionSockets.on('connection', function (err, socket, session) {
         var reply = {action: 'control', user: chat_from, msg: ' joined the channel' };
         chatExchange.publish('', reply);
     });
-
-
+/*para saber quien esta online*/
+socket.on('notification_online', function (data) {
+        var msg = JSON.parse(data);
+        var user = msg.user;
+         
+        var reply = {action: 'notification_online', user: user };
+        socket.broadcast.emit('notification_online', reply);
+        //chatExchange.publish('', reply);
+    });
     /**
      * Initialize subscriber queue.
      * 1. First create a queue w/o any name. This forces RabbitMQ to create new queue for every socket.io connection w/ a new random queue name.
