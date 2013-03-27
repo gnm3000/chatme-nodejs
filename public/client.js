@@ -177,6 +177,7 @@ socket.on('notification_online', function (msg) {
 
             // append to container and scroll
             //cant_tabs_user = $("ul.tabs a."+message.chat_from).length;
+            cant_tabs =  $("#myTab li").length;
             cant_tabs_user = $("div.tab-pane[id="+message.user+"]").length;
             if((cant_tabs_user == 0 && message.user!=user)){
                 //entonces agrega un tab
@@ -191,7 +192,11 @@ socket.on('notification_online', function (msg) {
                 //$("div.panes").append("<div class='"+message.chat_from+"'><ul></ul></div>");
                 //tabs.tabs( "refresh" );
                 //$("ul.tabs").tabs("div.panes > div");
-                //$("#myTab a."+message.user).click();
+
+                if(cant_tabs==0){
+                    $("#myTab a."+message.user).click();
+                }
+                
             }   else{
                 console.log("no entro al iff. User:"+user+". message.chat_from:"+message.user+ ".cant_tabs_user:"+cant_tabs_user);
             }
