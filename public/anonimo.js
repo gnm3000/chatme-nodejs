@@ -54,18 +54,18 @@ $(document).ready(function () {
                                     $("#status").html("<span style='color:black'>OFFLINE</span>");
                                 }
                         }else{
-                            if((function_dateDiff(new Date,new Date(last_online))/1000)>30){
-                                console.log("Es mayor a 30!!!!!!!");
+                            if((function_dateDiff(new Date,new Date(last_online))/1000)>15){
+                                console.log("Es mayor a 15!!!!!!!");
                                 $("#status").html("<span style='color:black'>OFFLINE</span>");
 
                             }else{
-                                console.log("Es menor a 30");
+                                console.log("Es menor a 15");
                             }
                         }
                          //$("#status").html("<span style='color:black'>OFFLINE</span>");
         }
-        /*Verificar cada 10 segundos si el last time es mayor a 30 segundos*/
-         setInterval(function_put_offline,1000*10);                
+        /*Verificar cada 5 segundos si el last time es mayor a 15 segundos*/
+         setInterval(function_put_offline,1000*5);                
         
          var function_dateDiff=function(date1,date2){
              return date1.getTime() - date2.getTime();
