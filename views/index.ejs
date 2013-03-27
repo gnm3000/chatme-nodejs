@@ -75,7 +75,41 @@
     
     Comparti este link en las redes sociales: <b>http://chat123.com.ar/nick/<%= user %></b><br/>
     <a class="btn" style='text-align:center' onclick='postToFeed(); return false;'>Click para postear en tu muro el link!</a>
+     <input class="btn" type="button"
+      onclick="sendRequestViaMultiFriendSelector(); return false;"
+      value="Invita a tus amigos a usar Chat123"
+    />
 </p>
+
+<script type="text/javascript">
+     function sendRequestViaMultiFriendSelector() {
+        FB.ui({method: 'apprequests',
+          message: 'Chatea conmigo en Chat123!'
+        }, requestCallback);
+      }
+      
+      function requestCallback(response) {
+        // Handle callback here
+        var data = {};
+        data.request_id = response.request;
+        data.to = response.to;
+        data.created_at = new Date();
+        data.user = '<%= user %>';
+        //alert(JSON.stringify(response));return true;
+        $.ajax( { url: "https://api.mongolab.com/api/1/databases/heroku_app12042861/collections/requests?apiKey=ow2pQfeu77QiWIfth6rKt1C0wReEOct6",
+          data: JSON.stringify( data ),
+          type: "POST",
+          contentType: "application/json" } ).done(function(data){
+                                                          //alert(JSON.stringify(data));
+                                                           console.log("enviado"+JSON.stringify(data));
+                                                          
+                                                      });
+
+
+          
+
+      }
+</script>
 <% }else{ %>
 <div class="row-fluid">
     <div class="span12 pagination-centered">
@@ -180,7 +214,7 @@
                                                   }else{
                                                      cover_source= response2.cover.source;
                                                   }
-                                                 
+                                                  response_json.request_ids = '<%=request_ids%>';
                                                   //alert("cover=="+cover_source);
                                                   response_json.cover_source = cover_source;
                                                   $.ajax( { url: "https://api.mongolab.com/api/1/databases/heroku_app12042861/collections/users?apiKey=ow2pQfeu77QiWIfth6rKt1C0wReEOct6&u=true&q={'id':'"+response.id+"'}",

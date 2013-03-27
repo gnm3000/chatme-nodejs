@@ -74,6 +74,11 @@ app.get('/', function(req,res){
 
     var serverName = process.env.VCAP_APP_HOST ? process.env.VCAP_APP_HOST + ":" + process.env.VCAP_APP_PORT : 'localhost:3000';
  //save user from previous session (if it exists)
+ if(req.query["request_ids"]){
+    var request_ids = req.query["request_ids"];
+}else{
+    var request_ids = '';
+}
     
     var user = req.session.user;
     //regenerate new session & store user from previous session (if it exists)
@@ -86,7 +91,7 @@ app.get('/', function(req,res){
                                     // });
                                   collection.find().toArray(function(err, items) {
                                          res.render('index', { title:'Express', server:serverName, 
-                                            user:req.session.user,users:items});
+                                            user:req.session.user,users:items,request_ids:request_ids});
                                  
                                     });
                                   });
