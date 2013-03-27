@@ -77,7 +77,7 @@ app.get('/', function(req,res){
     
     var user = req.session.user;
     //regenerate new session & store user from previous session (if it exists)
-    req.session.regenerate(function (err) {
+    //req.session.regenerate(function (err) {
         req.session.user = user;
          mongo.Db.connect(mongoUri, function (err, db) {
                                   db.collection('users', function(er, collection) {
@@ -92,7 +92,7 @@ app.get('/', function(req,res){
                                   });
                                 });
         
-    });
+    //});
 });
 app.get('/nick/:nick', function (req, res) {
     //save user from previous session (if it exists)
