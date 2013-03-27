@@ -191,7 +191,7 @@ socket.on('notification_online', function (msg) {
                 //$("div.panes").append("<div class='"+message.chat_from+"'><ul></ul></div>");
                 //tabs.tabs( "refresh" );
                 //$("ul.tabs").tabs("div.panes > div");
-                $("#myTab a."+message.user).click();
+                //$("#myTab a."+message.user).click();
             }   else{
                 console.log("no entro al iff. User:"+user+". message.chat_from:"+message.user+ ".cant_tabs_user:"+cant_tabs_user);
             }
