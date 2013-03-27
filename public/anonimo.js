@@ -43,6 +43,42 @@ $(document).ready(function () {
         socket.on('connecting', function () {
             console.log('connecting');
         });
+        var intervalBangID;
+        function_put_offline = function(){
+                        var last_online = $("#last_online").val();
+                        if(last_online==''){
+                            console.log("NULO");
+                        }else{
+                            if((function_dateDiff(new Date,new Date(last_online))/1000)>30){
+                                console.log("Es mayor a 30!!!!!!!");
+                                $("#status").html("<span style='color:black'>OFFLINE</span>");
+
+                            }else{
+                                console.log("Es menor a 30");
+                            }
+                        }
+                         //$("#status").html("<span style='color:black'>OFFLINE</span>");
+        }
+        /*Verificar cada 10 segundos si el last time es mayor a 30 segundos*/
+         setInterval(function_put_offline,1000*10);                
+        
+         var function_dateDiff=function(date1,date2){
+             return date1.getTime() - date2.getTime();
+         }
+        
+        socket.on('notification_online', function (msg) {
+            var mensaje = JSON.stringify(msg);
+            var fb_username = $("#fb_user_name").html();
+           // alert("mensaje"+msg.user+" el usuario:"+fb_username);
+            if(msg.user==fb_username){
+                $("#status").html("<span style='color:green'>ONLINE</span>");
+                $("#last_online").val(new Date);
+            }else{
+               // $("#status").html("<span style='color:black'>OFFLINE</span>");
+            }
+            console.log("esta online:"+mensaje);
+
+        });
         socket.on('disconnect', function () {
             console.log('disconnect');
             socket.emit('disconnect', JSON.stringify({action:'disconnect' }));
