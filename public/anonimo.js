@@ -44,10 +44,15 @@ $(document).ready(function () {
             console.log('connecting');
         });
         var intervalBangID;
+        var onlineCount = 0;
         function_put_offline = function(){
                         var last_online = $("#last_online").val();
                         if(last_online==''){
                             console.log("NULO");
+                                ++onlineCount;
+                                if (onlineCount == 2) {
+                                    $("#status").html("<span style='color:black'>OFFLINE</span>");
+                                }
                         }else{
                             if((function_dateDiff(new Date,new Date(last_online))/1000)>30){
                                 console.log("Es mayor a 30!!!!!!!");
