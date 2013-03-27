@@ -52,7 +52,7 @@ $(document).ready(function () {
         });
         socket.on('disconnect', function () {
             console.log('disconnect');
-            intervalID = setInterval(tryReconnect, 10000);
+            intervalID = setInterval(tryReconnect, 6000);
         });
         socket.on('connect_failed', function () {
             console.log('connect_failed');
@@ -77,8 +77,9 @@ $(document).ready(function () {
 
         var tryReconnect = function () {
             ++reconnectCount;
-            if (reconnectCount == 20) {
+            if (reconnectCount == 2000) {
                 clearInterval(intervalID);
+
             }
             console.log('Making a dummy http call to set jsessionid (before we do socket.io reconnect)');
             $.ajax('/')
