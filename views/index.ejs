@@ -22,6 +22,19 @@
     <link href="http://wbpreview.com/previews/WB00B8422/css/custom.css" rel="stylesheet" />
      <link href="http://wbpreview.com/previews/WB009X3K4/buttons.css" rel="stylesheet" />
     
+
+
+
+
+
+
+
+
+
+
+
+
+    
 <style type="text/css">
     body{padding-top: 10px;}
     h1,h2,h3{color: rgb(41, 70, 125); }
@@ -62,8 +75,16 @@
 <h1>Chat123</h1>
  <!-- <b>Server: </b><%= server %> -->
  
-
- 
+ <style>
+#beep-one{
+  display: none;
+}
+ </style>
+<audio id="beep-one" controls="controls" preload="auto">
+        <source src="/sounds/beep.mp3">
+        <source src="/sounds/beep.ogg">
+        Your browser isn't invited for super fun time.
+      </audio>
 <% if(user) { %>
 <b>User: </b> 
 <span id="user"><%= user %></span> 

@@ -212,6 +212,10 @@ socket.on('notification_online', function (msg) {
 
             if(!$("#myTab li."+message.user).hasClass("active")){
                 $("#myTab a."+message.user).css("color","red");
+                var beepOne = $("#beep-one")[0];
+                beepOne.load();
+                beepOne.play();
+                console.log("PLAY SOUND");
             }   
             
             //container.find('ul').append(messageView.show());

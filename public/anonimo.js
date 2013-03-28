@@ -181,6 +181,11 @@ $(document).ready(function () {
             if (message.user == name) {
                  messageView.find('.user').addClass('self');
                  messageView.find('.user').text("anonimo");
+            }else{
+                var beepOne = $("#beep-one")[0];
+                beepOne.load();
+                beepOne.play();
+                console.log("PLAY SOUND");
             }
 
             // append to container and scroll

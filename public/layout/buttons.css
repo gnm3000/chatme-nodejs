@@ -1,0 +1,632 @@
+/*----------------------------------/--------------------------------
+[Layout Stylesheet]
+	Project:		Bootstrap Buttons Pack 1
+	Version:		1.0
+	Last Change:	07/22/2012
+	author:			Ole-Martin Bratteng
+
+[Table of contents]
+
+	1.	Brands				/ .btn-brands-*
+
+-------------------------------------------------------------------*/
+
+/*------------------------------------------------------------------/
+[1. Brands / .btn-brand-*]
+*/
+[class*="btn-brand-"]{
+	color:#ffffff;
+	text-shadow:none;
+	
+	background:-moz-linear-gradient(center top, rgba(255, 255, 255, .1) 0%, rgba(0, 0, 0, .1) 100%);
+	background:-webkit-gradient(linear, center bottom, center top, from(rgba(0, 0, 0, .1)), to(rgba(255, 255, 255, .1)));
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorStr='#19FFFFFF', EndColorStr='#19000000');
+	-ms-filter:"progid:DXImageTransform.Microsoft.gradient(startColorStr='#19FFFFFF', EndColorStr='#19000000')";
+}
+[class*="btn-brand-"]:hover{
+	color:#ffffff;
+	background-position:0;
+
+	background:-moz-linear-gradient(center top, rgba(255, 255, 255, .2) 0%, rgba(0, 0, 0, .1) 100%);
+	background:-webkit-gradient(linear, center bottom, center top, from(rgba(0, 0, 0, .1)), to(rgba(255, 255, 255, .2)));
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorStr='#33FFFFFF', EndColorStr='#19000000');
+	-ms-filter:"progid:DXImageTransform.Microsoft.gradient(startColorStr='#33FFFFFF', EndColorStr='#19000000')";
+}
+	/*----------------------------------
+	[About.me (blue) / .btn-brand-aboutme-1]
+	*/
+	.btn-brand-aboutme-1, .btn-brand-aboutme-1:hover{
+		background-color:#00405d;
+	}
+	
+	/*----------------------------------
+	[About.me (yellow) / .btn-brand-aboutme-2]
+	*/
+	.btn-brand-aboutme-2, .btn-brand-aboutme-2:hover{
+		background-color:#ffcc33;
+	}
+	
+	/*----------------------------------
+	 [ Adobe / .btn-brand-adobe]
+	*/
+	.btn-brand-adobe, .btn-brand-adobe:hover{
+		background-color:#ff0000;
+	}
+	
+	/*----------------------------------
+	 [ Aim / .btn-brand-aim]
+	*/
+	.btn-brand-aim, .btn-brand-aim:hover{
+		background-color:#fcd20b;
+	}
+	
+	/*----------------------------------
+	 [ Amazon / .btn-brand-amazon]
+	*/
+	.btn-brand-amazon, .btn-brand-amazon:hover{
+		background-color:#e47911;
+	}
+	
+	/*----------------------------------
+	 [ Android / .btn-brand-android]
+	*/
+	.btn-brand-android, .btn-brand-android:hover{
+		background-color:#a4c639;
+	}
+	
+	/*----------------------------------
+	 [ AOL / .btn-brand-aol]
+	*/
+	.btn-brand-aol, .btn-brand-aol:hover{
+		background-color:#0060a3;
+	}
+	
+	/*----------------------------------
+	 [ Atlassian / .btn-brand-atlassian]
+	*/
+	.btn-brand-atlassian, .btn-brand-atlassian:hover{
+		background-color:#003366;
+	}
+	
+	/*----------------------------------
+	 [ Behance / .btn-brand-behance]
+	*/
+	.btn-brand-behance, .btn-brand-behance:hover{
+		background-color:#053eff;
+	}
+	
+	/*----------------------------------
+	 [ Blogger / .btn-brand-blogger]
+	*/
+	.btn-brand-blogger, .btn-brand-blogger:hover{
+		background-color:#fc4f08;
+	}
+	
+	/*----------------------------------
+	 [ Carbonmade / .btn-brand-carbonmade]
+	*/
+	.btn-brand-carbonmade, .btn-brand-carbonmade:hover{
+		background-color:#613854;
+	}
+	
+	/*----------------------------------
+	 [ Delicious / .btn-brand-delicious]
+	*/
+	.btn-brand-delicious, .btn-brand-delicious:hover{
+		background-color:#205cc0;
+	}
+	
+	/*----------------------------------
+	 [ Designmoo / .btn-brand-designmoo]
+	*/
+	.btn-brand-designmoo, .btn-brand-designmoo:hover{
+		background-color:#e54a4f;
+	}
+	
+	/*----------------------------------
+	 [ Devianart / .btn-brand-devianart]
+	*/
+	.btn-brand-deviantart, .btn-brand-deviantart:hover{
+		background-color:#4e6252;
+	}
+	
+	/*----------------------------------
+	 [ Disqus (blue) / .btn-brand-disqus-1]
+	*/
+	.btn-brand-disqus-1, .btn-brand-disqus-1:hover{
+		background-color:#59a3fc;
+	}
+	
+	/*----------------------------------
+	 [ Disqus (orange) / .btn-brand-disqus-2]
+	*/
+	.btn-brand-disqus-2, .btn-brand-disqus-2:hover{
+		background-color:#db7132;
+	}
+	
+	/*----------------------------------
+	 [ Dribbble / .btn-brand-dribbble]
+	*/
+	.btn-brand-dribbble, .btn-brand-dribbble:hover{
+		background-color:#ea4c89;
+	}
+	
+	/*----------------------------------
+	 [ Dropbox / .btn-brand-dropbox]
+	*/
+	.btn-brand-dropbox, .btn-brand-dropbox:hover{
+		background-color:#3d9ae8;
+	}
+	
+	/*----------------------------------
+	 [ eBay / .btn-brand-ebay]
+	*/
+	.btn-brand-ebay, .btn-brand-ebay:hover{
+		background-color:#89c507;
+	}
+	
+	/*----------------------------------
+	 [ Emeber / .btn-brand-ember]
+	*/
+	.btn-brand-ember, .btn-brand-ember:hover{
+		background-color:#f05e1b;
+	}
+	
+	/*----------------------------------
+	 [ Engadget / .btn-brand-engadget]
+	*/
+	.btn-brand-engadget, .btn-brand-engadget:hover{
+		background-color:#00bdf6;
+	}
+	
+	/*----------------------------------
+	 [ Envato / .btn-brand-envato]
+	*/
+	.btn-brand-envato, .btn-brand-envato:hover{
+		background-color:#528036;
+	}
+	
+	/*----------------------------------
+	 [ Etsy / .btn-brand-etsy]
+	*/
+	.btn-brand-etsy, .btn-brand-etsy:hover{
+		background-color:#eb6d20;
+	}
+	
+	/*----------------------------------
+	 [ Evernote / .btn-brand-evernote]
+	*/
+	.btn-brand-evernote, .btn-brand-evernote:hover{
+		background-color:#5ba525;
+	}
+	
+	/*----------------------------------
+	 [ Fab.com / .btn-brand-fabcom]
+	*/
+	.btn-brand-fabcom, .btn-brand-fabcom:hover{
+		background-color:#dd0017;
+	}
+	
+	/*----------------------------------
+	 [ Facebook / .btn-brand-facebook]
+	*/
+	.btn-brand-facebook, .btn-brand-facebook:hover{
+		background-color:#3b5998;
+	}
+	
+	/*----------------------------------
+	 [ Flickr (blue) / .btn-brand-flickr-1]
+	*/
+	.btn-brand-flickr-1, .btn-brand-flickr-1:hover{
+		background-color:#0063dc;
+	}
+	
+	/*----------------------------------
+	 [ Flickr (pink) / .btn-brand-flickr-2]
+	*/
+	.btn-brand-flickr-2, .btn-brand-flickr-2:hover{
+		background-color:#ff0084;
+	}
+	
+	/*----------------------------------
+	 [ Forrst / .btn-brand-forrst]
+	*/
+	.btn-brand-forrst, .btn-brand-forrst:hover{
+		background-color:#5b9a68;
+	}
+	
+	/*----------------------------------
+	 [ Foursquare / .btn-brand-foursquare]
+	*/
+	.btn-brand-foursquare, .btn-brand-foursquare:hover{
+		background-color:#25a0ca;
+	}
+	
+	/*----------------------------------
+	 [ Garmin / .btn-brand-garmin]
+	*/
+	.btn-brand-garmin, .btn-brand-garmin:hover{
+		background-color:#007cc3;
+	}
+	
+	/*----------------------------------
+	 [ GetGlue / .btn-brand-getglue]
+	*/
+	.btn-brand-getglue, .btn-brand-getglue:hover{
+		background-color:#2d75a2;
+	}
+	
+	/*----------------------------------
+	 [ Gimmebar / .btn-brand-gimmebar]
+	*/
+	.btn-brand-gimmebar, .btn-brand-gimmebar:hover{
+		background-color:#f70078;
+	}
+	
+	/*----------------------------------
+	 [ GitHub / .btn-brand-github]
+	*/
+	.btn-brand-github, .btn-brand-github:hover{
+		background-color:#4183c4;
+	}
+	
+	/*----------------------------------
+	 [ Google+ / .btn-brand-googleplus]
+	*/
+	.btn-brand-googleplus, .btn-brand-googleplus:hover{
+		background-color:#db4a39;
+	}
+	
+	/*----------------------------------
+	 [ Groovershark / .btn-brand-groovershark]
+	*/
+	.btn-brand-grooveshark, .btn-brand-groovershark:hover{
+		background-color:#f77f00;
+	}
+	
+	/*----------------------------------
+	 [ HTML5 / .btn-brand-html5]
+	*/
+	.btn-brand-html5, .btn-brand-html5:hover{
+		background-color:#ec6231;
+	}
+	
+	/*----------------------------------
+	 [ Heroku (dark) / .btn-brand-heroku-1]
+	*/
+	.btn-brand-heroku-1, .btn-brand-heroku-1:hover{
+		background-color:#6567a5;
+	}
+	
+	/*----------------------------------
+	 [ Heroku (light) / .btn-brand-heroku-2]
+	*/
+	.btn-brand-heroku-2, .btn-brand-heroku-2:hover{
+		background-color:#c7c5e6;
+	}
+	
+	/*----------------------------------
+	 [ IMDb / .btn-brand-imdb]
+	*/
+	.btn-brand-imdb, .btn-brand-imdb:hover{
+		background-color:#f3ce13;
+	}
+	
+	/*----------------------------------
+	 [ Instagram / .btn-brand-instagram]
+	*/
+	.btn-brand-instagram, .btn-brand-instagram:hover{
+		background-color:#634d40;
+	}
+	
+	/*----------------------------------
+	 [ Intuit / .btn-brand-intuit]
+	*/
+	.btn-brand-intuit, .btn-brand-intuit:hover{
+		background-color:#365ebf;
+	}
+	
+	/*----------------------------------
+	 [ Kickstarter / .btn-brand-kickstarter]
+	*/
+	.btn-brand-kickstarter, .btn-brand-kickstarter:hover{
+		background-color:#87c442;
+	}
+	
+	/*----------------------------------
+	 [ Kippt / .btn-brand-kippt]
+	*/
+	.btn-brand-kippt, .btn-brand-kippt:hover{
+		background-color:#e03500;
+	}
+	
+	/*----------------------------------
+	 [ LastFM / .btn-brand-lastfm]
+	*/
+	.btn-brand-lastfm, .btn-brand-lastfm:hover{
+		background-color:#c3000d;
+	}
+	
+	/*----------------------------------
+	 [ LinkedIn / .btn-brand-linkedin]
+	*/
+	.btn-brand-linkedin, .btn-brand-linkedin:hover{
+		background-color:#0e76a8;
+	}
+	
+	/*----------------------------------
+	 [ Meetup / .btn-brand-meetup]
+	*/
+	.btn-brand-meetup, .btn-brand-meetup:hover{
+		background-color:#e51937;
+	}
+	
+	/*----------------------------------
+	 [ Path / .btn-brand-path]
+	*/
+	.btn-brand-path, .btn-brand-path:hover{
+		background-color:#e41f11;
+	}
+	
+	/*----------------------------------
+	 [ PayPal (dark) / .btn-brand-paypal-1]
+	*/
+	.btn-brand-paypal-1, .btn-brand-paypal-1:hover{
+		background-color:#1e477a;
+	}
+	
+	/*----------------------------------
+	 [ PayPal (light) / .btn-brand-paypal-2]
+	*/
+	.btn-brand-paypal-2, .btn-brand-paypal-2:hover{
+		background-color:#3b7bbf;
+	}
+	
+	/*----------------------------------
+	 [ Pinboard / .btn-brand-pinboard]
+	*/
+	.btn-brand-pinboard, .btn-brand-pinboard:hover{
+		background-color:#0000e6;
+	}
+	
+	/*----------------------------------
+	 [ Pinterest / .btn-brand-pinterest]
+	*/
+	.btn-brand-pinterest, .btn-brand-pinterest:hover{
+		background-color:#910101;
+	}
+	
+	/*----------------------------------
+	 [ Pocket / .btn-brand-pocket]
+	*/
+	.btn-brand-pocket, .btn-brand-pocket:hover{
+		background-color:#ee4056;
+	}
+	
+	/*----------------------------------
+	 [ QUOTE.fm / .btn-brand-quotefm]
+	*/
+	.btn-brand-quotefm, .btn-brand-quotefm:hover{
+		background-color:#66ceff;
+	}
+	
+	/*----------------------------------
+	 [ Rdio / .btn-brand-rdio]
+	*/
+	.btn-brand-rdio, .btn-brand-rdio:hover{
+		background-color:#008fd5;
+	}
+	
+	/*----------------------------------
+	 [ Readability / .btn-brand-readability]
+	*/
+	.btn-brand-readability, .btn-brand-readability:hover{
+		background-color:#9c0000;
+	}
+	
+	/*----------------------------------
+	 [ RSS / .btn-brand-rss]
+	*/
+	.btn-brand-rss, .btn-brand-rss:hover{
+		background-color:#ee802f;
+	}
+	
+	/*----------------------------------
+	 [ Samsung / .btn-brand-samsung]
+	*/
+	.btn-brand-samsung, .btn-brand-samsung:hover{
+		background-color:#0c4da2;
+	}
+	
+	/*----------------------------------
+	 [ Skype / .btn-brand-skype]
+	*/
+	.btn-brand-skype, .btn-brand-skype:hover{
+		background-color:#00aff0;
+	}
+	
+	/*----------------------------------
+	 [ Softonic / .btn-brand-softonic]
+	*/
+	.btn-brand-softonic, .btn-brand-softonic:hover{
+		background-color:#008ace;
+	}
+	
+	/*----------------------------------
+	 [ SouncClound / .btn-brand-soundcload]
+	*/
+	.btn-brand-soundcloud, .btn-brand-soundcloud:hover{
+		background-color:#ff7700;
+	}
+	
+	/*----------------------------------
+	 [ Spotify / .btn-brand-spotify]
+	*/
+	.btn-brand-spotify, .btn-brand-spotify:hover{
+		background-color:#64b41a;
+	}
+	
+	/*----------------------------------
+	 [ Sprint / .btn-brand-sprint]
+	*/
+	.btn-brand-sprint, .btn-brand-sprint:hover{
+		background-color:#fee100;
+	}
+	
+	/*----------------------------------
+	 [ Squarespace / .btn-brand-squarespace]
+	*/
+	.btn-brand-squarespace, .btn-brand-squarespace:hover{
+		background-color:#121212;
+	}
+	
+	/*----------------------------------
+	 [ StumbleUpon / .btn-brand-stumbleupon]
+	*/
+	.btn-brand-stumbleupon, .btn-brand-stumbleupon:hover{
+		background-color:#f74425;
+	}
+	
+	/*----------------------------------
+	 [ T-mobile / .btn-brand-tmobile]
+	*/
+	.btn-brand-tmobile, .btn-brand-tmobile:hover{
+		background-color:#ea0a8e;
+	}
+	
+	/*----------------------------------
+	 [ Technorati / .btn-brand-technorati]
+	*/
+	.btn-brand-technorati, .btn-brand-technorati:hover{
+		background-color:#40a800;
+	}
+	
+	/*----------------------------------
+	 [ Tumblr / .btn-brand-tumblr]
+	*/
+	.btn-brand-tumblr, .btn-brand-tumblr:hover{
+		background-color:#34526f;
+	}
+	
+	/*----------------------------------
+	 [ Twitter / .btn-brand-twitter]
+	*/
+	.btn-brand-twitter, .btn-brand-twitter:hover{
+		background-color:#00a0d1;
+	}
+	
+	/*----------------------------------
+	 [ TYPO3 / .btn-brand-typo3]
+	*/
+	.btn-brand-typo3, .btn-brand-typo3:hover{
+		background-color:#ff8700;
+	}
+	
+	/*----------------------------------
+	 [ Ubuntu / .btn-brand-ubuntu]
+	*/
+	.btn-brand-ubuntu, .btn-brand-ubuntu:hover{
+		background-color:#dd4814;
+	}
+	
+	/*----------------------------------
+	 [ Verizon / .btn-brand-verizon]
+	*/
+	.btn-brand-verizon, .btn-brand-verizon:hover{
+		background-color:#ef1d1d;
+	}
+	
+	/*----------------------------------
+	 [ Vimeo / .btn-brand-vimeo]
+	*/
+	.btn-brand-vimeo, .btn-brand-vimeo:hover{
+		background-color:#86c9ef;
+	}
+	
+	/*----------------------------------
+	 [ Virb / .btn-brand-virb]
+	*/
+	.btn-brand-virb, .btn-brand-virb:hover{
+		background-color:#06afd8;
+	}
+	
+	/*----------------------------------
+	 [ Virgin Media / .btn-brand-virgin]
+	*/
+	.btn-brand-virgin, .btn-brand-virgin:hover{
+		background-color:#cc0000;
+	}
+	
+	/*----------------------------------
+	 [ Wordpress (blue) / .btn-brand-wordporess-1]
+	*/
+	.btn-brand-wordpress-1, .btn-brand-wordpress-1:hover{
+		background-color:#21759b;
+	}
+	
+	/*----------------------------------
+	 [ Wordpress (orange) / .btn-brand-wordpress-2]
+	*/
+	.btn-brand-wordpress-2, .btn-brand-wordpress-2:hover{
+		background-color:#d54e21;
+	}
+	
+	/*----------------------------------
+	 [ Wordpress (grey) / .btn-brand-wordpress-3]
+	*/
+	.btn-brand-wordpress-3, .btn-brand-wordpress-3:hover{
+		background-color:#464646;
+	}
+	
+	/*----------------------------------
+	 [ XBOX / .btn-brand-xbox]
+	*/
+	.btn-brand-xbox, .btn-brand-xbox:hover{
+		background-color:#9bc848;
+	}
+	
+	/*----------------------------------
+	 [ Yahoo! / .btn-brand-yahoo]
+	*/
+	.btn-brand-yahoo, .btn-brand-yahoo:hover{
+		background-color:#720e9e;
+	}
+	
+	/*----------------------------------
+	 [ Yandex / .btn-brand-yandex]
+	*/
+	.btn-brand-yandex, .btn-brand-yandex:hover{
+		background-color:#ffcc00;
+	}
+	
+	/*----------------------------------
+	 [ YELP / .btn-brand-yelp]
+	*/
+	.btn-brand-yelp, .btn-brand-yelp:hover{
+		background-color:#c41200;
+	}
+	
+	/*----------------------------------
+	 [ YouTube / .btn-brand-youtube]
+	*/
+	.btn-brand-youtube, .btn-brand-youtube:hover{
+		background-color:#c4302b;
+	}
+	
+	/*----------------------------------
+	 [ Zerply / .btn-brand-zerply]
+	*/
+	.btn-brand-zerply, .btn-brand-zerply:hover{
+		background-color:#9dcc7a;
+	}
+	
+	/*----------------------------------
+	 [ ZooTool / .btn-brand-zootool]
+	*/
+	.btn-brand-zootool, .btn-brand-zootool:hover{
+		background-color:#5e8b1d;
+	}
+	
+	
+	
+	
