@@ -1,10 +1,10 @@
 <html>
 <head>
     <meta property="fb:app_id"          content="275093569291809" /> 
-<meta property="og:url"             content="http://chat123.com.ar" /> 
+<meta property="og:url"             content="http://chatme.fm" /> 
 <meta property="og:title"           content="Crea tu perfil y chatea anonimamente con tus amigos!" /> 
 <meta property="og:image"           content="http://www.marketlikeachick.com/wp-content/uploads/2009/06/chat-bubbles-150x150.png" /> 
-<meta property="og:description"           content="En Chat123 te creas tu perfil y luego invitas a tus amigos a que chateen con vos!" /> 
+<meta property="og:description"           content="En Chatme.fm te creas tu perfil y luego invitas a tus amigos a que chateen con vos!" /> 
 
 <script src='http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js'></script>
 <!--script src="http://cdn.jquerytools.org/1.2.7/full/jquery.tools.min.js"></script> -->
@@ -52,7 +52,7 @@
     // init the FB JS SDK
     FB.init({
       appId      : '275093569291809', // App ID from the App Dashboard
-      channelUrl : 'http://chat123.com.ar/channel', // Channel File for x-domain communication
+      channelUrl : 'http://chatme.fm/channel', // Channel File for x-domain communication
       status     : true, // check the login status upon init?
       cookie     : true, // set sessions cookies to allow your server to access the session?
       xfbml      : true  // parse XFBML tags on this page?
@@ -84,11 +84,11 @@
         // calling the API ...
         var obj = {
           method: 'feed',
-          redirect_uri: 'http://chat123.com.ar',
-          link: 'http://chat123.com.ar/nick/<%= user %>',
-          picture: 'http://www.marketlikeachick.com/wp-content/uploads/2009/06/chat-bubbles-150x150.png',
-          name: 'Wow! Te animas a hablarme?',
-          caption: 'Chatea anonimamente conmigo en chat123!'
+          redirect_uri: 'http://chatme.fm',
+          link: 'http://chatme.fm/nick/<%= user %>',
+          picture: 'http://chatme.fm/image/chatme.png',
+          name: 'Wow! Te animas a hablarme? ;)',
+          caption: 'Chatea anonimamente conmigo en Chatme.fm!'
           //description: 'Using Dialogs to interact with users.'
         };
 
@@ -102,7 +102,7 @@
 
      
     </script>
-<h1>Chat123</h1>
+<h1>Chatme.fm</h1>
 
  <!-- <b>Server: </b><%= server %> -->
  
@@ -126,18 +126,18 @@
 <p style="text-align:center">
 
     
-    Comparti este link en las redes sociales: <b>http://chat123.com.ar/nick/<%= user %></b><br/>
+    Comparti este link en las redes sociales: <b>http://chatme.fm/nick/<%= user %></b><br/>
     <a class="btn" style='text-align:center' onclick='postToFeed(); return false;'>Click para postear en tu muro el link!</a>
      <input class="btn" type="button"
       onclick="sendRequestViaMultiFriendSelector(); return false;"
-      value="Invita a tus amigos a usar Chat123"
+      value="Invita a tus amigos a usar Chatme.fm"
     />
 </p>
 
 <script type="text/javascript">
      function sendRequestViaMultiFriendSelector() {
         FB.ui({method: 'apprequests',
-          message: 'Chatea conmigo en Chat123!'
+          message: 'Chatea conmigo en Chatme.fm!'
         }, requestCallback);
       }
       
@@ -340,7 +340,7 @@ cursor: pointer;
   m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
   })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
-  ga('create', 'UA-39608692-1', 'chat123.com.ar');
+  ga('create', 'UA-39678978-1', 'chatme.fm');
   ga('send', 'pageview');
 $("a").tooltip();
 </script>
