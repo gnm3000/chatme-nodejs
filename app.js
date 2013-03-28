@@ -139,6 +139,10 @@ app.get('/logout', function(req, res) {
     req.session.destroy();
     res.redirect('/');
 });
+ 
+app.get('/channel', function(req, res) {
+    res.render('channel', {});
+});
 
 /*
  When the user logs in (in our case, does http POST w/ user name), store it
