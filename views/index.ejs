@@ -12,6 +12,9 @@
 <script src="/socket.io/socket.io.js"></script>
 <script src="/client.js"></script>
   <script src="http://twitter.github.com/bootstrap/assets/js/bootstrap-tab.js"></script>
+  
+
+  <script src="http://twitter.github.com/bootstrap/assets/js/bootstrap-tooltip.js"></script>
 <link rel="stylesheet" href="/client.css"/>
 
     <link href="http://wbpreview.com/previews/WB00B8422/css/bootstrap.min.css" rel="stylesheet" />
@@ -100,12 +103,14 @@
      
     </script>
 <h1>Chat123</h1>
+
  <!-- <b>Server: </b><%= server %> -->
  
  <style>
 #beep-one{
   display: none;
 }
+
  </style>
 <audio id="beep-one" controls="controls" preload="auto">
         <source src="/sounds/beep.mp3">
@@ -159,38 +164,35 @@
       }
 </script>
 <% }else{ %>
+
+
+<!--NO LOGIN -->
 <div class="row-fluid">
     <div class="span12 pagination-centered">
    <a id="login_fb" class="btn btn-large btn-brand-facebook">
     Entrar con Facebook ahora!
    </a></div>
 
-
-
-  
-    
-
-
-
-
-
 </div>
 <div class="row-fluid" >
   <div class="span12">
-    <h2> Chatea con mas de <%= users.length %> Usuario en Chat123</h2>
+    <h2> Mira quien esta aqui! Anímate y chatea con uno de ellos!</h2>
   </div>
  </div>
-<div class="row" >
+<div class="row-fluid" >
 
       <% for(var i=0; i<users.length; i++) { %>
-       <div class="span2" style="margin: 5 5 5 5 ">
-    <a target="_blank" href="/nick/<%= users[i].username %>">
-    <img  class="img-polaroid" src="https://graph.facebook.com/<%= users[i].id %>/picture?width=150&height=150" />
+       <div style="text-align:center;float:left">
+      
+    <a title="Entra y habla con <%= users[i].name %>" data-toggle="tooltip"  alt="" target="_blank" href="/nick/<%= users[i].username %>">
+    <img  src="https://graph.facebook.com/<%= users[i].id %>/picture?width=100&height=100" />
     </a>
     </div>
     <% } %>
   
 </div>
+
+<!--NO LOGIN  END-->
 <% } %> 
 
 <div id="ask" class="bordered" style="display: none;">
@@ -340,7 +342,7 @@ cursor: pointer;
 
   ga('create', 'UA-39608692-1', 'chat123.com.ar');
   ga('send', 'pageview');
-
+$("a").tooltip();
 </script>
 </body>
 </html>
