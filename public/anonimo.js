@@ -140,8 +140,12 @@ $(document).ready(function () {
          When a message comes from the server, format, colorize it etc. and display in the chat widget
          */
         socket.on('chat', function (msg) {
+            console.log("CHAT ANONIMO ES:"+msg);
             var message = JSON.parse(msg);
-            if(message.chat_to==user || message.user==user){console.log("es para mi."+message.chat_to);}else{
+            console.log("el user es:"+user);
+            if(message.chat_to==user || message.user==user){
+                console.log("es para mi."+message.chat_to);
+            }else{
                 console.log("no es para mi."+message.chat_to);return;}
             var action = message.action;
             var struct = container.find('li.' + action + ':first');
