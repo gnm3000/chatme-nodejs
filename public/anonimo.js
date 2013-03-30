@@ -143,9 +143,18 @@ $(document).ready(function () {
             console.log("CHAT ANONIMO ES:"+msg);
             var message = JSON.parse(msg);
             console.log("el user es:"+user);
-            if(message.chat_to==user || message.user==user){
+            // user es user-39393
+            console.log("message.chat_to="+message.chat_to+";message.user="+message.user+";user="+user+";fb_user_name="+$("#fb_user_name").html());
+            if(
+                (message.chat_to==$("#fb_user_name").html() && message.user==user)
+
+              || (message.chat_to==user && message.user==$("#fb_user_name").html())
+
+              ){
+                
                 console.log("es para mi."+message.chat_to);
             }else{
+                
                 console.log("no es para mi."+message.chat_to);return;}
             var action = message.action;
             var struct = container.find('li.' + action + ':first');
