@@ -4,8 +4,7 @@ $(document).ready(function () {
     var user = $('#user').html();
     // show join box
     if (user === null) {
-        $('#ask').show();
-        $('#ask input').focus();
+       
     } else { //rejoin using old session
         join(user);
     }

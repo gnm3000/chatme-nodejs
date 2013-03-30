@@ -163,7 +163,46 @@
           
 
       }
+
 </script>
+<div id="channel" class="bordered" style="display: none;">
+<!-- <h4>Server: <%= server %> - conectado como  <%= user %></h4> -->
+<ul class="nav nav-tabs" id="myTab">
+  
+</ul>
+
+<script>
+  $('#myTab a').click(function (e) {
+  e.preventDefault();
+  $(this).tab('show');
+})
+</script>
+ <ul class="tabs">
+    
+  </ul>
+
+    <div id="msgs">
+        <div class="panes">
+        <div class="tab-content">
+ 
+</div>
+  </div>
+
+        <ul>
+            <li class="message" style="display: none">
+                <span class="user"></span><span class="message"></span>
+                <span class="time"></span>
+            </li>
+            <li class="control" style="display: none">
+                <span class="user"></span>&nbsp;<span class="message"></span>
+                <span class="time"></span>
+            </li>
+        </ul>
+    </div>
+    <div id="input">
+        <form><input type="text" data-chat-to="" id="message"/></form>
+    </div>
+</div>
 <% }else{ %>
 
 <style type="text/css">
@@ -204,44 +243,7 @@
 <div id="ask" class="bordered" style="display: none;">
      <input style="height:50px;display:none" type="text" id="name"/> <a href="#"><span style="display:none" class="btn join">Join!</span></a>
 </div>
-<div id="channel" class="bordered" style="display: none;">
-<!-- <h4>Server: <%= server %> - conectado como  <%= user %></h4> -->
-<ul class="nav nav-tabs" id="myTab">
-  
-</ul>
 
-<script>
-  $('#myTab a').click(function (e) {
-  e.preventDefault();
-  $(this).tab('show');
-})
-</script>
- <ul class="tabs">
-    
-  </ul>
-
-    <div id="msgs">
-        <div class="panes">
-        <div class="tab-content">
- 
-</div>
-  </div>
-
-        <ul>
-            <li class="message" style="display: none">
-                <span class="user"></span><span class="message"></span>
-                <span class="time"></span>
-            </li>
-            <li class="control" style="display: none">
-                <span class="user"></span>&nbsp;<span class="message"></span>
-                <span class="time"></span>
-            </li>
-        </ul>
-    </div>
-    <div id="input">
-        <form><input type="text" data-chat-to="" id="message"/></form>
-    </div>
-</div>
 
 
 <!-- the tabs -->
