@@ -69,7 +69,13 @@ app.configure(function () {
 app.configure('development', function () {
     app.use(express.errorHandler());
 });
-
+app.get('/*', function(req, res, next) {
+  if (req.headers.host.match(/^www/) !== null ) {
+    res.redirect('http://' + req.headers.host.replace(/^www\./, '') + req.url);
+  } else {
+    next();     
+  }
+})
 app.get('/', function(req,res){
 
     var serverName = process.env.VCAP_APP_HOST ? process.env.VCAP_APP_HOST + ":" + process.env.VCAP_APP_PORT : 'localhost:3000';
