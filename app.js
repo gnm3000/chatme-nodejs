@@ -75,7 +75,17 @@ app.get('/*', function(req, res, next) {
   } else {
     next();     
   }
-})
+});
+
+
+app.get('/pagar-regalo', function(req,res){
+
+     res.render('allopass', {});
+});
+app.get('/pagar-regalo/acceso', function(req,res){
+
+     res.render('allopass_acceso', {});
+});
 app.get('/', function(req,res){
 
     var serverName = process.env.VCAP_APP_HOST ? process.env.VCAP_APP_HOST + ":" + process.env.VCAP_APP_PORT : 'localhost:3000';
