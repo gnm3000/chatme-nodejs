@@ -39,8 +39,25 @@ $(document).ready(function () {
         /*
          Connect to socket.io on the server.
          */
-        var host = window.location.host.split(':')[0];
-        var socket = io.connect('http://' + host, {reconnect:false, 'try multiple transports':false});
+          var host = window.location.host.split(':')[0];
+         self.options = {
+        'secure':                    false,
+        'connect timeout':           5000,
+        'try multiple transports':   true,
+        'reconnect':                 true,
+        'reconnection delay':        500,
+        'reopen delay':              3000,
+        'max reconnection attempts': 10,
+        'sync disconnect on unload': true,
+        'auto connect':              true,
+        'remember transport':        false,
+        'transports': ['xhr-polling']
+    };
+
+        var socket = io.connect('http://' + host, self.options);
+
+       
+       // var socket = io.connect('http://' + host, {reconnect:true, 'try multiple transports':false});
         var intervalID;
         var reconnectCount = 0;
          

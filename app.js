@@ -24,11 +24,12 @@ var server = http.createServer(app);
 var io = require("socket.io").listen(server);
 io.configure(function () { 
   io.set("transports", ["xhr-polling"]); 
-  io.set("polling duration", 10); 
+  io.set("polling duration", 20); 
+  io.set("heartbeat timeout", 120);
+  io.set("heartbeat interval", 25);
+  //Set Socket.io's log level to 1 (info). Default is 3 (debugging)
+  io.set('log level', 1);
 });
-
-//Set Socket.io's log level to 1 (info). Default is 3 (debugging)
-io.set('log level', 1);
 
 
 /*
