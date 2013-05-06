@@ -93,6 +93,9 @@ app.get('/pagar-regalo/acceso', function(req,res){
      res.render('allopass_acceso', {});
 });
 app.get('/', function(req,res){
+    res.render('index_nico', {});
+});
+app.get('/home', function(req,res){
 
     var serverName = process.env.VCAP_APP_HOST ? process.env.VCAP_APP_HOST + ":" + process.env.VCAP_APP_PORT : 'localhost:3000';
  //save user from previous session (if it exists)
