@@ -70,7 +70,7 @@ $(document).ready(function () {
          var function_dateDiff=function(date1,date2){
              return date1.getTime() - date2.getTime();
          }
-        
+       
         socket.on('notification_online', function (msg) {
             var mensaje = JSON.stringify(msg);
             var fb_username = $("#fb_user_name").html();
@@ -86,7 +86,8 @@ $(document).ready(function () {
         });
         socket.on('disconnect', function () {
             console.log('disconnect');
-            socket.emit('disconnect', JSON.stringify({action:'disconnect' }));
+
+            socket.emit('disconnect', JSON.stringify({action:'disconnect' ,user:name}));
             intervalID = setInterval(tryReconnect, 4000);
         });
         socket.on('connect_failed', function () {

@@ -1,3 +1,4 @@
+var arrayNames = {};
 $(document).ready(function () {
     //Check if the user is rejoining
     //ps: This value is set by Express if browser session is still valid
@@ -42,16 +43,47 @@ $(document).ready(function () {
         var socket = io.connect('http://' + host, {reconnect:false, 'try multiple transports':false});
         var intervalID;
         var reconnectCount = 0;
-
+         
         socket.on('connect', function () {
             console.log('connected');
+            //alert("connected");
         });
         socket.on('connecting', function () {
             console.log('connecting');
         });
+        
+                       function procesarUsuario(mensaje)
+                            {
+                                //Esta función se ejecuta cuando el servidor nos avisa
+                                //que alguien se conectó
+                                //Limpiamos el div de usuarios
+                                $('#users').html(""); 
+                                $("#users").append("<h3>Usuarios Online:</h3>");
+                                //Colocamos de nuevo los usuarios
+                                console.log("usuario desconectado:"+JSON.stringify(mensaje));
+                                for (i in mensaje[1])
+                                {
+                                    $('#users').append($('<span>').html( mensaje[1][i]));
+                                    arrayNames[i] = mensaje[1][i];
+                                }
+                            }
+        socket.on("mensaje",procesarUsuario);
+        function procesarUsuarios(data)
+            {
+                //Esta función se ejecuta cuando el servidor nos
+                //avisa que alguien se desconectó
+                $('#users').html("");
+                $("#users").append("<h3>Usuarios Online:</h3>");
+                for (i in data[0])
+                {
+                    $('#users').append($('<span>').html(data[0][i]));
+                    arrayNames[i] = data[0][i];
+                }
+            }
+        socket.on("usuarioDesconectado",procesarUsuarios);
         socket.on('disconnect', function () {
             console.log('disconnect');
-            intervalID = setInterval(tryReconnect, 6000);
+            intervalID = setInterval(tryReconnect, 5000);
         });
         socket.on('connect_failed', function () {
             console.log('connect_failed');
@@ -68,24 +100,22 @@ $(document).ready(function () {
         socket.on('reconnecting', function () {
             console.log('reconnecting');
         });
-        var notification_online = function(){
-            socket.emit('notification_online', JSON.stringify({"user":name}));
-            console.log("se envia la notificacion");
-        }
-        setInterval(notification_online,1000*5); //cada 60 segundos;
+        
 
         var tryReconnect = function () {
             ++reconnectCount;
-            if (reconnectCount == 2000) {
+            if (reconnectCount == 3) {
                 clearInterval(intervalID);
 
             }
             console.log('Making a dummy http call to set jsessionid (before we do socket.io reconnect)');
-            $.ajax('/')
+            //$.ajax('/')
+            $.post('/user', {"user":name})
                 .success(function () {
                     console.log("http request succeeded");
                     //reconnect the socket AFTER we got jsessionid set
                     socket.socket.reconnect();
+                    socket.emit('join', JSON.stringify({}));
                     clearInterval(intervalID);
                 }).error(function (err) {
                     console.log("http request failed (probably server not up yet)");
@@ -105,11 +135,7 @@ $(document).ready(function () {
             });
 
         var container = $('div#msgs');
-socket.on('notification_online', function (msg) {
-    var mensaje = JSON.stringify(msg);
-    console.log("esta online:"+mensaje);
 
-});
         /*
          When a message comes from the server, format, colorize it etc. and display in the chat widget
          */
