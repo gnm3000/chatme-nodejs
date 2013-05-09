@@ -157,7 +157,7 @@ $(document).ready(function () {
          When a message comes from the server, format, colorize it etc. and display in the chat widget
          */
         socket.on('chat', function (msg) {
-            console.log("MENSAJE CHAT ES:"+msg);
+            //console.log("MENSAJE CHAT ES:"+msg);
             var message = JSON.parse(msg);
             // si el mensaje es para mi o si yo lo escribi entonces que si lo muestre.
             if(message.chat_to==user || message.user==user ){

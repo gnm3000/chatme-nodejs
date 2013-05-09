@@ -1,0 +1,23 @@
+{
+  "auth": {
+    "twitter": {
+      "consumerkey" : "gkt8OAOriTd6oOLXJRTLZA",
+      "consumersecret" : "t03JwQxGuwJfXjNeXqGtUtD6nYlICsueZQCRW5BcpWw",
+      "callback" : "http://chatme.fm:5000/auth/twitter/callback"
+    },
+    "facebook": {
+      "clientid" : "275093569291809",
+      "clientsecret" : "83fe167c332d25de1961e81db84ca5c8",
+      "callback" : "http://chatme.fm:5000/auth/facebook/callback"
+    }
+  },
+  "theme": {
+    "name" : "default"
+  },
+  "session" : {
+    "secret" : "yourbestsecret"
+  },
+  "app": {
+    "port": 5000
+  }
+}
