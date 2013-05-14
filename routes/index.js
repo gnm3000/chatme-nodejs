@@ -45,7 +45,7 @@ app.get('/', function(req,res){
                                   collection.find().toArray(function(err, items) {
                                     rClient.smembers("users_online",function(err,members){
             console.log("users_online_for_home:"+members);
-            res.render('index', { title:'Express',
+            res.render('index_nico', { title:'Express',
                                             user:'',users:items,users_online:members});
         })
                                          
