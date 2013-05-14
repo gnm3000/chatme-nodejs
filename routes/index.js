@@ -144,11 +144,14 @@ if(config.auth.facebook.clientid.length) {
 }
 app.get('/profile', function(req, res){
   //req.logout();
+  //res.render('')
   res.send('profile-perfil donde puede editar');
 });
 app.get('/talks', function(req, res){
   //req.logout();
-  res.send('talks-conversaciones');
+  //res.send(req.user.username);
+  res.render("talks",{user:req.user});
+  //res.send('talks-conversaciones');
 });
 app.get('/logout', function(req, res){
   req.logout();

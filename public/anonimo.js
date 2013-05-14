@@ -141,10 +141,12 @@ $(document).ready(function () {
          When a message comes from the server, format, colorize it etc. and display in the chat widget
          */
         socket.on('chat', function (msg) {
-            console.log("CHAT ANONIMO ES:"+msg);
+            //console.log("CHAT ANONIMO ES:"+msg);
+            
             var message = JSON.parse(msg);
-            console.log("el user es:"+user);
+            console.log("el message2:"+message.msg);
             // user es user-39393
+
             console.log("message.chat_to="+message.chat_to+";message.user="+message.user+";user="+user+";fb_user_name="+$("#fb_user_name").html());
             if(
                 (message.chat_to==$("#fb_user_name").html() && message.user==user)
@@ -215,8 +217,8 @@ $(document).ready(function () {
             var input = $(this).find(':input');
             var chat_to = input.attr("data-chat-to");
             var msg = input.val();
-            console.log("envio el mensaje desde anonimo:"+JSON.stringify({action:'message', msg:msg,chat_to:chat_to,chat_from:user,anon:'1' }));
-            socket.emit('chat', JSON.stringify({action:'message', msg:msg,chat_to:chat_to,chat_from:user,anon:'1' }));
+            console.log("envio el mensaje desde anonimo:"+JSON.stringify({action:'message', msg:msg,usuario:chat_to,anonimo:user,anon:'1' }));
+            socket.emit('chat', JSON.stringify({action:'message', msg:msg,usuario:chat_to,anonimo:user,anon:'1' }));
             input.val('');
         });
 

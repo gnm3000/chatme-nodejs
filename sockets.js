@@ -71,15 +71,22 @@ sessionSockets.on('connection', function (err, socket, session) {
         
 
         var msg = JSON.parse(data);
-        if(msg.anon=='1'){chat_from = msg.chat_from;}else{chat_from=session.user;}
+        //var msg = data;
+        if(msg.anon=='1'){
+            chat_from = msg.anonimo;
+            chat_to=msg.usuario;
+        }else{
+            chat_from=msg.usuario;
+            chat_to=msg.anonimo;}
         var reply = {action: 'message', 
                     user: chat_from,
                     chat_form:chat_from, 
                     msg: msg.msg, 
                     
-                    chat_to:msg.chat_to };
+                    chat_to:chat_to };
         //chatExchange.publish('', reply);
-        pub.publish('chat', reply);
+
+        pub.publish('chat', JSON.stringify(reply));
     });
 
     /**
@@ -90,9 +97,11 @@ sessionSockets.on('connection', function (err, socket, session) {
      */
     socket.on('join', function (data) {
         var msg = JSON.parse(data);
-         if(msg.anon=='1'){chat_from = msg.chat_from;}else{chat_from=session.user;}
+         if(msg.anon=='1'){
+            chat_from = msg.chat_from;}else{
+                chat_from=msg.usuario;}
         var reply = {action: 'control', user: chat_from, msg: ' joined the channel' };
-        socket.nickname = session.user;
+        socket.nickname = chat_from;
 
         usuariosConectados[socket.nickname] = socket.nickname;
         console.log(socket.nickname);
@@ -100,11 +109,12 @@ sessionSockets.on('connection', function (err, socket, session) {
          //Enviamos los datos de regreso a las sockets
          socket.broadcast.emit("mensaje",data);
          socket.emit("mensaje",data);
-         pub.publish('chat', reply);
+         pub.publish('chat', JSON.stringify(reply));
          //socket.sockets.emit("mensaje",data);
         //chatExchange.publish('', reply);
     });
 sub.on('message', function (channel, message) {
+    console.log("MENSAJE SUB.ON:"+ channel + "-mensaje: " +message);
         socket.emit(channel, message);
     });
     /**

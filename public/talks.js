@@ -1,42 +1,9 @@
 var arrayNames = {};
 $(document).ready(function () {
-    //Check if the user is rejoining
-    //ps: This value is set by Express if browser session is still valid
-    var user = $('#user').html();
-    // show join box
-    if (user === null) {
-       
-    } else { //rejoin using old session
-        join(user);
-    }
-
-    // join on enter
-    $('#ask input').keydown(function (event) {
-        if (event.keyCode == 13) {
-            $('#ask a').click();
-        }
-    });
-
-    /*
-     When the user joins, hide the join-field, display chat-widget and also call 'join' function that
-     initializes Socket.io and the entire app.
-     */
-    $('#ask a').click(function () {
-        join($('#ask input').val());
-        setTimeout("location.reload();",2000);
-    });
-    $("#myTab").on("click",".x_close",function(e){
-          e.preventDefault();
-                    var usuario = $(this).data("user");
-                    $("#myTab li."+usuario).remove();
-                    $("div.tab-pane[id="+usuario+"]").remove();
-    });
-     
-    function join(name) {
-        $('#ask').hide();
-        $('#channel').show();
-        $('input#message').focus();
-        /*
+  var user = $("#user").text();
+  var name = user;
+  /*primero conecto la socket*/
+  /*
          Connect to socket.io on the server.
          */
           var host = window.location.host.split(':')[0];
@@ -56,19 +23,16 @@ $(document).ready(function () {
 
         var socket = io.connect('http://' + host, self.options);
 
-       
-       // var socket = io.connect('http://' + host, {reconnect:true, 'try multiple transports':false});
         var intervalID;
         var reconnectCount = 0;
-         
-        socket.on('connect', function () {
+             socket.on('connect', function () {
             console.log('connected');
             //alert("connected");
         });
         socket.on('connecting', function () {
             console.log('connecting');
         });
-        
+     
                        function procesarUsuario(mensaje)
                             {
                                 //Esta función se ejecuta cuando el servidor nos avisa
@@ -98,7 +62,7 @@ $(document).ready(function () {
                 }
             }
         socket.on("usuarioDesconectado",procesarUsuarios);
-        socket.on('disconnect', function () {
+   socket.on('disconnect', function () {
             console.log('disconnect');
             intervalID = setInterval(tryReconnect, 5000);
         });
@@ -132,7 +96,9 @@ $(document).ready(function () {
                     console.log("http request succeeded");
                     //reconnect the socket AFTER we got jsessionid set
                     socket.socket.reconnect();
-                    socket.emit('join', JSON.stringify({}));
+                     console.log("MANDO JOIN:"+JSON.stringify({usuario:name,anon:0}));
+                socket.emit('join', JSON.stringify({usuario:name,anon:0}));
+                   
                     clearInterval(intervalID);
                 }).error(function (err) {
                     console.log("http request failed (probably server not up yet)");
@@ -145,6 +111,7 @@ $(document).ready(function () {
         $.post('/user', {"user":name})
             .success(function () {
                 // send join message
+                console.log("MANDO JOIN:"+JSON.stringify({usuario:name,anon:0}));
                 socket.emit('join', JSON.stringify({usuario:name,anon:0}));
 
             }).error(function () {
@@ -152,13 +119,13 @@ $(document).ready(function () {
             });
 
         var container = $('div#msgs');
-
-        /*
+  /*
          When a message comes from the server, format, colorize it etc. and display in the chat widget
          */
         socket.on('chat', function (msg) {
             //console.log("MENSAJE CHAT ES:"+msg);
-            var message = msg;
+            var message = JSON.parse(msg);
+            console.log("el action es:"+message.action);
             // si el mensaje es para mi o si yo lo escribi entonces que si lo muestre.
             if(message.chat_to==user || message.user==user ){
                              console.log("el chat_to es:"+message.chat_to+" y el user es: "+user);
@@ -268,8 +235,7 @@ $(document).ready(function () {
 
 
         });
-
-        /*
+         /*
          When the user creates a new chat message, send it to server via socket.emit w/ 'chat' event/channel name
          */
         $('#channel form').submit(function (event) {
@@ -289,11 +255,11 @@ $(document).ready(function () {
             var chat_to = $("#message").attr("data-chat-to");
             console.log("manda el mensaje con el chat_to = "+chat_to);
             if(chat_to==''){ input.val('');return;}
-            socket.emit('chat', JSON.stringify({action:'message', msg:msg,chat_to:chat_to,chat_from:user}));
+            console.log(JSON.stringify({action:'message', msg:msg,usuario:user,anonimo:chat_to,anon:'0' }));
+            socket.emit('chat', JSON.stringify({action:'message', msg:msg,usuario:user,anonimo:chat_to,anon:'0' }));
             input.val('');
         });
-        //
-    }
+ 
     $("#myTab").on('click','a',function(e){
     e.preventDefault();
     $(this).css("color","black");

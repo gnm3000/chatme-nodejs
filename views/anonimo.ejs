@@ -155,7 +155,7 @@ border-radius: 20px;
 
 
   <style>
-  body { background: white url("<%= fb_user.cover_source %>");
+  body { background: white;
        background-attachment: fixed }
        #status{ font-weight: bold;}
   </style>
@@ -169,8 +169,8 @@ border-radius: 20px;
 <img  class="bordered-css" src="https://graph.facebook.com/<%= fb_user.id %>/picture?width=150&height=150" />
        </div>
        <div class="span4">
-         <h3><%= fb_user.name %></h3>
-         <p><%= fb_user.link %></p>
+         <h3><%= fb_user.displayName %></h3>
+        
          <p id="status"><span style='color:blue'>Verificando conectividad...</span></p>
          <p style="display:none" id="fb_user_name"><%= fb_user.username %></p>
        </div>
