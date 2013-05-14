@@ -137,9 +137,14 @@ app.get('/profile', function(req, res){
   res.send('profile-perfil donde puede editar');
 });
 app.get('/talks', function(req, res){
+  if(req.isAuthenticated()){
+    res.render("talks",{user:req.user});
+  } else{
+    res.redirect('/');
+  }
   //req.logout();
   //res.send(req.user.username);
-  res.render("talks",{user:req.user});
+  
   //res.send('talks-conversaciones');
 });
 app.get('/logout', function(req, res){
