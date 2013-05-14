@@ -30,6 +30,7 @@ var server = exports.server = http.createServer(app);
  */
 var RedisStore = require('connect-redis')(express);
 if(process.env.REDISCLOUD_URL){
+  console.log("USO REDISCLOUD_URL");
     var redisURL = require('url').parse(process.env.REDISCLOUD_URL);
 var rClient = exports.rClient = redis.createClient(redisURL.port, redisURL.hostname, {no_ready_check: true});
 rClient.auth(redisURL.auth.split(":")[1]);
@@ -38,6 +39,7 @@ rClient2.auth(redisURL.auth.split(":")[1]);
 var rClient3 = exports.rClient3= redis.createClient(redisURL.port, redisURL.hostname, {no_ready_check: true});
 rClient2.auth(redisURL.auth.split(":")[1]);
 }else{
+  console.log("NO USO REDISCLOUD_URL");
     rClient = exports.rClient = redis.createClient();
     rClient2 = exports.rClient2 = redis.createClient();
     rClient3 = exports.rClient3 = redis.createClient();
