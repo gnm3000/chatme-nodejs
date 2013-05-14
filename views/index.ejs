@@ -1,11 +1,6 @@
 <html>
 <head>
-    <meta property="fb:app_id"          content="275093569291809" /> 
-<meta property="og:url"             content="http://chatme.fm" /> 
-<meta property="og:title"           content="Crea tu perfil y chatea anonimamente con tus amigos!" /> 
-<meta property="og:image"           content="http://www.marketlikeachick.com/wp-content/uploads/2009/06/chat-bubbles-150x150.png" /> 
-<meta property="og:description"           content="En Chatme.fm te creas tu perfil y luego invitas a tus amigos a que chateen con vos!" /> 
-
+ 
 <script src='http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js'></script>
 <!--script src="http://cdn.jquerytools.org/1.2.7/full/jquery.tools.min.js"></script> -->
 <script src='http://datejs.googlecode.com/svn/trunk/build/date.js'></script>
@@ -77,35 +72,6 @@
 </script>
     
 
-    <script> 
-      
-
-      function postToFeed() {
-
-        // calling the API ...
-        var obj = {
-          method: 'feed',
-          redirect_uri: 'http://chatme.fm',
-          link: 'http://chatme.fm/nick/<%= user %>',
-          picture: 'http://chatme.fm/image/chatme.png',
-          name: 'Wow! Te animas a hablarme? ;)',
-          caption: 'Chatea anonimamente conmigo en Chatme.fm!'
-          //description: 'Using Dialogs to interact with users.'
-        };
-
-        function callback(response) {
-          //document.getElementById('msg').innerHTML = "Post ID: " + response['post_id'];
-        }
-
-        FB.ui(obj, callback);
-      }
-        ////////////////////////////////////
-
-     
-    </script>
-
-
- <!-- <b>Server: </b><%= server %> -->
  <div class="container-narrow">
  <style>
 #beep-one{
@@ -113,97 +79,7 @@
 }
 
  </style>
-<audio id="beep-one" controls="controls" preload="auto">
-        <source src="/sounds/beep.mp3">
-        <source src="/sounds/beep.ogg">
-        Your browser isn't invited for super fun time.
-      </audio>
-<% if(user) { %>
-<b>User: </b> 
-<span id="user"><%= user %></span> 
-<a href="/logout" style='color:blue;text-decoration: underline'> Log out</a>
-
-
-<p style="text-align:center">
-
-    
-    Comparti este link en las redes sociales: <b>http://chatme.fm/nick/<%= user %></b><br/>
-    <a class="btn" style='text-align:center' onclick='postToFeed(); return false;'>Click para postear en tu muro el link!</a>
-     <input class="btn" type="button"
-      onclick="sendRequestViaMultiFriendSelector(); return false;"
-      value="Invita a tus amigos a usar Chatme.fm"
-    />
-</p>
-
-<script type="text/javascript">
-     function sendRequestViaMultiFriendSelector() {
-        FB.ui({method: 'apprequests',
-          message: 'Chatea conmigo en Chatme.fm!'
-        }, requestCallback);
-      }
-      
-      function requestCallback(response) {
-        // Handle callback here
-        var data = {};
-        data.request_id = response.request;
-        data.to = response.to;
-        data.created_at = new Date();
-        data.user = '<%= user %>';
-        //alert(JSON.stringify(response));return true;
-        $.ajax( { url: "https://api.mongolab.com/api/1/databases/heroku_app12042861/collections/requests?apiKey=ow2pQfeu77QiWIfth6rKt1C0wReEOct6",
-          data: JSON.stringify( data ),
-          type: "POST",
-          contentType: "application/json" } ).done(function(data){
-                                                          //alert(JSON.stringify(data));
-                                                           console.log("enviado"+JSON.stringify(data));
-                                                          
-                                                      });
-
-
-          
-
-      }
-
-</script>
-<div id="channel" class="bordered" style="display: none;">
-<!-- <h4>Server: <%= server %> - conectado como  <%= user %></h4> -->
-<ul class="nav nav-tabs" id="myTab">
-  
-</ul>
-
-<script>
-  $('#myTab a').click(function (e) {
-  e.preventDefault();
-  $(this).tab('show');
-})
-</script>
- <ul class="tabs">
-    
-  </ul>
-
-    <div id="msgs">
-        <div class="panes">
-        <div class="tab-content">
- 
-</div>
-  </div>
-
-        <ul>
-            <li class="message" style="display: none">
-                <span class="user"></span><span class="message"></span>
-                <span class="time"></span>
-            </li>
-            <li class="control" style="display: none">
-                <span class="user"></span>&nbsp;<span class="message"></span>
-                <span class="time"></span>
-            </li>
-        </ul>
-    </div>
-    <div id="input">
-        <form><input type="text" data-chat-to="" id="message"/></form>
-    </div>
-</div>
-<% }else{ %>
+<% if(user) {}else{ %>
 
 <style type="text/css">
   
@@ -255,56 +131,6 @@
  
   <!-- tab "panes" -->
   
-<script type="text/javascript">
-   
-
-      $("#login_fb").click(function(e){
-        e.preventDefault();
-            //alert("login");
-               FB.login(function(response) {
-                   if (response.authResponse) {
-                    //alert(response.authResponse);
-                    //alert('Welcome!  Fetching your information.... ');
-                     FB.api('/me', function(response) {
-                                  var cover = "";
-                                  
-
-                                  FB.api('/me?fields=cover', function(response2) {
-                                                  var response_json= response ;
-                                                  if (typeof(response2.cover) == "undefined"){
-                                                     cover_source= 'http://bit.ly/10gArc9';
-                                                  }else{
-                                                     cover_source= response2.cover.source;
-                                                  }
-                                                  response_json.request_ids = '<%=request_ids%>';
-                                                  //alert("cover=="+cover_source);
-                                                  response_json.cover_source = cover_source;
-                                                  $.ajax( { url: "https://api.mongolab.com/api/1/databases/heroku_app12042861/collections/users?apiKey=ow2pQfeu77QiWIfth6rKt1C0wReEOct6&u=true&q={'id':'"+response.id+"'}",
-                                                        
-                                                        data: JSON.stringify( { "$set" : response_json} ),
-                                                        type: "PUT",
-                                                        contentType: "application/json" } ).done(function(data){
-                                                          //alert(JSON.stringify(data));
-                                                           $("#name").val(response.username);
-                                                          $("#ask a").click();
-                                                          
-                                                      });
-                                                      //end
-
-
-
-                                  });
-                                 
-                                   
-                                 
-                     });
-                   } else {
-                     console.log('User cancelled login or did not fully authorize.');
-                   }
-                 },{scope:"email"});
-
-        });
-</script>
 <style type="text/css">
    
 .login_facebook {

@@ -63,9 +63,10 @@ if(config.auth.facebook.clientid.length) {
                                       collection.insert(profile, {safe: true}, function(er,rs) {
                                         console.log("mongoDB"+er);
                                       });
+                                      profile.nuevo = 1;
                                       console.log("profile nuevo 1");
                                     }
-                                    profile.nuevo = 1;
+                                    
                                      return done(null,profile);
                                   })
                                   });

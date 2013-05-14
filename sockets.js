@@ -59,16 +59,25 @@ sessionSockets.on('connection', function (err, socket, session) {
      socket.on('disconnect', function () 
         {
 
-                rClient.srem("users_online",socket.nickname);
-            rClient.del("sockets:users_online:"+socket);
-            //Creamos un arreglo con los usuarios y el que se eliminó
-             rClient.smembers("users_online",function(err,members){
-            data = [members,socket.nickname];
-             console.log("disconnect-nodejs: "+data);
-           //Mandamos la información a las Sockets
-           
-             io.sockets.emit("usuarioDesconectado",data);
-        })
+                    if(typeof(socket.nickname)!="undefined"){
+
+
+
+
+          //               client.scard('sockets:for:' + userKey + ':at:' + room_id, function(err, members_no) {
+          // if(!members_no) {}});
+                          rClient.srem("users_online",socket.nickname);
+                                rClient.del("sockets:users_online:"+socket);
+                                
+                                 rClient.smembers("users_online",function(err,members){
+                                data = [members,socket.nickname];
+                                 console.log("disconnect-nodejs: "+data);
+                               //Mandamos la información a las Sockets
+                               //sub.unsubscribe('chat');
+                                 io.sockets.emit("usuarioDesconectado",data);
+                                    });
+                    }
+                          
            //  //Eliminamos al usuario de lso conectados
            //  delete usuariosConectados[socket.nickname];
            //  //Creamos un arreglo con los usuarios y el que se eliminó
@@ -77,7 +86,7 @@ sessionSockets.on('connection', function (err, socket, session) {
            //  //Mandamos la información a las Sockets
            //  socket.broadcast.emit("usuarioDesconectado",data);
            // socket.emit("usuarioDesconectado",data);
-             
+             sub.unsubscribe('chat');
         });
     socket.on('chat', function (data) {
         
@@ -122,7 +131,7 @@ sessionSockets.on('connection', function (err, socket, session) {
             data = [socket.nickname,members];
              io.sockets.emit("mensaje",data);
         })
-       
+       sub.subscribe('chat');
          pub.publish('chat', JSON.stringify(reply));
          //socket.sockets.emit("mensaje",data);
         //chatExchange.publish('', reply);

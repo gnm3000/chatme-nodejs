@@ -112,11 +112,12 @@ $(document).ready(function () {
                 clearInterval(intervalID);
             }
             console.log('Making a dummy http call to set jsessionid (before we do socket.io reconnect)');
-            $.ajax('/')
+          $.post('/user_anon', {"user_anon":name})
                 .success(function () {
                     console.log("http request succeeded");
                     //reconnect the socket AFTER we got jsessionid set
                     socket.socket.reconnect();
+                    socket.emit('join', JSON.stringify({chat_from:name,anon:"1"}));
                     clearInterval(intervalID);
                 }).error(function (err) {
                     console.log("http request failed (probably server not up yet)");

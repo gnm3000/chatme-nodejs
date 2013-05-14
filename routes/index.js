@@ -36,32 +36,21 @@ app.get('/', function(req,res){
 
 
 
-    var serverName = process.env.VCAP_APP_HOST ? process.env.VCAP_APP_HOST + ":" + process.env.VCAP_APP_PORT : 'localhost:3000';
- //save user from previous session (if it exists)
- if(req.query["request_ids"]){
-    var request_ids = req.query["request_ids"];
-}else{
-    var request_ids = '';
-}
-    
-    var user = req.session.user;
-    //regenerate new session & store user from previous session (if it exists)
-    //req.session.regenerate(function (err) {
-        req.session.user = user;
+     
          mongo.Db.connect(mongoUri, function (err, db) {
                                   db.collection('users', function(er, collection) {
                                     // collection.insert({'mykey': 'myvalue'}, {safe: true}, function(er,rs) {
                                     //     console.log("mongoDB"+er);
                                     // });
                                   collection.find().toArray(function(err, items) {
-                                         res.render('index', { title:'Express', server:serverName, 
-                                            user:req.session.user,users:items,request_ids:request_ids});
+                                         res.render('index', { title:'Express',
+                                            user:'',users:items});
                                  
                                     });
                                   });
                                 });
         
-    //});
+   
 });
 
 app.get('/nick/:nick', function (req, res) {
