@@ -44,8 +44,17 @@ if(config.auth.facebook.clientid.length) {
       rest.get('https://graph.facebook.com/me?fields=id,name,birthday,cover,location&access_token='+accessToken)
                                       .on('complete', function(data) {
                                         console.log("ID ES:"+JSON.stringify(data)); // auto convert to object
-                                        profile.cover = data.cover.source;
-                                        profile.location = data.location.name;
+                                        if(typeof(data.cover)!="undefined"){
+                                          profile.cover = data.cover.source;
+                                        }else{
+                                          profile.cover = 'http://slowbuddy.com/wp-content/gallery/timeline-covers/kids-in-love-facebook-cover.png';
+                                        }
+                                         if(typeof(data.location)!="undefined"){
+                                          profile.location = data.location.name;
+                                        }else{
+                                          profile.location = '';
+                                        }
+                                        
 
                                       });
       mongo.Db.connect(mongoUri, function (err, db) {

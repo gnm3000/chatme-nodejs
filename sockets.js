@@ -109,7 +109,18 @@ sessionSockets.on('connection', function (err, socket, session) {
 
         pub.publish('chat', JSON.stringify(reply));
     });
+    socket.on('set_status', function(data) {
+    var status = data.status;
 
+    rClient.set('users:' + socket.nickname + ':status', status, function(err, statusSet) {
+        io.sockets.emit("set_status",JSON.stringify({
+        action: 'set_status',
+        username: socket.nickname,
+        status: status
+      }));
+     
+    });
+  });
     /**
      * When a user joins, publish it to chatExchange w/o Routing key (Routing doesn't matter
      * because chatExchange is a 'fanout').
@@ -125,6 +136,7 @@ sessionSockets.on('connection', function (err, socket, session) {
         socket.nickname = chat_from;
         rClient.sadd("users_online",socket.nickname);
         rClient.set("sockets:users_online:"+socket.nickname,socket);
+        rClient.set("sockets:status:"+socket.nickname,'online');
         console.log(socket.nickname);
 
         rClient.smembers("users_online",function(err,members){
@@ -138,6 +150,7 @@ sessionSockets.on('connection', function (err, socket, session) {
     });
 sub.on('message', function (channel, message) {
     console.log("MENSAJE SUB.ON:"+ channel + "-mensaje: " +message);
+
         socket.emit(channel, message);
     });
     /**

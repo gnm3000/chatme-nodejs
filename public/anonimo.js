@@ -213,6 +213,7 @@ $(document).ready(function () {
         /*
          When the user creates a new chat message, send it to server via socket.emit w/ 'chat' event/channel name
          */
+         
         $('#channel form').submit(function (event) {
             event.preventDefault();
             var input = $(this).find(':input');
@@ -220,6 +221,7 @@ $(document).ready(function () {
             var msg = input.val();
             console.log("envio el mensaje desde anonimo:"+JSON.stringify({action:'message', msg:msg,usuario:chat_to,anonimo:user,anon:'1' }));
             socket.emit('chat', JSON.stringify({action:'message', msg:msg,usuario:chat_to,anonimo:user,anon:'1' }));
+
             input.val('');
         });
 

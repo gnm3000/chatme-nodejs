@@ -81,7 +81,19 @@ $(document).ready(function () {
         socket.on('reconnecting', function () {
             console.log('reconnecting');
         });
-        
+        socket.on('set_status', function (data) {
+            var data = JSON.parse(data);
+
+            console.log('set_status'+data.username+".Status:"+data.status);
+        });
+
+                    $("select").change(function () {
+              var str = $("select option:selected").val();
+             
+               socket.emit("set_status",{status:str});
+            })
+            .trigger('change');
+       
 
         var tryReconnect = function () {
             ++reconnectCount;

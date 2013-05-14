@@ -14,7 +14,7 @@ var app = module.parent.exports.app
   ,rest = require('restler')
   , config = require('../config.json'),
   mongoUri = module.parent.exports.mongoUri;
-
+var rClient = module.parent.exports.rClient;
 app.get('/*', function(req, res, next) {
   if (req.headers.host.match(/^www/) !== null ) {
     res.redirect('http://' + req.headers.host.replace(/^www\./, '') + req.url);
@@ -35,7 +35,7 @@ app.get('/pagar-regalo/acceso', function(req,res){
 app.get('/', function(req,res){
 
 
-
+  
      
          mongo.Db.connect(mongoUri, function (err, db) {
                                   db.collection('users', function(er, collection) {
@@ -43,8 +43,12 @@ app.get('/', function(req,res){
                                     //     console.log("mongoDB"+er);
                                     // });
                                   collection.find().toArray(function(err, items) {
-                                         res.render('index', { title:'Express',
-                                            user:'',users:items});
+                                    rClient.smembers("users_online",function(err,members){
+            console.log("users_online_for_home:"+members);
+            res.render('index', { title:'Express',
+                                            user:'',users:items,users_online:members});
+        })
+                                         
                                  
                                     });
                                   });

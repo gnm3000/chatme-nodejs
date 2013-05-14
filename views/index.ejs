@@ -108,8 +108,14 @@
 
       <% for(var i=0; i<users.length; i++) { %>
        <div style="text-align:center;float:left">
-      
-    <a title="Entra y habla con <%= users[i].name %>" data-toggle="tooltip"  alt="" target="_blank" href="/nick/<%= users[i].username %>">
+      <%
+      bandera = '';
+      users_online.forEach(function(el, index) {
+      if(el==users[i].username){
+        bandera = "class='focus'";
+      }
+}); %>
+    <a <%=bandera%> title="Entra y habla con <%= users[i].displayName %>" data-toggle="tooltip"  alt="" target="_blank" href="/nick/<%= users[i].username %>">
     <img width="100"  src="https://graph.facebook.com/<%= users[i].id %>/picture?width=100&height=100" />
     </a>
     </div>
@@ -132,7 +138,19 @@
   <!-- tab "panes" -->
   
 <style type="text/css">
-   
+   /*FOCUS*/
+.focus {
+  -webkit-transition: all 1s ease;
+     -moz-transition: all 1s ease;
+       -o-transition: all 1s ease;
+      -ms-transition: all 1s ease;
+          transition: all 1s ease;
+}
+ 
+.focus:hover {
+  border: 70px solid #000;
+  border-radius: 50%;
+}
 .login_facebook {
     -moz-box-shadow:inset 0px 1px 0px 0px #bee2f9;
     -webkit-box-shadow:inset 0px 1px 0px 0px #bee2f9;
