@@ -34,7 +34,10 @@ app.get('/pagar-regalo/acceso', function(req,res){
 });
 app.get('/', function(req,res){
 
-
+if(req.isAuthenticated()){
+  res.redirect('/talks');
+    
+  } 
   
      
          mongo.Db.connect(mongoUri, function (err, db) {
