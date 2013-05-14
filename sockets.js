@@ -13,6 +13,7 @@ server = module.parent.exports.server
 var sessionStore = module.parent.exports.sessionStore;
 var cookieParser = module.parent.exports.cookieParser;
 
+var rClient = module.parent.exports.rClient;
 var rClient2 = module.parent.exports.rClient2;
 var rClient3 = module.parent.exports.rClient3;
 //configuro los sockets para que functione en heroku
@@ -46,7 +47,7 @@ var sub = rClient2;
 var pub = rClient3;
 sub.subscribe('chat');
 //JSON para controlar que no se repitan nombres
-var usuariosConectados = {};
+
 sessionSockets.on('connection', function (err, socket, session) {
     /**
      * When a user sends a chat message, publish it to chatExchange w/o a Routing Key (Routing Key doesn't matter
@@ -57,14 +58,25 @@ sessionSockets.on('connection', function (err, socket, session) {
     
      socket.on('disconnect', function () 
         {
-            //Eliminamos al usuario de lso conectados
-            delete usuariosConectados[socket.nickname];
+
+                rClient.srem("users_online",socket.nickname);
+            rClient.del("sockets:users_online:"+socket);
             //Creamos un arreglo con los usuarios y el que se eliminó
-            data = [usuariosConectados,socket.nickname];
-            console.log("disconnect-nodejs: "+data);
-            //Mandamos la información a las Sockets
-            socket.broadcast.emit("usuarioDesconectado",data);
-           socket.emit("usuarioDesconectado",data);
+             rClient.smembers("users_online",function(err,members){
+            data = [members,socket.nickname];
+             console.log("disconnect-nodejs: "+data);
+           //Mandamos la información a las Sockets
+           
+             io.sockets.emit("usuarioDesconectado",data);
+        })
+           //  //Eliminamos al usuario de lso conectados
+           //  delete usuariosConectados[socket.nickname];
+           //  //Creamos un arreglo con los usuarios y el que se eliminó
+           //  data = [usuariosConectados,socket.nickname];
+           //  console.log("disconnect-nodejs: "+data);
+           //  //Mandamos la información a las Sockets
+           //  socket.broadcast.emit("usuarioDesconectado",data);
+           // socket.emit("usuarioDesconectado",data);
              
         });
     socket.on('chat', function (data) {
@@ -102,13 +114,15 @@ sessionSockets.on('connection', function (err, socket, session) {
                 chat_from=msg.usuario;}
         var reply = {action: 'control', user: chat_from, msg: ' joined the channel' };
         socket.nickname = chat_from;
-
-        usuariosConectados[socket.nickname] = socket.nickname;
+        rClient.sadd("users_online",socket.nickname);
+        rClient.set("sockets:users_online:"+socket.nickname,socket);
         console.log(socket.nickname);
-        data = [socket.nickname,usuariosConectados];
-         //Enviamos los datos de regreso a las sockets
-         socket.broadcast.emit("mensaje",data);
-         socket.emit("mensaje",data);
+
+        rClient.smembers("users_online",function(err,members){
+            data = [socket.nickname,members];
+             io.sockets.emit("mensaje",data);
+        })
+       
          pub.publish('chat', JSON.stringify(reply));
          //socket.sockets.emit("mensaje",data);
         //chatExchange.publish('', reply);

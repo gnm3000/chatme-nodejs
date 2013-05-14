@@ -45,7 +45,13 @@ rClient2.auth(redisURL.auth.split(":")[1]);
 
 var sessionStore = exports.sessionStore =  new RedisStore({client: rClient});
 
-
+ rClient.keys('sockets:users_online:*', function(err, keys) {
+    if(keys.length) rClient.del(keys);
+    console.log('Deletion of sockets reference for each user >> ', err || "Done!");
+  });
+ rClient.del("users_online",function(err,result){
+    console.log('Deletion of set users_online >> ', err || "Done!");
+ });
 /*
  * Passportjs auth strategy
  */
