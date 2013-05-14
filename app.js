@@ -23,7 +23,8 @@ var mongoUri = exports.mongoUri =  'mongodb://heroku_app12042861:clfom3dnopr5phr
 var server = exports.server = http.createServer(app);
 
 
-
+var REDISCLOUD_URL = exports.REDISCLOUD_URL = "redis://rediscloud:5A4TCCPOGwU3K3vP@pub-redis-17092.us-east-1-4.3.ec2.garantiadata.com:17092";
+process.env.REDISCLOUD_URL = REDISCLOUD_URL;
 
 /*
  Also use Redis for Session Store. Redis will keep all Express sessions in it.

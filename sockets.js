@@ -86,7 +86,7 @@ sessionSockets.on('connection', function (err, socket, session) {
            //  //Mandamos la información a las Sockets
            //  socket.broadcast.emit("usuarioDesconectado",data);
            // socket.emit("usuarioDesconectado",data);
-             sub.unsubscribe('chat');
+             
         });
     socket.on('chat', function (data) {
         
@@ -131,7 +131,7 @@ sessionSockets.on('connection', function (err, socket, session) {
             data = [socket.nickname,members];
              io.sockets.emit("mensaje",data);
         })
-       sub.subscribe('chat');
+       
          pub.publish('chat', JSON.stringify(reply));
          //socket.sockets.emit("mensaje",data);
         //chatExchange.publish('', reply);
