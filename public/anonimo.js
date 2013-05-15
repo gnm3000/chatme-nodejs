@@ -217,21 +217,30 @@ $(document).ready(function () {
         /*
          When the user creates a new chat message, send it to server via socket.emit w/ 'chat' event/channel name
          */
+
+
          $('#bgavatar').on('click', '.follow', function(e) {
              e.preventDefault();
+             socket.emit("follow_user",JSON.stringify({"user":$(this).data("user"),"follow_to":$("#fb_user_name").html()}));
+             //console.log("socket:"+socket.id);
             console.log("follow");
             $(this).text("Dejar de seguir");
             $(this).removeClass("follow");
             $(this).addClass("unfollow");
+            
         });
           $('#bgavatar').on('click', '.unfollow', function(e) {
              e.preventDefault();
+             socket.emit("unfollow_user",JSON.stringify({"user":$(this).data("user"),"follow_to":$("#fb_user_name").html()}));
             console.log("unfollow");
             $(this).text("Seguir");
             $(this).removeClass("unfollow");
             $(this).addClass("follow");
         });
-       
+       $('.not-follow').click(function(e){
+        e.preventDefault();
+        alert("debe loguearse");
+       });
         $('#channel form').submit(function (event) {
             //alert("submit");
             event.preventDefault();

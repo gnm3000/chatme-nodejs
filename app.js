@@ -65,6 +65,8 @@ app.configure(function () {
     app.set('view engine', 'ejs');
     app.use(express.favicon());
     app.use(express.logger('dev'));
+     app.use(express.static(path.join(__dirname, 'public')));
+    app.use(cookieParser);
     app.use(express.bodyParser());
     app.use(express.methodOverride());
 
@@ -75,14 +77,22 @@ app.configure(function () {
      W/o this, Socket.io won't work if you have more than 1 instance.
      If you are NOT running on Cloud Foundry, having cookie name 'jsessionid' doesn't hurt - it's just a cookie name.
      */
-    app.use(cookieParser);
-    app.use(express.session({store: sessionStore,cookie: { maxAge : 3600000 }, key: 'jsessionid_chatme', secret: 'your secret here3333'}));
     
+
+    app.use(express.session({
+      store: sessionStore,
+      cookie: {secure: false,maxAge: 86400000, expires : new Date(Date.now() + 86400000)},
+     
+      key: 'jsession_chatmefm_'+86400000, 
+      secret: config.session.secret
+    }));
+    
+
     
     app.use(passport.initialize());
     app.use(passport.session());
 
-    app.use(express.static(path.join(__dirname, 'public')));
+   
     app.use(app.router);
 });
 

@@ -73,9 +73,18 @@
   <h1 id="fb_user_name"><%= fb_user.username %></h1>
   <div class="datos"><p><%= fb_user.displayName %>, vivo en Corrientes<br>29 años<br>Intereses: <a href="index.html">Viajes</a><a href="index.html">Arte</a><a href="index.html"> Fotografía</a>
   </p>  </div>
-    <a class="btn btn-info follow">
+  <% if(user_logged!=''){%>
+<a class="btn btn-info follow" data-user="<%=user_logged%>">
      Seguir
     </a>
+
+  <%}else{%>
+  <a class="btn btn-info not-follow">
+     Seguir
+    </a>
+
+  <%} %>
+    
   </p><div class="portada">Cambiar Portada</div>
 </div></div>
 <div class="container">   <div id="iconos"><a class="btn btn-seg" href="#"><strong>125</strong> Seguidores</a>

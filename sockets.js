@@ -5,6 +5,7 @@ server = module.parent.exports.server
     , path = require('path')
     , redis = require('redis')
     ,mongo = require('mongodb')
+    , mongoUri = module.parent.exports.mongoUri
     , amqp = require('amqp')
   , passport = require('passport')
   , config = require('./config')
@@ -88,6 +89,31 @@ sessionSockets.on('connection', function (err, socket, session) {
            // socket.emit("usuarioDesconectado",data);
              
         });
+ socket.on('follow_user', function (data) {
+  console.log(data);
+  var msg = JSON.parse(data);
+
+   mongo.Db.connect(mongoUri, function (err, db) {
+                                  db.collection('followers', function(er, collection) {
+                                    // collection.insert({'user':msg.user,'follow':msg.follow_to}, {safe: true}, function(er,rs) {
+                                    //     console.log("mongoDB"+er);
+                                    // });
+                                  var criteria = {user:msg.user};
+                                  var objNew = {$push:{follow:msg.follow_to}};
+
+                                 collection.update(criteria,objNew, {upsert:true},function(er,rs) {
+                                        if(er){console.log("mongoDB"+er);}
+                                        console.log("fin del socket");
+                                    });
+                                  });
+                                });
+   
+
+ });
+ socket.on('unfollow_user', function (data) {
+  console.log(data);
+  
+ });
     socket.on('chat', function (data) {
         
 
@@ -130,7 +156,9 @@ sessionSockets.on('connection', function (err, socket, session) {
     socket.on('join', function (data) {
         var msg = JSON.parse(data);
          if(msg.anon=='1'){
+
             chat_from = msg.chat_from;}else{
+              socket.username = msg.usuario;
                 chat_from=msg.usuario;}
         var reply = {action: 'control', user: chat_from, msg: ' joined the channel' };
         socket.nickname = chat_from;

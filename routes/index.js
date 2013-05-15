@@ -1,7 +1,6 @@
 /*
  * Module dependencies
  */
-
 var app = module.parent.exports.app
     , http = require('http')
     , path = require('path')
@@ -159,12 +158,16 @@ app.get('/:nick', function (req, res) {
         req.session.user_anon="user-"+Math.floor((Math.random()*10000)+1);
     }
    
-    
+    if(req.user){
+    var user_logged =req.user.id;
+  } else{
+    var user_logged ='';
+  }
 
     var user_anon = req.session.user_anon;
 
     //regenerate new session & store user from previous session (if it exists)
-    req.session.regenerate(function (err) {
+    //req.session.regenerate(function (err) {
         req.session.user_anon = user_anon;
         console.log("el user_anon en /:nick es:"+req.session.user_anon);
                                  mongo.Db.connect(mongoUri, function (err, db) {
@@ -177,7 +180,7 @@ app.get('/:nick', function (req, res) {
                                     else{
                                        res.render('anonimo_nico', { title:'Chat anonimo con '+req.params.nick, 
                                     server:serverName, user:user_anon,user_anon:req.session.user_anon, fb_user:doc
-                                    ,nick:req.params.nick});
+                                    ,nick:req.params.nick,user_logged:user_logged});
                                     }
                                    
                                   })
@@ -185,6 +188,6 @@ app.get('/:nick', function (req, res) {
                                 });
                                 
         
-    });
+   // });
         
 });
