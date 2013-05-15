@@ -37,7 +37,7 @@ app.get('/', function(req,res){
 if(req.isAuthenticated()){
   res.redirect('/talks');
     
-  } 
+  } else{
   
      
          mongo.Db.connect(mongoUri, function (err, db) {
@@ -57,7 +57,7 @@ if(req.isAuthenticated()){
                                   });
                                 });
         
-   
+   }
 });
 
 

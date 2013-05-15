@@ -83,14 +83,14 @@
       <% for(var i=0; i<users.length; i++) { %>
        <div style="text-align:center;float:left">
       <%
-      bandera = '';
+      bandera = "class='no-focus'";
       users_online.forEach(function(el, index) {
       if(el==users[i].username){
         bandera = "class='focus'";
       }
 }); %>
-    <a <%=bandera%> title="Entra y habla con <%= users[i].username %>" data-toggle="tooltip"  alt="" target="_blank" href="/nick/<%= users[i].username %>">
-    <img width="100"  src="https://graph.facebook.com/<%= users[i].id %>/picture?width=100&height=100" />
+    <a  title="Entra y habla con <%= users[i].username %>" data-toggle="tooltip"  alt="" target="_blank" href="/nick/<%= users[i].username %>">
+    <img <%=bandera%>  width="100"  src="https://graph.facebook.com/<%= users[i].id %>/picture?width=100&height=100" />
     </a>
     </div>
     <% } %>
@@ -131,7 +131,10 @@
 
     <!-- Footer
     ================================================== -->
-    
+    <style type="text/css">
+    .focus{border: 3px solid #8ea259;}
+    .no-focus{border: 3px solid white;}
+    </style>
 
 
     <!-- Le javascript
