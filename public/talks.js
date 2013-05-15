@@ -90,13 +90,12 @@ $(document).ready(function () {
 
             console.log('set_status'+data.username+".Status:"+data.status);
         });
-
-                    $("select").change(function () {
-              var str = $("select option:selected").val();
-             
-               socket.emit("set_status",{status:str});
-            })
-            .trigger('change');
+$("#mostrarc ul.options a").click(function(e){
+    e.preventDefault();
+   var str= $(this).text();
+    socket.emit("set_status",{status:str});
+});
+                  
        
 
         var tryReconnect = function () {
