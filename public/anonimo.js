@@ -217,7 +217,21 @@ $(document).ready(function () {
         /*
          When the user creates a new chat message, send it to server via socket.emit w/ 'chat' event/channel name
          */
-         
+         $('#bgavatar').on('click', '.follow', function(e) {
+             e.preventDefault();
+            console.log("follow");
+            $(this).text("Dejar de seguir");
+            $(this).removeClass("follow");
+            $(this).addClass("unfollow");
+        });
+          $('#bgavatar').on('click', '.unfollow', function(e) {
+             e.preventDefault();
+            console.log("unfollow");
+            $(this).text("Seguir");
+            $(this).removeClass("unfollow");
+            $(this).addClass("follow");
+        });
+       
         $('#channel form').submit(function (event) {
             //alert("submit");
             event.preventDefault();
