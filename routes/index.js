@@ -60,41 +60,7 @@ if(req.isAuthenticated()){
    
 });
 
-app.get('/nick/:nick', function (req, res) {
-    //save user from previous session (if it exists)
-    var serverName = process.env.VCAP_APP_HOST ? process.env.VCAP_APP_HOST + ":" + process.env.VCAP_APP_PORT : 'localhost:3000';
-    // if(!req.cookies.nick){
-         //var nick_rand = "user-"+Math.floor((Math.random()*10000)+1);
-    //      res.cookie('nick', nick_rand, {maxAge: 900000, httpOnly: true});
-    // }
-    if(!req.session.user_anon){
-        req.session.user_anon="user-"+Math.floor((Math.random()*10000)+1);
-    }
-   
-    
 
-    var user_anon = req.session.user_anon;
-
-    //regenerate new session & store user from previous session (if it exists)
-    req.session.regenerate(function (err) {
-        req.session.user_anon = user_anon;
-                                 mongo.Db.connect(mongoUri, function (err, db) {
-                                  db.collection('users', function(er, collection) {
-                                    // collection.insert({'mykey': 'myvalue'}, {safe: true}, function(er,rs) {
-                                    //     console.log("mongoDB"+er);
-                                    // });
-                                  collection.findOne({username:req.params.nick},function(err,doc){
-                                    res.render('anonimo', { title:'Chat anonimo con '+req.params.nick, 
-                                    server:serverName, user:user_anon, fb_user:doc
-                                    ,nick:req.params.nick});
-                                  })
-                                  });
-                                });
-                                
-        
-    });
-        
-});
 
 /*
  * Authentication routes
@@ -178,5 +144,47 @@ app.post('/user', function (req, res) {
 });
 app.post('/user_anon', function (req, res) {
     req.session.user_anon = req.body.user_anon;
+    console.log("user_anon post="+req.session.user_anon);
     res.json({"error": ""});
+});
+
+app.get('/:nick', function (req, res) {
+    //save user from previous session (if it exists)
+    var serverName = process.env.VCAP_APP_HOST ? process.env.VCAP_APP_HOST + ":" + process.env.VCAP_APP_PORT : 'localhost:3000';
+    // if(!req.cookies.nick){
+         //var nick_rand = "user-"+Math.floor((Math.random()*10000)+1);
+    //      res.cookie('nick', nick_rand, {maxAge: 900000, httpOnly: true});
+    // }
+    if(!req.session.user_anon || req.session.user_anon==req.params.nick){
+        req.session.user_anon="user-"+Math.floor((Math.random()*10000)+1);
+    }
+   
+    
+
+    var user_anon = req.session.user_anon;
+
+    //regenerate new session & store user from previous session (if it exists)
+    req.session.regenerate(function (err) {
+        req.session.user_anon = user_anon;
+        console.log("el user_anon en /:nick es:"+req.session.user_anon);
+                                 mongo.Db.connect(mongoUri, function (err, db) {
+                                  db.collection('users', function(er, collection) {
+                                    // collection.insert({'mykey': 'myvalue'}, {safe: true}, function(er,rs) {
+                                    //     console.log("mongoDB"+er);
+                                    // });
+                                  collection.findOne({username:req.params.nick},function(err,doc){
+                                    if(!doc){res.send("UPs! el usuario no se encuentra <a href='/'>Volver a Chatme.fm</a>");}
+                                    else{
+                                       res.render('anonimo_nico', { title:'Chat anonimo con '+req.params.nick, 
+                                    server:serverName, user:user_anon,user_anon:req.session.user_anon, fb_user:doc
+                                    ,nick:req.params.nick});
+                                    }
+                                   
+                                  })
+                                  });
+                                });
+                                
+        
+    });
+        
 });

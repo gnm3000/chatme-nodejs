@@ -1,13 +1,16 @@
 $(document).ready(function () {
     //Check if the user is rejoining
     //ps: This value is set by Express if browser session is still valid
-    var user = $('#user').text();
+    var user = $('#user').html();
+    
     // show join box
     if (user === "") {
         $('#ask').show();
         $('#ask input').focus();
     } else { //rejoin using old session
+        //alert("join user");
         join(user);
+
     }
 
     // join on enter
@@ -16,6 +19,7 @@ $(document).ready(function () {
             $('#ask a').click();
         }
     });
+
 
     /*
      When the user joins, hide the join-field, display chat-widget and also call 'join' function that
@@ -45,45 +49,45 @@ $(document).ready(function () {
         });
         var intervalBangID;
         var onlineCount = 0;
-        function_put_offline = function(){
-                        var last_online = $("#last_online").val();
-                        if(last_online==''){
-                            console.log("NULO");
-                                ++onlineCount;
-                                if (onlineCount == 2) {
-                                    $("#status").html("<span style='color:black'>OFFLINE</span>");
-                                }
-                        }else{
-                            if((function_dateDiff(new Date,new Date(last_online))/1000)>15){
-                                console.log("Es mayor a 15!!!!!!!");
-                                $("#status").html("<span style='color:black'>OFFLINE</span>");
+        // function_put_offline = function(){
+        //                 var last_online = $("#last_online").val();
+        //                 if(last_online==''){
+        //                     console.log("NULO");
+        //                         ++onlineCount;
+        //                         if (onlineCount == 2) {
+        //                             $("#status").html("<span style='color:black'>OFFLINE</span>");
+        //                         }
+        //                 }else{
+        //                     if((function_dateDiff(new Date,new Date(last_online))/1000)>15){
+        //                         console.log("Es mayor a 15!!!!!!!");
+        //                         $("#status").html("<span style='color:black'>OFFLINE</span>");
 
-                            }else{
-                                console.log("Es menor a 15");
-                            }
-                        }
-                         //$("#status").html("<span style='color:black'>OFFLINE</span>");
-        }
+        //                     }else{
+        //                         console.log("Es menor a 15");
+        //                     }
+        //                 }
+        //                  //$("#status").html("<span style='color:black'>OFFLINE</span>");
+        // }
         /*Verificar cada 5 segundos si el last time es mayor a 15 segundos*/
-         setInterval(function_put_offline,1000*5);                
+        //  setInterval(function_put_offline,1000*5);                
         
-         var function_dateDiff=function(date1,date2){
-             return date1.getTime() - date2.getTime();
-         }
+        //  var function_dateDiff=function(date1,date2){
+        //      return date1.getTime() - date2.getTime();
+        //  }
        
-        socket.on('notification_online', function (msg) {
-            var mensaje = JSON.stringify(msg);
-            var fb_username = $("#fb_user_name").html();
-           // alert("mensaje"+msg.user+" el usuario:"+fb_username);
-            if(msg.user==fb_username){
-                $("#status").html("<span style='color:green'>ONLINE</span>");
-                $("#last_online").val(new Date);
-            }else{
-               // $("#status").html("<span style='color:black'>OFFLINE</span>");
-            }
-            console.log("esta online:"+mensaje);
+        // socket.on('notification_online', function (msg) {
+        //     var mensaje = JSON.stringify(msg);
+        //     var fb_username = $("#fb_user_name").html();
+        //    // alert("mensaje"+msg.user+" el usuario:"+fb_username);
+        //     if(msg.user==fb_username){
+        //         $("#status").html("<span style='color:green'>ONLINE</span>");
+        //         $("#last_online").val(new Date);
+        //     }else{
+        //        // $("#status").html("<span style='color:black'>OFFLINE</span>");
+        //     }
+        //     console.log("esta online:"+mensaje);
 
-        });
+        // });
         socket.on('disconnect', function () {
             console.log('disconnect');
 
@@ -215,6 +219,7 @@ $(document).ready(function () {
          */
          
         $('#channel form').submit(function (event) {
+            //alert("submit");
             event.preventDefault();
             var input = $(this).find(':input');
             var chat_to = input.attr("data-chat-to");

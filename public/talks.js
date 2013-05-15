@@ -250,6 +250,13 @@ $("#mostrarc ul.options a").click(function(e){
 
 
         });
+
+ $("#myTab").on("click",".x_close",function(e){
+          e.preventDefault();
+                    var usuario = $(this).data("user");
+                    $("#myTab li."+usuario).remove();
+                    $("div.tab-pane[id="+usuario+"]").remove();
+    });
          /*
          When the user creates a new chat message, send it to server via socket.emit w/ 'chat' event/channel name
          */

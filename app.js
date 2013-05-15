@@ -76,8 +76,8 @@ app.configure(function () {
      If you are NOT running on Cloud Foundry, having cookie name 'jsessionid' doesn't hurt - it's just a cookie name.
      */
     app.use(cookieParser);
-    app.use(express.session({store: sessionStore, key: 'jsessionid', secret: 'your secret here'}));
-
+    app.use(express.session({store: sessionStore,cookie: { maxAge : 3600000 }, key: 'jsessionid_chatme', secret: 'your secret here3333'}));
+    
     
     app.use(passport.initialize());
     app.use(passport.session());
