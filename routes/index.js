@@ -145,7 +145,7 @@ app.get('/profile', function(req, res){
 });
 app.get('/talks', function(req, res){
   if(req.isAuthenticated()){
-    res.render("talks",{user:req.user});
+    res.render("talks_nico",{user:req.user});
   } else{
     res.redirect('/');
   }

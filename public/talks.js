@@ -1,5 +1,9 @@
 var arrayNames = {};
 $(document).ready(function () {
+    $('#myTab a').click(function (e) {
+  e.preventDefault();
+  $(this).tab('show');
+})
   var user = $("#user").text();
   var name = user;
   /*primero conecto la socket*/
@@ -39,12 +43,12 @@ $(document).ready(function () {
                                 //que alguien se conectó
                                 //Limpiamos el div de usuarios
                                 $('#users').html(""); 
-                                $("#users").append("<h3>Usuarios Online:</h3>");
+                                //$("#users").append("<h3>Usuarios Online:</h3>");
                                 //Colocamos de nuevo los usuarios
                                 console.log("usuario desconectado:"+JSON.stringify(mensaje));
                                 for (i in mensaje[1])
                                 {
-                                    $('#users').append($('<span>').html( mensaje[1][i]));
+                                    $('#users').append($('<p>').html( mensaje[1][i]));
                                     arrayNames[i] = mensaje[1][i];
                                 }
                             }
@@ -54,10 +58,10 @@ $(document).ready(function () {
                 //Esta función se ejecuta cuando el servidor nos
                 //avisa que alguien se desconectó
                 $('#users').html("");
-                $("#users").append("<h3>Usuarios Online:</h3>");
+                //$("#users").append("<h3>Usuarios Online:</h3>");
                 for (i in data[0])
                 {
-                    $('#users').append($('<span>').html(data[0][i]));
+                    $('#users').append($('<p>').html(data[0][i]));
                     arrayNames[i] = data[0][i];
                 }
             }

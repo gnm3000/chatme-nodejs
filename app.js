@@ -8,12 +8,7 @@ var express = require('express')
     , passport = require('passport')
   , config = require('./config.json');
 
-// var url_rabbit = process.env.CLOUDAMQP_URL || "amqp://localhost"; // default to localhost
-// var rabbitConn = amqp.createConnection({url: url_rabbit});
-// var chatExchange;
-// rabbitConn.on('ready', function () {
-//     chatExchange = rabbitConn.exchange('chatExchange', {'type': 'fanout'});
-// });
+
 var mongoUri = exports.mongoUri =  'mongodb://heroku_app12042861:clfom3dnopr5phrqi94n22kgd7@dbh75.mongolab.com:27757/heroku_app12042861'; 
 /*
  Setup Express & Socket.io
