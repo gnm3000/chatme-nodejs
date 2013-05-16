@@ -90,7 +90,7 @@ sessionSockets.on('connection', function (err, socket, session) {
              
         });
  socket.on('follow_user', function (data) {
-  console.log(data);
+  console.log('follow_user'+data);
   var msg = JSON.parse(data);
 
    mongo.Db.connect(mongoUri, function (err, db) {
@@ -110,8 +110,25 @@ sessionSockets.on('connection', function (err, socket, session) {
    
 
  });
+ 
  socket.on('unfollow_user', function (data) {
-  console.log(data);
+  console.log('unfollow_user'+data);
+   var msg = JSON.parse(data);
+
+   mongo.Db.connect(mongoUri, function (err, db) {
+                                  db.collection('followers', function(er, collection) {
+                                    // collection.insert({'user':msg.user,'follow':msg.follow_to}, {safe: true}, function(er,rs) {
+                                    //     console.log("mongoDB"+er);
+                                    // });
+                                  var criteria = {user:msg.user};
+                                  var objNew = {$pull:{follow:msg.follow_to}};
+
+                                 collection.update(criteria,objNew, {upsert:true},function(er,rs) {
+                                        if(er){console.log("mongoDB"+er);}
+                                        console.log("fin del socket");
+                                    });
+                                  });
+                                });
   
  });
     socket.on('chat', function (data) {

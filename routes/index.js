@@ -146,7 +146,11 @@ app.post('/user_anon', function (req, res) {
     console.log("user_anon post="+req.session.user_anon);
     res.json({"error": ""});
 });
-
+function include(arr, obj) {
+    for(var i=0; i<arr.length; i++) {
+        if (arr[i] == obj) return true;
+    }
+}
 app.get('/:nick', function (req, res) {
     //save user from previous session (if it exists)
     var serverName = process.env.VCAP_APP_HOST ? process.env.VCAP_APP_HOST + ":" + process.env.VCAP_APP_PORT : 'localhost:3000';
@@ -165,7 +169,7 @@ app.get('/:nick', function (req, res) {
   }
 
     var user_anon = req.session.user_anon;
-
+     var follower = false;
     //regenerate new session & store user from previous session (if it exists)
     //req.session.regenerate(function (err) {
         req.session.user_anon = user_anon;
@@ -176,15 +180,41 @@ app.get('/:nick', function (req, res) {
                                     //     console.log("mongoDB"+er);
                                     // });
                                   collection.findOne({username:req.params.nick},function(err,doc){
-                                    if(!doc){res.send("UPs! el usuario no se encuentra <a href='/'>Volver a Chatme.fm</a>");}
+                                    if(!doc){
+                                      res.send("UPs! el usuario no se encuentra <a href='/'>Volver a Chatme.fm</a>");}
                                     else{
-                                       res.render('anonimo_nico', { title:'Chat anonimo con '+req.params.nick, 
-                                    server:serverName, user:user_anon,user_anon:req.session.user_anon, fb_user:doc
-                                    ,nick:req.params.nick,user_logged:user_logged});
+                                      if(req.user){
+                                        db.collection('followers', function(er, followers_collection) {
+                                          followers_collection.findOne({user:parseInt(doc.id)},function(err,followers){
+                                                  if(err){
+                                                    console.log(err);
+                                                    }else{
+                                                    console.log("los followers son:"+followers.follow);
+                                                      
+                                                        //no es seguidor
+                                                        console.log("follower=false"+req.user.username);
+                                                        var follower = false;
+                                                        res.render('anonimo_nico', { title:'Chat anonimo con '+req.params.nick, 
+                                                          server:serverName, user:user_anon,user_anon:req.session.user_anon, fb_user:doc
+                                                          ,nick:req.params.nick,user_logged:user_logged,follower:include(followers.follow,req.user.username)});
+                                                      
+                                                  }
+                                            });
+                                            
+                                          });
+                                      //});
+                                     
+                                    }else{
+                                      res.render('anonimo_nico', { title:'Chat anonimo con '+req.params.nick, 
+                                                          server:serverName, user:user_anon,user_anon:req.session.user_anon, fb_user:doc
+                                                          ,nick:req.params.nick,user_logged:user_logged,follower:false});
+                                    }
+
+                                      
                                     }
                                    
                                   })
-                                  });
+                                  }); //mongo connect cerrado
                                 });
                                 
         
