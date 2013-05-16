@@ -71,7 +71,7 @@
 
 
   <h1 id="fb_user_name"><%= fb_user.username %></h1>
-  <p id="fb_user_name_id"><%= fb_user.id %></p>
+  <p id="fb_user_name_id" style="display:none"><%= fb_user.id %></p>
   <div class="datos"><p><%= fb_user.displayName %>, vivo en Corrientes<br>29 años<br>Intereses: <a href="index.html">Viajes</a><a href="index.html">Arte</a><a href="index.html"> Fotografía</a>
   </p>  </div>
   <% if(user_logged!=''){%>
@@ -103,6 +103,8 @@
 </div>
 <div id="titulo"><h1>Pregunta lo que quieras. Es anonimo!
 <span style="display:none" id="user"><%= user_anon %></span></h1><div id="botones"><a class="btn btn-puntuar" href="#">Puntuar</a><a class="btn btn-regalo2" href="#">Dar un Regalo</a><a class="btn btn-denunciar" href="#">Denunciar</a></div></div>
+
+<% if(user_online==true){%>
 <div id="channel">
    <div id="msgs">
        
@@ -121,6 +123,12 @@
  <div id="input">
         <form id="form-message"><input type="text" data-chat-to="<%= nick %>" id="message"/></form>
     </div></div>
+
+<%}else{%>
+<div id="no-conectado">El usuario no esta conectado en este momento, tomate un café. </div>
+
+ <%} %>
+
 
 <div id="menu-ab">
 <div class="navbar">

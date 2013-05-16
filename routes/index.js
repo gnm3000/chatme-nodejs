@@ -150,7 +150,12 @@ function include(arr, obj) {
     for(var i=0; i<arr.length; i++) {
         if (arr[i] == obj) return true;
     }
+    return false;
 }
+
+
+
+
 app.get('/:nick', function (req, res) {
     //save user from previous session (if it exists)
     var serverName = process.env.VCAP_APP_HOST ? process.env.VCAP_APP_HOST + ":" + process.env.VCAP_APP_PORT : 'localhost:3000';
@@ -207,10 +212,27 @@ app.get('/:nick', function (req, res) {
                                                         //no es seguidor
                                                         //console.log("follower=false"+req.user.username);
                                                         //var follower = false;
+                                                        //req.params.nick
+                                                        
+                                                        rClient.smembers("users_online",function(err,members){
+                                                        if(err){console.log("error users_online"+err);}
+                                                                if(members.indexOf(req.params.nick) != -1){
+
+                                                                  console.log("encontrado");
+                                                                  var user_online = true;
+                                                                }else{
+                                                                  var user_online = false;
+                                                                }
+                                                                console.log("VARIABLE USER_ONLINE para "+req.params.nick+"="+user_online);
                                                        
                                                         res.render('anonimo_nico', { title:'Chat anonimo con '+req.params.nick, 
                                                           server:serverName, user:user_anon,user_anon:req.session.user_anon, fb_user:doc
-                                                          ,nick:req.params.nick,user_logged:user_logged,follower:follower});
+                                                          ,nick:req.params.nick,user_logged:user_logged,follower:follower,user_online:user_online});
+                                                            });
+
+
+                                                      
+                                                       
                                                       
                                                   }
                                             });
@@ -219,9 +241,25 @@ app.get('/:nick', function (req, res) {
                                       //});
                                      
                                     }else{
-                                      res.render('anonimo_nico', { title:'Chat anonimo con '+req.params.nick, 
+
+                                      rClient.smembers("users_online",function(err,members){
+                                                        if(err){console.log("error users_online"+err);}
+                                                                if(members.indexOf(req.params.nick) != -1){
+
+                                                                  console.log("encontrado");
+                                                                  var user_online = true;
+                                                                }else{
+                                                                  var user_online = false;
+                                                                }
+                                                                console.log("VARIABLE USER_ONLINE para "+req.params.nick+"="+user_online);
+                                                      
+                                                        res.render('anonimo_nico', { title:'Chat anonimo con '+req.params.nick, 
                                                           server:serverName, user:user_anon,user_anon:req.session.user_anon, fb_user:doc
-                                                          ,nick:req.params.nick,user_logged:user_logged,follower:false});
+                                                          ,nick:req.params.nick,user_logged:user_logged,follower:false,user_online:user_online});
+                                                            });
+                                      
+                                    
+
                                     }
 
                                       
