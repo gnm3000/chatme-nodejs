@@ -163,9 +163,11 @@ app.get('/:nick', function (req, res) {
     }
    
     if(req.user){
-    var user_logged =req.user.id;
+    var user_logged =req.user.username;
+     var user_logged_id =req.user.id;
   } else{
     var user_logged ='';
+    var user_logged_id ='';
   }
 
     var user_anon = req.session.user_anon;
@@ -184,19 +186,31 @@ app.get('/:nick', function (req, res) {
                                       res.send("UPs! el usuario no se encuentra <a href='/'>Volver a Chatme.fm</a>");}
                                     else{
                                       if(req.user){
+                                        console.log("yo soy user logueado:"+req.user.username);
+                                        //si el usuario esta logueado hay que mirar si es follower.
                                         db.collection('followers', function(er, followers_collection) {
-                                          followers_collection.findOne({user:parseInt(doc.id)},function(err,followers){
+                                          console.log("Busco a que usuarios le sigue el usuario:"+req.user.username);
+                                          followers_collection.findOne({user:req.user.username},function(err,followers){
                                                   if(err){
                                                     console.log(err);
+
                                                     }else{
-                                                    console.log("los followers son:"+followers.follow);
+                                                      var follower=false;
+                                                      if(followers){
+                                                        console.log("el usuario "+req.user.username+" le sigue a:"+followers.follow);
+                                                         var follower = include(followers.follow,req.params.nick);
+                                                         console.log("el usuario "+req.user.username+" es seguidor de "+doc.username+"?="+follower);
+                                                        
+                                                        }
+                                                    
                                                       
                                                         //no es seguidor
-                                                        console.log("follower=false"+req.user.username);
-                                                        var follower = false;
+                                                        //console.log("follower=false"+req.user.username);
+                                                        //var follower = false;
+                                                       
                                                         res.render('anonimo_nico', { title:'Chat anonimo con '+req.params.nick, 
                                                           server:serverName, user:user_anon,user_anon:req.session.user_anon, fb_user:doc
-                                                          ,nick:req.params.nick,user_logged:user_logged,follower:include(followers.follow,req.user.username)});
+                                                          ,nick:req.params.nick,user_logged:user_logged,follower:follower});
                                                       
                                                   }
                                             });

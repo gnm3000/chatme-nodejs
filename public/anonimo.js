@@ -21,6 +21,7 @@ $(document).ready(function () {
     });
 
 
+
     /*
      When the user joins, hide the join-field, display chat-widget and also call 'join' function that
      initializes Socket.io and the entire app.

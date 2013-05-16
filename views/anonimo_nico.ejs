@@ -71,16 +71,17 @@
 
 
   <h1 id="fb_user_name"><%= fb_user.username %></h1>
+  <p id="fb_user_name_id"><%= fb_user.id %></p>
   <div class="datos"><p><%= fb_user.displayName %>, vivo en Corrientes<br>29 años<br>Intereses: <a href="index.html">Viajes</a><a href="index.html">Arte</a><a href="index.html"> Fotografía</a>
   </p>  </div>
   <% if(user_logged!=''){%>
-  
+
             <% if(follower==true){%>
-            <a class="btn btn-info unfollow" data-user="<%=user_logged%>">
+            <a class="btn btn-info unfollow" data-user="<%=user_logged%>" >
              Dejar de Seguir
             </a>
             <%}else{%>
-            <a class="btn btn-info follow" data-user="<%=user_logged%>">
+            <a class="btn btn-info follow" data-user="<%=user_logged%>" >
      Seguir
     </a>
             <%} %>
