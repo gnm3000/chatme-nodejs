@@ -67,13 +67,28 @@
       </div>
     </div>
 
-<div class="hero-unit"><div id="bgavatar"><img id="upload" src="/chatme/img/avatar.jpg" class="img-polaroid" alt="140x140" style="width: 140px; height: 140px;"</div>
+<div class="hero-unit"><div id="bgavatar">
+  <img id="upload" src="/chatme/img/avatar.jpg" class="img-polaroid" alt="140x140" style="width: 140px; height: 140px;"</div>
 
 
-  <h1 id="fb_user_name"><%= fb_user.username %></h1>
+  <h1 id="fb_user_name"><a id="username_editable" data-type="text" data-pk="1" data-url="/post_username" data-original-title="Insert your username"><%= fb_user.username %></a></h1>
   <p id="fb_user_name_id" style="display:none"><%= fb_user.id %></p>
-  <div class="datos"><p><%= fb_user.displayName %>, vivo en Corrientes<br>29 años<br>Intereses: <a href="index.html">Viajes</a><a href="index.html">Arte</a><a href="index.html"> Fotografía</a>
-  </p>  </div>
+  <div class="datos"><p>
+    <a id="displayName" data-type="text" data-pk="1" data-url="/post" data-original-title="Insert your name and lastname"><%= fb_user.displayName %></a>,
+   vivo en <a id="city">Corrientes</a><br>
+<a href="#" id="age" data-type="date" data-pk="1" data-url="/post" data-original-title="Select date">15/05/1984</a>
+   <br>Intereses: 
+
+   <!--  <a href="index.html">Viajes</a>
+    <a href="index.html">Arte</a>
+    <a href="index.html"> Fotografía</a> -->
+    <a href="#" id="intereses_select2" data-type="select2" data-pk="<%= fb_user.username %>"  data-url="/post" data-original-title="Agrega intereses"></a>
+  </p>
+<p>
+  
+  
+</p>
+    </div>
   <% if(user_logged!=''){%>
 
             <% if(follower==true){%>
@@ -247,5 +262,63 @@ filepicker.setKey('A7nALgSYjQaSMszgI0sigz');
 
 
 </style>
+
+<!-- ponemos bootstrap editable -->
+<!-- select2 --> 
+        <link href="http://vitalets.github.io/x-editable/assets/select2/select2.css" rel="stylesheet">
+        <script src="http://vitalets.github.io/x-editable/assets/select2/select2.js"></script> 
+<link href="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.4.4/bootstrap-editable/css/bootstrap-editable.css">
+<script src="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.4.4/bootstrap-editable/js/bootstrap-editable.min.js"></script>
+
+<script>
+$.fn.editable.defaults.mode = 'popup';
+$.fn.editable.defaults.placement = 'right';
+
+$(document).ready(function(){
+                $(function(){
+                  var preload_data = [
+                  { id: '1', text: 'Fotografia'}
+                  , { id: '2', text: 'Bailar'}
+                  , { id: '3', text: 'Estar en Chatme.fm' }
+                  , { id: '4', text: 'Llevar dolares a panama' }
+                  , { id: '5', text: 'Volar con bolsos'}
+                  , { id: '6', text: 'Crear empresas' }
+                  , { id: '7', text: 'Vaciar empresas' }
+                ];
+                    $('#intereses_select2').editable({
+                        source: preload_data,
+                        select2: {
+                           multiple: true
+                        }
+                    });
+                });
+                $(function(){
+                            $('#displayName').editable({
+                                url: '/post',
+                                title: 'Enter your name'
+                            });
+                            $('#username_editable').editable({
+                                url: '/post_username',
+                                title: 'Enter your username'
+                                ,
+                                success: function(data, config) {
+                                   alert("redireccionar al nuevo perfil");            
+                                }
+                            });
+                            $('#city').editable({
+                                url: '/post',
+                                title: 'Enter your city'
+                            });
+                             $('#age').editable({
+                                format: 'yyyy-mm-dd',    
+                                viewformat: 'dd/mm/yyyy',    
+                                datepicker: {
+                                        weekStart: 1
+                                   }
+                                });
+                });
+});
+
+</script>
   </body>
 </html>

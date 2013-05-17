@@ -132,7 +132,15 @@ app.get('/logout', function(req, res){
 app.get('/channel', function(req, res) {
     res.render('channel', {});
 });
-
+app.post('/post', function (req, res) {
+    //req.session.user = .user;
+    res.json(req.body.value);
+});
+app.post('/post_username', function (req, res) {
+    //req.session.user = .user;
+    res.send("El usuario ya existe",400);
+    //res.json({"errors": {"username": "username already exist"} });
+});
 /*
  When the user logs in (in our case, does http POST w/ user name), store it
  in Express session (which in turn is stored in Redis)
