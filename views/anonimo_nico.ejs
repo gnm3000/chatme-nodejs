@@ -67,7 +67,7 @@
       </div>
     </div>
 
-<div class="hero-unit"><div id="bgavatar"><img src="/chatme/img/avatar.jpg" class="img-polaroid" alt="140x140" style="width: 140px; height: 140px;"</div>
+<div class="hero-unit"><div id="bgavatar"><img id="upload" src="/chatme/img/avatar.jpg" class="img-polaroid" alt="140x140" style="width: 140px; height: 140px;"</div>
 
 
   <h1 id="fb_user_name"><%= fb_user.username %></h1>
@@ -215,5 +215,37 @@ overflow-y: scroll;
         Your browser isn't invited for super fun time.
       </audio>
 </div>
+
+<!-- filepicker.io-->
+<script type="text/javascript" src="//api.filepicker.io/v1/filepicker.js"></script>
+<script type="text/javascript">
+  
+$(document).ready(function(){
+
+filepicker.setKey('A7nALgSYjQaSMszgI0sigz');
+      $("#upload").click(function(e){
+            e.preventDefault();
+            filepicker.pick(function(FPFile){
+              $("#upload").attr("src",FPFile.url+"/convert?w=140&h=140&fit=clip");
+            console.log(FPFile.url);
+          });
+      });
+      $(".portada").click(function(e){
+            e.preventDefault();
+            filepicker.pick(function(FPFile){
+              var style_tag = "background: #EEE url("+FPFile.url+") 50% -400px";
+              $(".hero-unit").attr("style",style_tag);
+            console.log(FPFile.url);
+          });
+      });
+});
+
+</script>
+<style type="text/css">
+  .hero-unit{
+    }
+
+
+</style>
   </body>
 </html>
