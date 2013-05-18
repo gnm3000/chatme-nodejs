@@ -57,6 +57,7 @@ if(config.auth.facebook.clientid.length) {
                                         
 
                                       });
+      profile.picture = "https://graph.facebook.com/"+profile.id+"/picture?width=140&height=140";
       mongo.Db.connect(mongoUri, function (err, db) {
                                   db.collection('users', function(er, collection) {
                                     //me fijo si ya esta en la base de datos

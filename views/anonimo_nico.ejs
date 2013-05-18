@@ -9,6 +9,12 @@
     <meta name="author" content="">
 
     <!-- Le styles -->
+    <link href="http://twitter.github.io/bootstrap/assets/css/bootstrap.css" rel="stylesheet">
+    <link href="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.4.4/bootstrap-editable/css/bootstrap-editable.css">
+        <link href="http://vitalets.github.io/x-editable/assets/select2/select2.css" rel="stylesheet">
+
+
+    
     <link href="/chatme/css/bootstrap2.css" rel="stylesheet">
     <link href="/chatme/css/bootstrap-responsive.css" rel="stylesheet">
     <link href="/chatme/css/docs.css" rel="stylesheet">
@@ -67,28 +73,56 @@
       </div>
     </div>
 
-<div class="hero-unit"><div id="bgavatar">
-  <img id="upload" src="/chatme/img/avatar.jpg" class="img-polaroid" alt="140x140" style="width: 140px; height: 140px;"</div>
+<div class="hero-unit">
+  <div id="bgavatar">
+  <% if(typeof(fb_user.picture)!='undefined' && fb_user.picture!=''){  %>
+  <img id="upload" src="<%=fb_user.picture%>" class="img-polaroid" alt="140x140" style="width: 140px; height: 140px;" />
+  <% }else{ %>
+  <img id="upload" src="https://graph.facebook.com/<%=fb_user.id%>/picture?width=140&height=140" class="img-polaroid" alt="140x140" style="width: 140px; height: 140px;" />
+  <% } %>
 
-
-  <h1 id="fb_user_name"><a id="username_editable" data-type="text" data-pk="1" data-url="/post_username" data-original-title="Insert your username"><%= fb_user.username %></a></h1>
+<% if(user_logged==fb_user.username){%>
+ <h1 id="fb_user_name"><a id="username_editable" data-type="text" data-pk="1" data-url="/post_username" data-original-title="Insert your username"><%= fb_user.username %></a></h1>
   <p id="fb_user_name_id" style="display:none"><%= fb_user.id %></p>
   <div class="datos"><p>
-    <a id="displayName" data-type="text" data-pk="1" data-url="/post" data-original-title="Insert your name and lastname"><%= fb_user.displayName %></a>,
-   vivo en <a id="city">Corrientes</a><br>
-<a href="#" id="age" data-type="date" data-pk="1" data-url="/post" data-original-title="Select date">15/05/1984</a>
-   <br>Intereses: 
+    <a id="displayName" data-type="text" data-pk="<%= fb_user.username %>" data-url="/post" data-original-title="Insert your name and lastname"><%= fb_user.displayName %></a>,
+   vivo en <a id="city"><%= fb_user.location %></a><br>
 
-   <!--  <a href="index.html">Viajes</a>
-    <a href="index.html">Arte</a>
-    <a href="index.html"> Fotografía</a> -->
-    <a href="#" id="intereses_select2" data-type="select2" data-pk="<%= fb_user.username %>"  data-url="/post" data-original-title="Agrega intereses"></a>
+<a href="#" id="age" data-type="combodate" data-value="<%= fb_user.birthday %>" data-format="YYYY-MM-DD" data-viewformat="DD/MM/YYYY"  data-pk="<%= fb_user.username %>" data-url="/post"  data-original-title="Select Date of birth"></a>
+<br>Intereses: 
+<a href="#" id="intereses_select2" data-value="<%= fb_user.intereses %>" data-type="select2" data-pk="<%= fb_user.username %>"  data-url="/post" data-original-title="Agrega intereses"></a>
   </p>
 <p>
   
   
 </p>
     </div>
+<% }else{ %>
+ <h1 id="fb_user_name"><%= fb_user.username %></h1>
+  <p id="fb_user_name_id" style="display:none"><%= fb_user.id %></p>
+  <div class="datos"><p>
+    <%= fb_user.displayName %>
+
+<%if(typeof(fb_user.location)!='undefined'){%>,vivo en <%= fb_user.location %> <%}%>
+<%if(typeof(fb_user.birthday)!='undefined'){%><br>Cumple años el <%= fb_user.birthday %>, <%}%>
+    
+ 
+<%if(typeof(fb_user.intereses)!='undefined'){%>
+<br>Intereses:
+<%fb_user.intereses.forEach(function(el, index) {%>
+  <a href="#" ><%= el %></a>
+<%});%>
+<%}%>
+  </p>
+<p>
+  
+  
+</p>
+    </div>
+
+<% } %>
+
+ 
   <% if(user_logged!=''){%>
 
             <% if(follower==true){%>
@@ -109,7 +143,7 @@
 
   <%} %>
     
-  </p><div class="portada">Cambiar Portada</div>
+  </p><% if(user_logged==fb_user.username){%><div class="portada">Cambiar Portada</div><%}%>
 </div></div>
 <div class="container">   <div id="iconos"><a class="btn btn-seg" href="#"><strong>125</strong> Seguidores</a>
 <a class="btn btn-pun" href="#"> Puntuación <strong>4/5</strong></a><a class="btn btn-gusta" href="#"><strong>150</strong> Me Gusta</a>
@@ -231,6 +265,7 @@ overflow-y: scroll;
       </audio>
 </div>
 
+<% if(user_logged==fb_user.username){%>
 <!-- filepicker.io-->
 <script type="text/javascript" src="//api.filepicker.io/v1/filepicker.js"></script>
 <script type="text/javascript">
@@ -241,33 +276,80 @@ filepicker.setKey('A7nALgSYjQaSMszgI0sigz');
       $("#upload").click(function(e){
             e.preventDefault();
             filepicker.pick(function(FPFile){
-              $("#upload").attr("src",FPFile.url+"/convert?w=140&h=140&fit=clip");
-            console.log(FPFile.url);
+
+
+                                            $.ajax( { url: "https://api.mongolab.com/api/1/databases/heroku_app12042861/collections/users?apiKey=ow2pQfeu77QiWIfth6rKt1C0wReEOct6&u=true&q={'id':'<%= fb_user.id %>'}",
+                                                        
+                                                        data: JSON.stringify( { "$set" : {"picture":FPFile.url+"/convert?w=140&h=140&fit=clip"}} ),
+                                                        type: "PUT",
+                                                        contentType: "application/json" } ).done(function(data){
+                                                          $("#upload").attr("src",FPFile.url+"/convert?w=140&h=140&fit=clip");
+                                                          console.log(FPFile.url);
+                                                          
+                                                      });
+
+
+
+              
           });
       });
       $(".portada").click(function(e){
             e.preventDefault();
             filepicker.pick(function(FPFile){
-              var style_tag = "background: #EEE url("+FPFile.url+") 50% -400px";
-              $(".hero-unit").attr("style",style_tag);
-            console.log(FPFile.url);
+
+
+              $.ajax( { url: "https://api.mongolab.com/api/1/databases/heroku_app12042861/collections/users?apiKey=ow2pQfeu77QiWIfth6rKt1C0wReEOct6&u=true&q={'id':'<%= fb_user.id %>'}",
+                                                        
+                                                        data: JSON.stringify( { "$set" : {"cover":FPFile.url}} ),
+                                                        type: "PUT",
+                                                        contentType: "application/json" } ).done(function(data){
+                                                          var style_tag = "background: #EEE url("+FPFile.url+") 50% -400px";
+                                                            $(".hero-unit").attr("style",style_tag);
+                                                               console.log(FPFile.url);
+                                                          
+                                                      });
+
+
+              
           });
       });
 });
 
 </script>
+<!-- fin de filepicker.io -->
+<%}%>
+
+ <% if(typeof(fb_user.cover)!='undefined' && fb_user.cover!=''){  %>
+
 <style type="text/css">
   .hero-unit{
+    background: #EEE url(<%=fb_user.cover%>) 50% -400px;
     }
 
 
 </style>
+  <% }else{ %>
+  
+<style type="text/css">
+.hero-unit{
+    background: #EEE url(http://sphotos-b.ak.fbcdn.net/hphotos-ak-snc6/408535_539737279402464_158820707_n.png) 50% -700px;
+    }
+  
+
+
+</style>
+  <% } %>
+
+
 
 <!-- ponemos bootstrap editable -->
 <!-- select2 --> 
-        <link href="http://vitalets.github.io/x-editable/assets/select2/select2.css" rel="stylesheet">
+
+<% if(user_logged==fb_user.username){%>
+ <script src="http://vitalets.github.io/x-editable/assets/momentjs/moment.min.js"></script> 
+
         <script src="http://vitalets.github.io/x-editable/assets/select2/select2.js"></script> 
-<link href="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.4.4/bootstrap-editable/css/bootstrap-editable.css">
+
 <script src="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.4.4/bootstrap-editable/js/bootstrap-editable.min.js"></script>
 
 <script>
@@ -277,13 +359,13 @@ $.fn.editable.defaults.placement = 'right';
 $(document).ready(function(){
                 $(function(){
                   var preload_data = [
-                  { id: '1', text: 'Fotografia'}
-                  , { id: '2', text: 'Bailar'}
-                  , { id: '3', text: 'Estar en Chatme.fm' }
-                  , { id: '4', text: 'Llevar dolares a panama' }
-                  , { id: '5', text: 'Volar con bolsos'}
-                  , { id: '6', text: 'Crear empresas' }
-                  , { id: '7', text: 'Vaciar empresas' }
+                  { id: 'Fotografia', text: 'Fotografia'}
+                  , { id: 'Bailar', text: 'Bailar'}
+                  , { id: 'Estar en Chatme.fm', text: 'Estar en Chatme.fm' }
+                  , { id: 'Llevar dolares a panama', text: 'Llevar dolares a panama' }
+                  , { id: 'Volar con bolsos', text: 'Volar con bolsos'}
+                  , { id: 'Crear empresas', text: 'Crear empresas' }
+                  , { id: 'Vaciar empresas', text: 'Vaciar empresas' }
                 ];
                     $('#intereses_select2').editable({
                         source: preload_data,
@@ -320,5 +402,8 @@ $(document).ready(function(){
 });
 
 </script>
+<%}%>
+
+
   </body>
 </html>

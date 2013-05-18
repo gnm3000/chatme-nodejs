@@ -134,11 +134,36 @@ app.get('/channel', function(req, res) {
 });
 app.post('/post', function (req, res) {
     //req.session.user = .user;
-    res.json(req.body.value);
+
+    mongo.Db.connect(mongoUri, function (err, db) {
+                                  db.collection('users', function(er, collection) {
+                                    var criteria = {username:req.body.pk};
+
+                                    var objNew = '';
+                                    if(req.body.name=="intereses_select2"){
+                                       objNew = {'$set':{intereses: req.body.value}};
+                                    }
+                                     if(req.body.name=="displayName"){
+                                       objNew = {'$set':{displayName: req.body.value}};
+                                    }
+                                     if(req.body.name=="age"){
+                                       objNew = {'$set':{birthday: req.body.value}};
+                                    }
+                                     console.log(JSON.stringify(criteria)+"|"+JSON.stringify(objNew));
+                                    collection.update(criteria,objNew, {},function(er,rs) {
+                                        if(er){console.log("mongoDB"+er);res.send("Error:"+er,400)}
+                                        console.log("fin del socket");
+                                        res.send("OK",200);
+                                    });
+                                  
+                                  });
+                                });
+
+    //res.json(req.body.value);
 });
 app.post('/post_username', function (req, res) {
     //req.session.user = .user;
-    res.send("El usuario ya existe",400);
+    res.send("The function is not implemented",400);
     //res.json({"errors": {"username": "username already exist"} });
 });
 /*
@@ -198,6 +223,7 @@ app.get('/:nick', function (req, res) {
                                     if(!doc){
                                       res.send("UPs! el usuario no se encuentra <a href='/'>Volver a Chatme.fm</a>");}
                                     else{
+                                      
                                       if(req.user){
                                         console.log("yo soy user logueado:"+req.user.username);
                                         //si el usuario esta logueado hay que mirar si es follower.
