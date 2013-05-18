@@ -87,7 +87,18 @@
   <p id="fb_user_name" style="display:none"><%= fb_user.username %></p>
   <div class="datos"><p>
     <a id="displayName" data-type="text" data-pk="<%= fb_user.username %>" data-url="/post" data-original-title="Insert your name and lastname"><%= fb_user.displayName %></a>,
-   vivo en <a id="city"><%= fb_user.location %></a><br>
+   vivo en 
+   <% location_value='' %>
+  <%if(typeof(fb_user.location.name)!='undefined'){
+      location_value=fb_user.location.name;
+    }else{ location_value=fb_user.location;}%>
+
+<input type="text" name="query" value="<%=location_value %>" id="search-input"/>
+ <br>
+
+
+
+
 
 <a href="#" id="age" data-type="combodate" data-value="<%= fb_user.birthday %>" data-format="YYYY-MM-DD" data-viewformat="DD/MM/YYYY"  data-pk="<%= fb_user.username %>" data-url="/post"  data-original-title="Select Date of birth"></a>
 <br>Intereses: 
@@ -104,7 +115,16 @@
   <div class="datos"><p>
     <%= fb_user.displayName %>
 
-<%if(typeof(fb_user.location)!='undefined'){%>,vivo en <%= fb_user.location %> <%}%>
+<%if(typeof(fb_user.location)!='undefined'){%>
+
+,vivo en 
+<%if(typeof(fb_user.location.name)!='undefined'){%>
+<%= fb_user.location.name %> 
+<% }else{ %>
+<%= fb_user.location %> 
+
+<%}%>
+<%}%>
 <%if(typeof(fb_user.birthday)!='undefined'){%><br>Cumple años el <%= fb_user.birthday %>, <%}%>
     
  
@@ -360,7 +380,10 @@ $.fn.editable.defaults.mode = 'popup';
 $.fn.editable.defaults.placement = 'right';
 
 $(document).ready(function(){
-                $(function(){
+             
+
+
+ $(function(){
                   var preload_data = [
                   { id: 'Fotografia', text: 'Fotografia'}
                   , { id: 'Bailar', text: 'Bailar'}
@@ -377,6 +400,9 @@ $(document).ready(function(){
                         }
                     });
                 });
+
+
+
                 $(function(){
                             $('#displayName').editable({
                                 url: '/post',
@@ -390,10 +416,10 @@ $(document).ready(function(){
                                    alert("redireccionar al nuevo perfil");            
                                 }
                             });
-                            $('#city').editable({
-                                url: '/post',
-                                title: 'Enter your city'
-                            });
+                            // $('#city').editable({
+                            //     url: '/post',
+                            //     title: 'Enter your city'
+                            // });
                              $('#age').editable({
                                 format: 'yyyy-mm-dd',    
                                 viewformat: 'dd/mm/yyyy',    
@@ -406,7 +432,95 @@ $(document).ready(function(){
 
 </script>
 <%}%>
+<script type="text/javascript">
+  
+  $(document).ready(function(){
+  // use this hash to cache search results
+  //http://tatiyants.com/how-to-use-json-objects-with-twitter-bootstrap-typeahead/
+  $('#search-input').typeahead({
 
+    source: function (query, process) {
+        // return $.get('/typeahead', { query: query }, function (data) {
+        //     return process(data);
+        // });
+          states = [];
+            map = {};
+        return $.ajax({
+          url: "http://ws.geonames.org/searchJSON",
+          dataType: "jsonp",
+          data: {
+            featureClass: "P",
+            style: "full",
+            maxRows: 12,
+            name_startsWith: query
+          },
+          success: function( data ) {
+            var respuesta = $.map( data.geonames, function( item ) {
+              return item.name + (item.adminName1 ? ", " + item.adminName1 : "") + ", " + item.countryName;
+              // return {
+              //  // label: ,
+              //   //value: item.name
+              // }
+            });
+            //console.log(respuesta);
+            return process(respuesta);
+          }
+        });
+
+
+    },
+    updater: function (item) {
+          //selectedState = map[item].stateCode;
+           $.ajax( { url: "https://api.mongolab.com/api/1/databases/heroku_app12042861/collections/users?apiKey=ow2pQfeu77QiWIfth6rKt1C0wReEOct6&u=true&q={'id':'<%= fb_user.id %>'}",
+                                                        
+                                                        data: JSON.stringify( { "$set" : {"location":item}} ),
+                                                        type: "PUT",
+                                                        contentType: "application/json" } ).done(function(data){
+                                                          console.log("updater"+item);
+                                                          
+                                                      });
+          
+          return item;
+      }
+});
+  // $('#search-input').typeahead({
+  //     property: 'name',
+  //   items:11,
+  //   onselect: function (obj) {
+  //       var obj = JSON.parse(obj);
+
+  //       // You still can use the manufacturer_id here 
+  //       console.log(obj.name);
+
+  //       return obj.name;
+  //   },
+  //     source:function(typeahead, query){
+  //       $.ajax({
+  //         url: "http://ws.geonames.org/searchJSON",
+  //         dataType: "jsonp",
+  //         data: {
+  //           featureClass: "P",
+  //           style: "full",
+  //           maxRows: 12,
+  //           name_startsWith: query
+  //         },
+  //         success: function( data ) {
+  //           var elementos = new Array;
+  //           var resultado = $.map( data.geonames, function( item ) {
+  //             return {
+  //               label: item.name + (item.adminName1 ? ", " + item.adminName1 : "") + ", " + item.countryName
+  //               //value: item.name
+  //             }
+            
+             
+  //           });
+  //           typeahead.process(resultado);
+  //         }
+  //       });
+  //         }
+  // });
+});
+</script>
 
   </body>
 </html>

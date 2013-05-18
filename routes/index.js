@@ -128,7 +128,16 @@ app.get('/logout', function(req, res){
 //     req.session.destroy();
 //     res.redirect('/');
 // });
- 
+ app.get('/getGEONAMES', function(req, res) {
+
+    res.json([
+   "John",
+   "Jane",
+   "Alfredo",
+   "Giovanni",
+   "Superman"
+ ]);
+});
 app.get('/channel', function(req, res) {
     res.render('channel', {});
 });
