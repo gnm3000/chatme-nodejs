@@ -141,7 +141,15 @@ app.post('/post', function (req, res) {
 
                                     var objNew = '';
                                     if(req.body.name=="intereses_select2"){
-                                       objNew = {'$set':{intereses: req.body.value}};
+                                      // aca hay que eliminar el interes undefined
+                                      var intereses_lista = req.body.value;
+                                      var intereses_lista_new =[];
+                                      intereses_lista.forEach(function(p){
+                                              if(p!='undefined'){
+                                                  intereses_lista_new.push(p);
+                                              }
+                                          });
+                                       objNew = {'$set':{intereses: intereses_lista_new}};
                                     }
                                      if(req.body.name=="displayName"){
                                        objNew = {'$set':{displayName: req.body.value}};
@@ -223,7 +231,7 @@ app.get('/:nick', function (req, res) {
                                     if(!doc){
                                       res.send("UPs! el usuario no se encuentra <a href='/'>Volver a Chatme.fm</a>");}
                                     else{
-                                      
+
                                       if(req.user){
                                         console.log("yo soy user logueado:"+req.user.username);
                                         //si el usuario esta logueado hay que mirar si es follower.
