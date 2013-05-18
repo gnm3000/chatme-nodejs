@@ -82,8 +82,9 @@
   <% } %>
 
 <% if(user_logged==fb_user.username){%>
- <h1 id="fb_user_name"><a id="username_editable" data-type="text" data-pk="1" data-url="/post_username" data-original-title="Insert your username"><%= fb_user.username %></a></h1>
+ <h1><a id="username_editable" data-type="text" data-pk="1" data-url="/post_username" data-original-title="Insert your username"><%= fb_user.username %></a></h1>
   <p id="fb_user_name_id" style="display:none"><%= fb_user.id %></p>
+  <p id="fb_user_name" style="display:none"><%= fb_user.username %></p>
   <div class="datos"><p>
     <a id="displayName" data-type="text" data-pk="<%= fb_user.username %>" data-url="/post" data-original-title="Insert your name and lastname"><%= fb_user.displayName %></a>,
    vivo en <a id="city"><%= fb_user.location %></a><br>
