@@ -99,9 +99,36 @@ if(config.auth.facebook.clientid.length) {
 app.get('/explore', function(req, res){
   if(req.isAuthenticated()){
 
+var conditions = [];
+var sex_male = req.query["sex_male"];
+var sex_female = req.query["sex_female"];
+if((sex_female=='true' && sex_male=='true') || (sex_female=='false' && sex_male=='false') ){
+
+}else{
+
+if(sex_female=='true'){conditions.push({gender:'female'});}
+if(sex_male=='true'){conditions.push({gender:'male'});}
+
+
+
+}
+var ciudad = req.query["ciudad"];
+if(ciudad!=''){conditions.push({ciudad:ciudad})}
+
+console.log("conditions="+JSON.stringify(conditions));
+var edad = req.query["edad"];
+//if(conditions.length==0){conditions=null};
+conditions = {'$and':conditions};
+console.log("conditions="+JSON.stringify(conditions));
 var callback1 = function(db,items,members){
   db.collection("promotions",function(er,collection){
-    collection.find().toArray(function(er,promotions){
+
+    var fechaInicial = new Date(); // 22 de Marzo del 2010 -  los meses comienzan a contar desde 0
+    valorFecha = fechaInicial.valueOf(),  // 1269226800000
+    valorFechaTermino = valorFecha -  ( 1 * 1 * 60 * 60 * 1000 ), // 1 antes, como milisegundos ( días * horas * minutos * segundos * milisegundos )
+    fechaTermino = new Date(valorFechaTermino) // nuevo objeto de fecha: 20 de mayo - Thu May 20 2010 23:00:00 GMT-0400 (CLT)
+    console.log("la fecha es "+fechaTermino);
+    collection.find({"start": {"$gte": fechaTermino, "$lt": new Date()}}).toArray(function(er,promotions){
         ;
         res.render('explore_nico', { 
 
@@ -116,7 +143,7 @@ var callback1 = function(db,items,members){
                                     // collection.insert({'mykey': 'myvalue'}, {safe: true}, function(er,rs) {
                                     //     console.log("mongoDB"+er);
                                     // });
-      collection.find().toArray(function(err, items) {
+      collection.find(conditions).toArray(function(err, items) {
         rClient.smembers("users_online",function(err,members){
           console.log("users_online_for_home:"+members);
           callback1(db,items,members);
