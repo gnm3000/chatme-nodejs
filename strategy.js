@@ -47,40 +47,45 @@ if(config.auth.facebook.clientid.length) {
                                         if(typeof(data.cover)!="undefined"){
                                           profile.cover = data.cover.source;
                                         }else{
-                                          profile.cover = 'http://slowbuddy.com/wp-content/gallery/timeline-covers/kids-in-love-facebook-cover.png';
+                                          profile.cover = 'http://sphotos-b.ak.fbcdn.net/hphotos-ak-snc6/408535_539737279402464_158820707_n.png';
+                                        }
+                                        if(typeof(data.birthday)!="undefined"){
+                                          profile.birthday = data.birthday;
+                                        }else{
+                                          profile.birthday = '';
                                         }
                                          if(typeof(data.location)!="undefined"){
                                           profile.location = data.location.name;
                                         }else{
                                           profile.location = '';
                                         }
-                                        
+                                                mongo.Db.connect(mongoUri, function (err, db) {
+                                                                            db.collection('users', function(er, collection) {
+                                                                              //me fijo si ya esta en la base de datos
+                                                                            collection.findOne({email:profile._json.email},function(err,doc){
+                                                                              if(doc){
+                                                                                profile.nuevo = 0;
+                                                                                console.log("profile nuevo 0");
+                                                                              }else{
+
+                                                                                
+
+                                                                                profile.picture = "https://graph.facebook.com/"+profile.id+"/picture?width=140&height=140";
+                                                
+                                                                                collection.insert(profile, {safe: true}, function(er,rs) {
+                                                                                  console.log("mongoDB"+er);
+                                                                                });
+                                                                                profile.nuevo = 1;
+                                                                                console.log("profile nuevo 1");
+                                                                              }
+                                                                              
+                                                                               return done(null,profile);
+                                                                            })
+                                                                            });
+                                                                          });
 
                                       });
-      profile.picture = "https://graph.facebook.com/"+profile.id+"/picture?width=140&height=140";
-      mongo.Db.connect(mongoUri, function (err, db) {
-                                  db.collection('users', function(er, collection) {
-                                    //me fijo si ya esta en la base de datos
-                                  collection.findOne({email:profile._json.email},function(err,doc){
-                                    if(doc){
-                                      profile.nuevo = 0;
-                                      console.log("profile nuevo 0");
-                                    }else{
-
-                                      
-
-                                      
-                                      collection.insert(profile, {safe: true}, function(er,rs) {
-                                        console.log("mongoDB"+er);
-                                      });
-                                      profile.nuevo = 1;
-                                      console.log("profile nuevo 1");
-                                    }
-                                    
-                                     return done(null,profile);
-                                  })
-                                  });
-                                });
+      
       
       
       

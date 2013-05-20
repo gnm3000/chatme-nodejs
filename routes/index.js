@@ -23,14 +23,7 @@ app.get('/*', function(req, res, next) {
 });
 
 
-app.get('/pagar-regalo', function(req,res){
 
-     res.render('allopass', {});
-});
-app.get('/pagar-regalo/acceso', function(req,res){
-
-     res.render('allopass_acceso', {});
-});
 app.get('/', function(req,res){
 
 if(req.isAuthenticated()){
@@ -103,11 +96,114 @@ if(config.auth.facebook.clientid.length) {
 
 
 }
-app.get('/profile', function(req, res){
-  //req.logout();
-  //res.render('')
-  res.send('profile-perfil donde puede editar');
+app.get('/explore', function(req, res){
+   if(req.isAuthenticated()){
+     res.render("explore_nico");
+  } else{
+    res.redirect('/');
+  }
+ 
+
 });
+
+app.get('/pagar-regalo', function(req,res){
+res.render('allopass', {});
+    
+});
+
+
+app.get('/pagar-regalo/acceso', function(req,res){
+      var code = req.query["CODE"];
+      var trxid = req.query["trxid"];
+      var transaction_id = req.query["transaction_id"];
+      /*
+      Aca se tiene que acreditar la promocion al usuario. */
+     res.render('allopass_acceso', {});
+});
+
+
+app.get('/promote', function(req, res){
+   if(req.isAuthenticated()){
+      res.render('allopass', {});
+  } else{
+    res.redirect('/');
+  }
+ 
+
+});
+app.get('/profile', function(req, res){
+  if(req.isAuthenticated()){
+     res.redirect("/"+req.user.username);
+  } else{
+    res.redirect('/');
+  }
+
+});
+
+app.get("/mongo",function(req,res){
+
+function insertElemento(collection,item){
+var criteria = {id:item.id};
+var picture = "https://graph.facebook.com/"+item.id+"/picture?width=140&height=140";
+
+var objNew = {'$set':{location: picture}};
+collection.update(criteria,objNew, {},function(er,rs) {
+                                        if(er){console.log("mongoDB"+er);res.send("Error:"+er,400)}
+                                        console.log("se hizo update en:"+item.displayName);
+                                        //res.send("OK",200);
+                                    });
+}
+
+mongo.Db.connect(mongoUri, function (err, db) {
+                                  db.collection('users', function(er, collection) {
+                                    // collection.insert({'mykey': 'myvalue'}, {safe: true}, function(er,rs) {
+                                    //     console.log("mongoDB"+er);
+                                    // });
+                                  console.log("mongoDB");
+                                  collection.find().toArray(function(err, items) {
+                                    items.forEach(function(el,index){
+                                      if(typeof(el.location)=="undefined"){
+                                        console.log("Es undefined,"+el.displayName);
+                                       // insertElemento(collection,el);
+                                      }else{
+
+                                        console.log("No es undefined");
+                                      }
+                                    });
+                                  });
+                                });
+
+});
+});
+
+app.get('/friends', function(req, res){
+  if(req.isAuthenticated()){
+
+
+mongo.Db.connect(mongoUri, function (err, db) {
+                                  db.collection('users', function(er, collection) {
+                                    // collection.insert({'mykey': 'myvalue'}, {safe: true}, function(er,rs) {
+                                    //     console.log("mongoDB"+er);
+                                    // });
+                                  collection.find().toArray(function(err, items) {
+                                    rClient.smembers("users_online",function(err,members){
+            console.log("users_online_for_home:"+members);
+            res.render('friends_nico', { 
+                                            user:req.user,followers:items,users_online:members});
+        })
+                                         
+                                 
+                                    });
+                                  });
+                                });
+
+    
+  } else{
+    res.redirect('/');
+  }
+ 
+});
+
 app.get('/talks', function(req, res){
   if(req.isAuthenticated()){
     res.render("talks_nico",{user:req.user});
@@ -229,6 +325,10 @@ app.get('/:nick', function (req, res) {
      var follower = false;
     //regenerate new session & store user from previous session (if it exists)
     //req.session.regenerate(function (err) {
+
+      /*
+     
+      */
         req.session.user_anon = user_anon;
         console.log("el user_anon en /:nick es:"+req.session.user_anon);
                                  mongo.Db.connect(mongoUri, function (err, db) {

@@ -53,19 +53,19 @@
           <div class="nav-collapse collapse">
             <ul class="nav">
                             <li class="">
-                <a href="chat.html">Conversaciones</a>
+                <a href="/talks">Conversaciones</a>
               </li>
               <li class="active">
-                <a href="">Perfil</a>
+                <a href="/profile">Perfil</a>
               </li>
               <li class="">
-                <a href="amigos.html">Amigos</a>
+                <a href="/friends">Amigos</a>
               </li>
               <li class="">
-            <a href="explorar.html">Explorar</a>
+            <a href="/explore">Explorar</a>
             </li>
             <li class="">
-              <a href="index.html">Salir</a>
+              <a href="/logout">Salir</a>
               </li>
                           </ul>
           </div>
@@ -88,21 +88,16 @@
   <div class="datos"><p>
     <a id="displayName" data-type="text" data-pk="<%= fb_user.username %>" data-url="/post" data-original-title="Insert your name and lastname"><%= fb_user.displayName %></a>,
    vivo en 
-   <% location_value='' %>
-  <%if(typeof(fb_user.location.name)!='undefined'){
-      location_value=fb_user.location.name;
-    }else{ location_value=fb_user.location;}%>
-
-<input type="text" name="query" value="<%=location_value %>" id="search-input"/>
+<input type="text" name="query" value="<%=fb_user.location %>" id="search-input"/>
  <br>
 
 
 
 
 
-<a href="#" id="age" data-type="combodate" data-value="<%= fb_user.birthday %>" data-format="YYYY-MM-DD" data-viewformat="DD/MM/YYYY"  data-pk="<%= fb_user.username %>" data-url="/post"  data-original-title="Select Date of birth"></a>
+<a href="#" id="age" data-type="combodate" data-value="<% if(fb_user.birthday){%><%=fb_user.birthday%><%} %>" data-format="MM-DD-YYYY" data-viewformat="DD/MM/YYYY"  data-pk="<%= fb_user.username %>" data-url="/post"  data-original-title="Select Date of birth"></a>
 <br>Intereses: 
-<a href="#" id="intereses_select2" data-value="<%= fb_user.intereses %>" data-type="select2" data-pk="<%= fb_user.username %>"  data-url="/post" data-original-title="Agrega intereses"></a>
+<a href="#" id="intereses_select2" data-value="<%if(fb_user.intereses){%><%= fb_user.intereses %><%}%>" data-type="select2" data-pk="<%= fb_user.username %>"  data-url="/post" data-original-title="Agrega intereses"></a>
   </p>
 <p>
   
@@ -115,17 +110,11 @@
   <div class="datos"><p>
     <%= fb_user.displayName %>
 
-<%if(typeof(fb_user.location)!='undefined'){%>
+<%if(fb_user.location!=''){%>
 
-,vivo en 
-<%if(typeof(fb_user.location.name)!='undefined'){%>
-<%= fb_user.location.name %> 
-<% }else{ %>
-<%= fb_user.location %> 
-
+,vivo en <%= fb_user.location %> 
 <%}%>
-<%}%>
-<%if(typeof(fb_user.birthday)!='undefined'){%><br>Cumple años el <%= fb_user.birthday %>, <%}%>
+<%if(fb_user.birthday!=''){%><br>Cumple años el <%= fb_user.birthday %>, <%}%>
     
  
 <%if(typeof(fb_user.intereses)!='undefined'){%>
