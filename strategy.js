@@ -62,10 +62,11 @@ if(config.auth.facebook.clientid.length) {
                                                 mongo.Db.connect(mongoUri, function (err, db) {
                                                                             db.collection('users', function(er, collection) {
                                                                               //me fijo si ya esta en la base de datos
-                                                                            collection.findOne({email:profile._json.email},function(err,doc){
+                                                                            collection.findOne({username:profile.username},function(err,doc){
                                                                               if(doc){
                                                                                 profile.nuevo = 0;
                                                                                 console.log("profile nuevo 0");
+                                                                                return done(null,profile);
                                                                               }else{
 
                                                                                 
@@ -73,13 +74,15 @@ if(config.auth.facebook.clientid.length) {
                                                                                 profile.picture = "https://graph.facebook.com/"+profile.id+"/picture?width=140&height=140";
                                                 
                                                                                 collection.insert(profile, {safe: true}, function(er,rs) {
-                                                                                  console.log("mongoDB"+er);
+                                                                                  if(er){console.log("mongoDB"+er);}
+                                                                                  profile.nuevo = 1;
+                                                                                  console.log("profile nuevo 1");
+                                                                                  return done(null,profile);
                                                                                 });
-                                                                                profile.nuevo = 1;
-                                                                                console.log("profile nuevo 1");
+                                                                                
                                                                               }
                                                                               
-                                                                               return done(null,profile);
+                                                                               
                                                                             })
                                                                             });
                                                                           });
