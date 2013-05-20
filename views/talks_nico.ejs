@@ -113,13 +113,27 @@ cursor: pointer;
 
                           <div class="span4">
                             <!-- AddThis Button BEGIN -->
-<div class="addthis_toolbox addthis_default_style addthis_32x32_style">
+<div class="addthis_toolbox addthis_default_style addthis_32x32_style"
+addthis:url="http://chatme.fm/<%= user.username %>"
+addthis:title="Mira esto! Habla conmigo anonimamente!"
+addthis:description="Chatme.fm te permite chatear con usuarios anonimamente"> 
+
 <a class="addthis_button_facebook"></a>
 <a class="addthis_button_twitter"></a>
 <a class="addthis_button_google_plusone_share"></a>
 <a class="addthis_button_compact"></a><a class="addthis_counter addthis_bubble_style"></a>
 </div>
-<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=undefined"></script>
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=undefined">
+  
+  var addthis_config =
+{
+   // ... members go here
+}
+var addthis_share =
+{
+   url:
+}
+</script>
 <!-- AddThis Button END -->
                            <!--  <div class="facebook"><a href="facebok.html">Facebook</a></div>
                                     <div class="twitter"><a href="twitter.html">Twitter</a></div>
