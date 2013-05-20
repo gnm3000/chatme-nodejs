@@ -52,6 +52,7 @@
           <a class="brand" href="./index.html"><img src="/chatme/img/logo3.png"></a>
           <div class="nav-collapse collapse">
             <ul class="nav">
+              <% if(user_logged!=''){%>
                             <li class="">
                 <a href="/talks">Conversaciones</a>
               </li>
@@ -66,7 +67,12 @@
             </li>
             <li class="">
               <a href="/logout">Salir</a>
-              </li>
+              </li> <%}else{%>
+          <li class="">
+            <a href="/">Crea tu cuenta</a>
+            </li>
+    
+              <%}%>
                           </ul>
           </div>
         </div>
