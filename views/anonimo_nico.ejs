@@ -11,7 +11,7 @@
     <!-- Le styles -->
     <link href="http://twitter.github.io/bootstrap/assets/css/bootstrap.css" rel="stylesheet">
     <link href="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.4.4/bootstrap-editable/css/bootstrap-editable.css">
-        <link href="http://vitalets.github.io/x-editable/assets/select2/select2.css" rel="stylesheet">
+       
 
 
     
@@ -367,7 +367,7 @@ filepicker.setKey('A7nALgSYjQaSMszgI0sigz');
  <script src="http://vitalets.github.io/x-editable/assets/momentjs/moment.min.js"></script> 
 
         <script src="http://vitalets.github.io/x-editable/assets/select2/select2.js"></script> 
-
+ <link href="http://vitalets.github.io/x-editable/assets/select2/select2.css" rel="stylesheet">
 <script src="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.4.4/bootstrap-editable/js/bootstrap-editable.min.js"></script>
 
 <script>
@@ -379,16 +379,16 @@ $(document).ready(function(){
 
 
  $(function(){
-// var preload_data = [
-//                   { id: 'Fotografia', text: 'Fotografia'}
-//                   , { id: 'Bailar', text: 'Bailar'}
-//                   , { id: 'Estar en Chatme.fm', text: 'Estar en Chatme.fm' }
-//                   , { id: 'Llevar dolares a panama', text: 'Llevar dolares a panama' }
-//                   , { id: 'Volar con bolsos', text: 'Volar con bolsos'}
-//                   , { id: 'Crear empresas', text: 'Crear empresas' }
-//                   , { id: 'Vaciar empresas', text: 'Vaciar empresas' }
-//                 ];
-var preload_data = ['Fotografia','Bailar','Estar en Chatme.fm','Llevar dolares','Crear empresas',"vaciar empresas"];
+var preload_data = [
+                  { id: 'Fotografia', text: 'Fotografia'}
+                  , { id: 'Bailar', text: 'Bailar'}
+                  , { id: 'Estar en Chatme.fm', text: 'Estar en Chatme.fm' }
+                  , { id: 'Llevar dolares a panama', text: 'Llevar dolares a panama' }
+                  , { id: 'Volar con bolsos', text: 'Volar con bolsos'}
+                  , { id: 'Crear empresas', text: 'Crear empresas' }
+                  , { id: 'Vaciar empresas', text: 'Vaciar empresas' }
+                ];
+//var preload_data = ['Fotografia','Bailar','Estar en Chatme.fm','Llevar dolares','Crear empresas',"vaciar empresas"];
 
 
    $("#intereses_select22").select2({
@@ -397,11 +397,11 @@ var preload_data = ['Fotografia','Bailar','Estar en Chatme.fm','Llevar dolares',
                   });
                   
                     $('#intereses_select2').editable({
-                        //source: preload_data,
+                        source: preload_data,
                         select2: {
-                           //multiple: true,
-                            tags:preload_data,
-                          maximumInputLength: 15
+                           multiple: true,
+                        //    tags:preload_data,
+                          maximumInputLength: 25
                         }
                     });
                 });

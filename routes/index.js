@@ -23,7 +23,82 @@
 });
 
 
+app.get('/admin', function(req,res){
 
+var callback2 = function(items,db,configuration){
+
+db.collection("promotions",function(er,collection){
+  collection.find().toArray(function(er,promotions){
+    res.render("admin",{users:items,configuration:configuration,promotions:promotions});
+  });
+});
+  
+}
+
+var callback1 = function(items,db){
+
+db.collection("configuration",function(er,collection){
+collection.findOne({config:1},function(er,configuration){
+   callback2(items,db,configuration);
+});
+
+});
+         
+}
+  mongo.Db.connect(mongoUri, function (err, db) {
+    db.collection('users', function(er, collection) {
+                                    // collection.insert({'mykey': 'myvalue'}, {safe: true}, function(er,rs) {
+                                    //     console.log("mongoDB"+er);
+                                    // });
+    collection.find().toArray(function(err, items) {
+     
+       callback1(items,db);
+       
+     
+
+
+    });
+  });
+  });
+  
+});
+app.post('/post_config', function(req,res){
+  
+    //req.session.user = .user;
+    //res.send("OK");
+    mongo.Db.connect(mongoUri, function (err, db) {
+      db.collection('configuration', function(er, collection) {
+        var criteria = {config:1};
+
+        var objNew = '';
+        if(req.body.name=="users_vip"){
+                                      // aca viene la lista de los vip
+                                      var intereses_lista = req.body.value;
+                                      var intereses_lista_new =[];
+                                      intereses_lista.forEach(function(p){
+                                        if(p!='undefined'){
+                                          intereses_lista_new.push(p);
+                                        }
+                                      });
+                                      objNew = {'$set':{users_vip: intereses_lista_new}};
+                                    }
+                                    if(req.body.name=="cantidad_horas"){
+                                     objNew = {'$set':{cantidad_horas: req.body.value}};
+                                   }
+                                  
+                                  console.log(JSON.stringify(criteria)+"|"+JSON.stringify(objNew));
+                                   collection.update(criteria,objNew, {upsert:true},function(er,rs) {
+                                    if(er){console.log("mongoDB"+er);res.send("Error:"+er,400)}
+                                    console.log("fin del socket");
+                                    res.send("OK",200);
+                                  });
+
+                                 });
+});
+
+    //res.json(req.body.value);
+  
+});
  app.get('/', function(req,res){
 
   if(req.isAuthenticated()){
@@ -120,16 +195,25 @@ var edad = req.query["edad"];
 //if(conditions.length==0){conditions=null};
 conditions = {'$and':conditions};
 console.log("conditions="+JSON.stringify(conditions));
-var callback1 = function(db,items,members){
+var callback1 = function(db,items,members,configuration){
   db.collection("promotions",function(er,collection){
 
     var fechaInicial = new Date(); // 22 de Marzo del 2010 -  los meses comienzan a contar desde 0
     valorFecha = fechaInicial.valueOf(),  // 1269226800000
-    valorFechaTermino = valorFecha -  ( 1 * 1 * 60 * 60 * 1000 ), // 1 antes, como milisegundos ( días * horas * minutos * segundos * milisegundos )
+    //valorFechaTermino = valorFecha -  ( 1 * configuration.cantidad_horas * 60 * 60 * 1000 ), // 1 antes, como milisegundos ( días * horas * minutos * segundos * milisegundos )
+    valorFechaTermino = valorFecha -  ( 1 * 1 * 1 * 60 * 1000 ),
+
     fechaTermino = new Date(valorFechaTermino) // nuevo objeto de fecha: 20 de mayo - Thu May 20 2010 23:00:00 GMT-0400 (CLT)
     console.log("la fecha es "+fechaTermino);
-    collection.find({"start": {"$gte": fechaTermino, "$lt": new Date()}}).toArray(function(er,promotions){
-        ;
+    
+    var start_filter = {"$gte": fechaTermino, "$lt": new Date()};
+   // var username_filter = {};
+    //{"username":username_filter}
+    //var filters = {'$or':{[username:'$in':configuration.users_vip],[start:start_filter]}};
+    var filters = {'$or':[{"username":{'$in':configuration.users_vip}},{"start":start_filter}]};
+    console.log(JSON.stringify(filters));
+    collection.find(filters).toArray(function(er,promotions){
+        console.log("PROMO="+promotions);
         res.render('explore_nico', { 
 
             user:req.user,followers:items,users_online:members,promotions:promotions});
@@ -146,7 +230,14 @@ var callback1 = function(db,items,members){
       collection.find(conditions).toArray(function(err, items) {
         rClient.smembers("users_online",function(err,members){
           console.log("users_online_for_home:"+members);
-          callback1(db,items,members);
+          db.collection("configuration",function(er,collection){
+            collection.findOne({config:1},function(er,configuration){
+              callback1(db,items,members,configuration);
+            });
+          });
+
+
+          
           // res.render('explore_nico', { 
           //   user:req.user,followers:items,users_online:members});
         })

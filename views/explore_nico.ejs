@@ -73,15 +73,18 @@
         <div id="destacados">
         <h1><strong>★</strong> Destacados</h1>
                 <div id="caja">
-        <div class="row" >
-        
+        <div id="foo0" class="row" >
+          <% cantidad = 0; %>
+          <% while(cantidad<=15){ %>
               <% for(var i=0; i<promotions.length; i++) { %>
               <div style="text-align:center;float:left">
-            <a title="Entra y habla con <%=promotions[i].username%>" data-toggle="tooltip"  alt="" target="_blank" href="/<%=promotions[i].username%>">
+            <a title="Entra y habla con <%=promotions[i].username%> - <%=promotions[i].start%>" data-toggle="tooltip"  alt="" target="_blank" href="/<%=promotions[i].username%>">
             <img width="100"  src="<%=promotions[i].picture%>" />
             </a> </div>
+              <% cantidad++;%>
               <%}%>
-              
+
+          <%}%>
 
            
             
@@ -89,22 +92,12 @@
             
               
                   
-                     <div style="text-align:center;float:left">
-                    
-                  <a title="Entra y habla con Juan Pedro López" data-toggle="tooltip"  alt="" target="_blank" href="nick/juanpedrolz/index.html">
-                  <img width="100"  src="https://graph.facebook.com/632554049/picture?width=100&height=100" />
-                  </a>
-                  </div><div style="text-align:center;float:left">
-                    
-                  <a title="Entra y habla con Cristian Romero" data-toggle="tooltip"  alt="" target="_blank" href="nick/cristian.romero.37669">
-                  <img width="100"  src="https://graph.facebook.com/1240232632/picture?width=100&height=100" />
-                  </a>
-                  </div></div></div>
+                     </div></div>
      
                   
       <a  class="btn btn-info" id="aparecer_aqui">★ Aparecer Aquí ★</a>  
       <p id="aparecer_aqui_descripcion" style="text-align:center;display:none">
-        Es fácil! Conviertete en usuario descadado instantáneamente, Manda un sms con CODE al 27777 por tu celular!<br/>
+        Es fácil! Convertite en usuario descadado por 24 hs!. Manda un sms con CODE al 27777 por tu celular!<br/>
 
  <script type="text/javascript" src="https://payment.allopass.com/buy/checkout.apu?ids=298783&idd=1272560&lang=es"></script>
 
@@ -388,7 +381,23 @@ $("a.ap-payment-button").html(html_button);
   // });
 });
 </script>
+<script type="text/javascript" language="javascript" src="/chatme/js/carrousel-plugin/jquery.carouFredSel-6.2.1-packed.js"></script>
+  <script type="text/javascript">
+$(document).ready(function(){
 
-  
+  $('#foo0').carouFredSel({
+    circular: true,
+    infinite    : true,
+    width       : null,
+    height: "100px",
+//fx=scroll,directscroll,fade,crossfade,cover,cover-fade,uncover,uncover-fade
+    scroll:{pauseOnHover: "resume",duration:2000,fx:"crossfade"
+
+}
+
+  });
+});
+  </script>
+
   </body>
 </html>
