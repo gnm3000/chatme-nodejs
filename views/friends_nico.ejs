@@ -83,11 +83,12 @@
                     </li>
         </ul>
         <div id="h1amigos">
-        <h1>Seguis a 23 Usuarios</h1>
+            <% users = followers;%>
+        <h1>Seguis a <%=users.length%> Usuarios</h1>
 <h2>Estas personas no saben que las sigues. Esto es completamente anónimo... </h2></div>
 <div class="row-fluid">
             <ul class="thumbnails" id="columns">
-             <% users = followers;%>
+           
  <% for(var i=0; i<users.length; i++) { %>
       
       <%
@@ -110,7 +111,12 @@
                     <a class="btn btn-pun" href="#"> <strong>4/5</strong></a><a class="btn btn-gusta" href="#"><strong>150</strong></a>
                    
                     
-                    </div><a href="#" class="btn btn-info">Dejar de Seguir</a> </p>
+                    </div>
+
+                    <a class="btn btn-info unfollow" data-user="<%= users[i].username %>" >
+                         Dejar de Seguir
+                        </a>
+                    </p>
                   </div></div>
                 
               </li>
@@ -220,6 +226,52 @@ $("a").tooltip();
 
 
 </style>
+<!-- BEGIN SOCKET FOLLOW-->
+<script src="/socket.io/socket.io.js"></script>
+    <script type="text/javascript">
 
+     var host = window.location.host.split(':')[0];
+        var socket = io.connect('http://' + host, {reconnect:false, 'try multiple transports':false});
+        var intervalID;
+        var reconnectCount = 0;
+
+        socket.on('connect', function () {
+            console.log('connected');
+        });
+        socket.on('connecting', function () {
+            console.log('connecting');
+        });
+
+
+        </script>
+<script type="text/javascript">
+  $(document).ready(function(){
+      /* BEGIN FOLLOW*/
+         $('#columns').on('click', '.follow', function(e) {
+             e.preventDefault();
+             socket.emit("follow_user",JSON.stringify({"user":'<%=user.username%>',"follow_to":$(this).data("user")}));
+             //console.log("socket:"+socket.id);
+            console.log("follow");
+            $(this).text("Dejar de seguir");
+            $(this).removeClass("follow");
+            $(this).addClass("unfollow");
+            
+        });
+          $('#columns').on('click', '.unfollow', function(e) {
+             e.preventDefault();
+             socket.emit("unfollow_user",JSON.stringify({"user":'<%=user.username%>',"follow_to":$(this).data("user")}));
+            console.log("unfollow");
+            $(this).text("Seguir");
+            $(this).removeClass("unfollow");
+            $(this).addClass("follow");
+        });
+       $('.not-follow').click(function(e){
+        e.preventDefault();
+        alert("debe loguearse");
+       });
+       /* END FOLLOW*/
+  });
+</script>
+<!-- END SOCKET FOLLOW-->
   </body>
 </html>

@@ -288,9 +288,27 @@ var callback1 = function(db,items,members,configuration){
     console.log(JSON.stringify(filters));
     collection.find(filters).toArray(function(er,promotions){
         console.log("PROMO="+promotions);
-        res.render('explore_nico', { 
 
-            user:req.user,followers:items,users_online:members,promotions:promotions});
+        db.collection("users",function(er,collection){
+          if(er!=null){console.log("error:"+er)}else{
+            collection.findOne({username:req.user.username},function(er,user_obj){
+              console.log("USUARIO="+JSON.stringify(user_obj));
+
+              db.collection("followers",function(er,collection){
+                 if(er!=null){console.log("error:"+er)}else{
+                  collection.findOne({user:req.user.username},function(er,following_user){
+
+               res.render('explore_nico', {follow:following_user.follow,user:req.user,users:items,users_online:members,promotions:promotions,user_obj:user_obj});
+            
+                  });
+                 }
+              });
+            
+
+            });
+          }
+        });
+       
     });
     
   });

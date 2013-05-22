@@ -105,6 +105,25 @@
 
       </p>
 </div> 
+
+<% if(typeof(user_obj.set_explore)=='undefined'){%>
+<!-- inicia el seteo-->
+<div id="destacados" class="box_age_city">
+  <div class="row">
+    <div class="span12">
+    <h3>Para que los usuarios puedan encontrarte debes seleccionar correctamente tu ciudad y tu edad</h3>
+<p>Seleecione ciudad: <input id="set_city" type="text" name="query" value="" class="search-input"/> y su fecha de nacimiento: <input type="text" id="set_bithday" value="<%=user_obj.birthday%>"></p><p>
+No te volveremos a pedir estos datos una vez guardados<br/>
+<button class="btn btn-info" id="set_city_age">Guardar</button>
+</p>
+
+  </div>
+</div>
+
+</div>
+
+<%}%>
+<!--fin set age/buthr-->
 <div id="destacados" >      
 <div class="row">
 <div class="span3"><h2>Quiero:</h2><label class="checkbox">
@@ -129,8 +148,8 @@
                                     
                   
                 </select></div>
-<div class="span3"><h2>Vive en:</h2>
-<input type="text" name="query" value="" id="search-input"/>
+<div  class="span3"><h2>Vive en:</h2>
+<input type="text" name="query" value="" class="search-input" id="search-input"/>
   </div>
                                                                       
 
@@ -141,7 +160,7 @@
 </div>
 <div class="row-fluid">
             <ul class="thumbnails">
-             <% users = followers;%>
+             
  <% for(var i=0; i<users.length; i++) { %>
       
       <%
@@ -168,7 +187,11 @@
                     <a class="btn btn-pun" href="#"> <strong>4/5</strong></a><a class="btn btn-gusta" href="#"><strong>150</strong></a>
                    
                     
-                    </div><a href="#" class="btn btn-info">Dejar de Seguir</a> </p>
+                    </div>
+                  
+                    <a href="#" data-username="<%= users[i].username%>" username="<%= users[i].username%>" class="btn btn-info follow following">Seguir</a> 
+
+                  </p>
                   </div></div>
                 
               </li>
@@ -307,7 +330,7 @@ $("a.ap-payment-button").html(html_button);
   $(document).ready(function(){
   // use this hash to cache search results
   //http://tatiyants.com/how-to-use-json-objects-with-twitter-bootstrap-typeahead/
-  $('#search-input').typeahead({
+  $('.search-input').typeahead({
 
     source: function (query, process) {
         // return $.get('/typeahead', { query: query }, function (data) {
@@ -400,6 +423,135 @@ $(document).ready(function(){
   });
 });
   </script>
+<!-- BEGIN SOCKET FOLLOW-->
+<script src="/socket.io/socket.io.js"></script>
+    <script type="text/javascript">
 
+     var host = window.location.host.split(':')[0];
+        var socket = io.connect('http://' + host, {reconnect:false, 'try multiple transports':false});
+        var intervalID;
+        var reconnectCount = 0;
+
+        socket.on('connect', function () {
+            console.log('connected');
+        });
+        socket.on('connecting', function () {
+            console.log('connecting');
+        });
+
+
+        </script>
+<script type="text/javascript">
+  $(document).ready(function(){
+      /* BEGIN FOLLOW*/
+         $('#columns').on('click', '.follow', function(e) {
+             e.preventDefault();
+             socket.emit("follow_user",JSON.stringify({"user":'<%=user.username%>',"follow_to":$(this).data("user")}));
+             //console.log("socket:"+socket.id);
+            console.log("follow");
+            $(this).text("Dejar de seguir");
+            $(this).removeClass("follow");
+            $(this).addClass("unfollow");
+            
+        });
+          $('#columns').on('click', '.unfollow', function(e) {
+             e.preventDefault();
+             socket.emit("unfollow_user",JSON.stringify({"user":'<%=user.username%>',"follow_to":$(this).data("user")}));
+            console.log("unfollow");
+            $(this).text("Seguir");
+            $(this).removeClass("unfollow");
+            $(this).addClass("follow");
+        });
+       $('.not-follow').click(function(e){
+        e.preventDefault();
+        alert("debe loguearse");
+       });
+       /* END FOLLOW*/
+  });
+</script>
+<!-- END SOCKET FOLLOW-->
+
+
+<script type="text/javascript">
+  //hago push de todos los folowers
+  //foreach de followers
+  $(document).ready(function(){
+  var following_user = [];
+  <%if(follow){%> 
+<% follow.forEach(function(el,index){%>
+  following_user.push('<%=el%>');
+  <%});%>
+  <%}%>
+
+following_user.forEach(function(el,index){
+  $(".following[username='"+el+"']").removeClass("follow").addClass("unfollow").html("Dejar de Seguir");
+});
+  //y hago $(".following[data-username=elemento]").removeClass("follow").addClass("unfollow");
+});
+</script>
+
+<!-- BEGIN SOCKET FOLLOW-->
+<script src="/socket.io/socket.io.js"></script>
+    <script type="text/javascript">
+
+     var host = window.location.host.split(':')[0];
+        var socket = io.connect('http://' + host, {reconnect:false, 'try multiple transports':false});
+        var intervalID;
+        var reconnectCount = 0;
+
+        socket.on('connect', function () {
+            console.log('connected');
+        });
+        socket.on('connecting', function () {
+            console.log('connecting');
+        });
+
+
+        </script>
+<script type="text/javascript">
+  $(document).ready(function(){
+      /* BEGIN FOLLOW*/
+         $('.thumbnails').on('click', '.follow', function(e) {
+             e.preventDefault();
+             socket.emit("follow_user",JSON.stringify({"user":'<%=user.username%>',"follow_to":$(this).data("username")}));
+             //console.log("socket:"+socket.id);
+            console.log("follow");
+            $(this).text("Dejar de seguir");
+            $(this).removeClass("follow");
+            $(this).addClass("unfollow");
+            
+        });
+          $('.thumbnails').on('click', '.unfollow', function(e) {
+             e.preventDefault();
+             socket.emit("unfollow_user",JSON.stringify({"user":'<%=user.username%>',"follow_to":$(this).data("username")}));
+            console.log("unfollow");
+            $(this).text("Seguir");
+            $(this).removeClass("unfollow");
+            $(this).addClass("follow");
+        });
+       $('.not-follow').click(function(e){
+        e.preventDefault();
+        alert("debe loguearse");
+       });
+       /* END FOLLOW*/
+  });
+</script>
+<!-- END SOCKET FOLLOWf-->
+
+<script type="text/javascript">
+  $("#set_city_age").click(function(e){
+e.preventDefault();
+var city = $("#set_city").val();
+var birthday = $("#set_bithday").val();
+//aca hago guardado con mongoDB.
+$.ajax( { url: 
+  'https://api.mongolab.'+'com/api/1/databases/heroku_app12042861/collections/users?'+'apiKey=ow2pQfeu77QiWIfth6rKt1C0wReEOct6&'+'q={"username":"<%=user_obj.username%>"}',
+          data: JSON.stringify( { "$set" : { "location" : city,"birthday":birthday,"set_explore":1 } } ),
+          type: "PUT",
+          contentType: "application/json" } ).done(function(data){
+            $(".box_age_city").hide(600);
+          });
+  });
+</script>
   </body>
 </html>
