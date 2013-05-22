@@ -114,7 +114,7 @@
  <h1 id="fb_user_name"><%= fb_user.username %></h1>
   <p id="fb_user_name_id" style="display:none"><%= fb_user.id %></p>
   <div class="datos"><p>
-    <%= fb_user.displayName %>
+    <span class="replace_with_links"><%= fb_user.displayName %></span>
 
 <%if(fb_user.location!=''){%>
 
@@ -372,7 +372,7 @@ $(document).ready(function(){
   }
   //THIS IS A JQUERY STATEMENT THAT GRABS A CHUNK OF
   //TEXT AND REPLACES IT WITH THE UPDATED STRING
-  $("#bgavatar").each(function(i){
+  $(".replace_with_links").each(function(i){
     var text = $(this).html();
     $(this).html(replaceURLWithHTMLLinks(text));
   });
