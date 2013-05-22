@@ -379,19 +379,29 @@ $(document).ready(function(){
 
 
  $(function(){
-                  var preload_data = [
-                  { id: 'Fotografia', text: 'Fotografia'}
-                  , { id: 'Bailar', text: 'Bailar'}
-                  , { id: 'Estar en Chatme.fm', text: 'Estar en Chatme.fm' }
-                  , { id: 'Llevar dolares a panama', text: 'Llevar dolares a panama' }
-                  , { id: 'Volar con bolsos', text: 'Volar con bolsos'}
-                  , { id: 'Crear empresas', text: 'Crear empresas' }
-                  , { id: 'Vaciar empresas', text: 'Vaciar empresas' }
-                ];
+// var preload_data = [
+//                   { id: 'Fotografia', text: 'Fotografia'}
+//                   , { id: 'Bailar', text: 'Bailar'}
+//                   , { id: 'Estar en Chatme.fm', text: 'Estar en Chatme.fm' }
+//                   , { id: 'Llevar dolares a panama', text: 'Llevar dolares a panama' }
+//                   , { id: 'Volar con bolsos', text: 'Volar con bolsos'}
+//                   , { id: 'Crear empresas', text: 'Crear empresas' }
+//                   , { id: 'Vaciar empresas', text: 'Vaciar empresas' }
+//                 ];
+var preload_data = ['Fotografia','Bailar','Estar en Chatme.fm','Llevar dolares','Crear empresas',"vaciar empresas"];
+
+
+   $("#intereses_select22").select2({
+                      tags:preload_data,
+                      maximumInputLength: 15
+                  });
+                  
                     $('#intereses_select2').editable({
-                        source: preload_data,
+                        //source: preload_data,
                         select2: {
-                           multiple: true
+                           //multiple: true,
+                            tags:preload_data,
+                          maximumInputLength: 15
                         }
                     });
                 });
