@@ -23,7 +23,18 @@
 });
 
 
+ function include(arr, obj) {
+  for(var i=0; i<arr.length; i++) {
+    if (arr[i] == obj) return true;
+  }
+  return false;
+}
+
+
 app.get('/admin', function(req,res){
+var administrators = ["Martinez.German","gnm3000","josechatelet","Fran376","matias.brugnoli"];
+if(req.isAuthenticated() && include(administrators,req.user.username)){
+
 
 var callback2 = function(items,db,configuration){
 
@@ -34,7 +45,6 @@ db.collection("promotions",function(er,collection){
 });
   
 }
-
 var callback1 = function(items,db){
 
 db.collection("configuration",function(er,collection){
@@ -45,7 +55,7 @@ collection.findOne({config:1},function(er,configuration){
 });
          
 }
-  mongo.Db.connect(mongoUri, function (err, db) {
+mongo.Db.connect(mongoUri, function (err, db) {
     db.collection('users', function(er, collection) {
                                     // collection.insert({'mykey': 'myvalue'}, {safe: true}, function(er,rs) {
                                     //     console.log("mongoDB"+er);
@@ -60,6 +70,14 @@ collection.findOne({config:1},function(er,configuration){
     });
   });
   });
+
+
+}else{
+  res.send("Acceso no permitido");
+}
+
+
+  
   
 });
 app.post('/post_config', function(req,res){
@@ -553,12 +571,7 @@ app.post('/post_username', function (req, res) {
   console.log("user_anon post="+req.session.user_anon);
   res.json({"error": ""});
 });
- function include(arr, obj) {
-  for(var i=0; i<arr.length; i++) {
-    if (arr[i] == obj) return true;
-  }
-  return false;
-}
+
 
 
 
