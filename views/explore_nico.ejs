@@ -74,6 +74,7 @@
         <h1><strong>★</strong> Destacados</h1>
                 <div id="caja">
         <div id="foo0" class="row" >
+          <% if(promotions!=null){%>
           <% cantidad = 0; %>
           <% while(cantidad<=15){ %>
               <% for(var i=0; i<promotions.length; i++) { %>
@@ -87,6 +88,7 @@
           <%}%>
 
            
+          <%}%>
             
             
             
@@ -116,7 +118,7 @@
    <input name="sex" id="sex_male" value="male" type="checkbox"> Chicos
  </label><label class="checkbox">
     <input type="checkbox" id="sex_female" name="sex" value="female"> Chicas
-  </label><select id="select01">
+  </label><select id="select01" style="display:none">
                   <option>Edad</option>
                   <option>18-25</option>
                   <option>25-30</option>
