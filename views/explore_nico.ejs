@@ -539,10 +539,17 @@ following_user.forEach(function(el,index){
 <!-- END SOCKET FOLLOWf-->
 
 <script type="text/javascript">
+function isGoodDate(dt){
+    var reGoodDate = /^((0?[1-9]|1[012])[ /.](0?[1-9]|[12][0-9]|3[01])[ /.](19|20)?[0-9]{2})*$/;
+    return reGoodDate.test(dt);
+}
   $("#set_city_age").click(function(e){
 e.preventDefault();
 var city = $("#set_city").val();
+if(city==''){alert("inserte la ciudad");return false;}
 var birthday = $("#set_bithday").val();
+if(!isGoodDate(birthday)){alert("inserte fecha de nacimiento mes/dia/año. Ejemplo: 06/09/1988");return false;}
+//return false;
 //aca hago guardado con mongoDB.
 $.ajax( { url: 
   'https://api.mongolab.'+'com/api/1/databases/heroku_app12042861/collections/users?'+'apiKey=ow2pQfeu77QiWIfth6rKt1C0wReEOct6&'+'q={"username":"<%=user_obj.username%>"}',
