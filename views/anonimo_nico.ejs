@@ -360,10 +360,29 @@ filepicker.setKey('A7nALgSYjQaSMszgI0sigz');
 
 
 
+<%if((user_logged!=fb_user.username) || user_logged==''){%>
+<!-- parsear html a URL -->
+<script>
+$(document).ready(function(){
+  //THIS JAVASCRIPT FUNCTION DOES THE WORK AND RETURNS THE 
+  //STRING WITH HTML ANCHOR LINKS 
+  function replaceURLWithHTMLLinks(text) {
+    var exp = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
+    return text.replace(exp,"<a target='_blank' href='$1'>$1</a>"); 
+  }
+  //THIS IS A JQUERY STATEMENT THAT GRABS A CHUNK OF
+  //TEXT AND REPLACES IT WITH THE UPDATED STRING
+  $("#bgavatar").each(function(i){
+    var text = $(this).html();
+    $(this).html(replaceURLWithHTMLLinks(text));
+  });
+});
+</script>
+<%}%>
+<% if(user_logged==fb_user.username){%>
 <!-- ponemos bootstrap editable -->
 <!-- select2 --> 
 
-<% if(user_logged==fb_user.username){%>
  <script src="http://vitalets.github.io/x-editable/assets/momentjs/moment.min.js"></script> 
 
         <script src="http://vitalets.github.io/x-editable/assets/select2/select2.js"></script> 
@@ -525,6 +544,9 @@ var preload_data = [
   //         }
   // });
 });
+
+
+
 </script>
 
   </body>
