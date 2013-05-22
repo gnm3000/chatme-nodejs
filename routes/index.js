@@ -200,8 +200,8 @@ var callback1 = function(db,items,members,configuration){
 
     var fechaInicial = new Date(); // 22 de Marzo del 2010 -  los meses comienzan a contar desde 0
     valorFecha = fechaInicial.valueOf(),  // 1269226800000
-    //valorFechaTermino = valorFecha -  ( 1 * configuration.cantidad_horas * 60 * 60 * 1000 ), // 1 antes, como milisegundos ( días * horas * minutos * segundos * milisegundos )
-    valorFechaTermino = valorFecha -  ( 1 * 1 * 1 * 60 * 1000 ),
+    valorFechaTermino = valorFecha -  ( 1 * configuration.cantidad_horas * 60 * 60 * 1000 ), // 1 antes, como milisegundos ( días * horas * minutos * segundos * milisegundos )
+    //valorFechaTermino = valorFecha -  ( 1 * 1 * 1 * 60 * 1000 ),
 
     fechaTermino = new Date(valorFechaTermino) // nuevo objeto de fecha: 20 de mayo - Thu May 20 2010 23:00:00 GMT-0400 (CLT)
     console.log("la fecha es "+fechaTermino);
