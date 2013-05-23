@@ -466,8 +466,30 @@ app.get('/friends', function(req, res){
             console.log(err);
 
           }
-          console.log("los amigos de "+followers.user+" son "+followers.follow);
-                                                    //return followers.follow;
+          if(!followers){
+
+             db.collection('users', function(er, collection) {
+                                                        var condition = {username: {'$in':[]}};
+                                                        collection.find(condition).toArray(function(err, items_users) {
+                                                          //return items;
+                                                                //BEGIN
+                                                                //console.log(items_users);
+                                                                rClient.smembers("users_online",function(err,members){
+                                                                  console.log("users_online_for_home:"+members);
+                                                                      //var items = ;
+                                                                      res.render('friends_nico', {user:req.user,followers:items_users,users_online:members});
+                                                                    });
+                                                                //END 
+
+                                                              });
+
+
+                                                      });
+
+
+          }else{
+             console.log("los amigos de "+followers.user+" son "+followers.follow);
+              //return followers.follow;
                                                       //
                                                       db.collection('users', function(er, collection) {
                                                         var condition = {username: {'$in':followers.follow}};
@@ -488,6 +510,10 @@ app.get('/friends', function(req, res){
                                                       });
                                                       //
                                                     //followers.follow
+          }
+
+         
+                                                   
                                                   });
 
 });
