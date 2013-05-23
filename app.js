@@ -1,3 +1,12 @@
+var options = {
+  // time in ms when the event loop is considered blocked
+  blockThreshold: 10
+};
+var nodefly = require('nodefly').profile(
+    '6c2a8a36142a74532463a7f19454d715',
+    [APPLICATION_NAME,'Heroku'],
+    options // optional
+);
 var express = require('express')
 
     
