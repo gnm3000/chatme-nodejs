@@ -297,9 +297,16 @@ var callback1 = function(db,items,members,configuration){
               db.collection("followers",function(er,collection){
                  if(er!=null){console.log("error:"+er)}else{
                   collection.findOne({user:req.user.username},function(er,following_user){
-
-               res.render('explore_nico', {follow:following_user.follow,user:req.user,users:items,users_online:members,promotions:promotions,user_obj:user_obj});
+                    if(!following_user){
+                      var follow = null;
+                       res.render('explore_nico', {follow:following_user.follow,user:req.user,users:items,users_online:members,promotions:promotions,user_obj:user_obj});
             
+                    }else{
+                      var follow = following_user.follow;
+                       res.render('explore_nico', {follow:following_user.follow,user:req.user,users:items,users_online:members,promotions:promotions,user_obj:user_obj});
+            
+                    }
+              
                   });
                  }
               });
