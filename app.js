@@ -4,7 +4,7 @@ var options = {
 };
 var nodefly = require('nodefly').profile(
     '6c2a8a36142a74532463a7f19454d715',
-    [APPLICATION_NAME,'Heroku'],
+    ['rabbit-chat3','Heroku'],
     options // optional
 );
 var express = require('express')
