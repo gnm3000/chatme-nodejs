@@ -112,7 +112,11 @@
   <div class="row">
     <div class="span12">
     <h3>Para que los usuarios puedan encontrarte debes seleccionar correctamente tu ciudad y tu edad</h3>
-<p>Seleecione ciudad: <input id="set_city" type="text" name="query" value="" class="search-input"/> y su fecha de nacimiento: <input type="text" id="set_bithday" value="<%=user_obj.birthday%>"></p><p>
+<p>Seleecione ciudad: <input id="set_city" type="text" name="query" value="" class="search-input"/> y su fecha de nacimiento: 
+
+<a href="#" id="age" data-type="combodate" data-value="<% if(user_obj.birthday){%><%=user_obj.birthday%><%} %>" data-format="MM-DD-YYYY" data-viewformat="DD/MM/YYYY"  data-pk="<%= user_obj.username %>" data-url="/post"  data-original-title="Select Date of birth"></a>
+
+</p><p>
 No te volveremos a pedir estos datos una vez guardados<br/>
 <button class="btn btn-info" id="set_city_age">Guardar</button>
 </p>
@@ -540,6 +544,7 @@ following_user.forEach(function(el,index){
 
 <script type="text/javascript">
 function isGoodDate(dt){
+  alert(dt);
     var reGoodDate = /^((0?[1-9]|1[012])[ /.](0?[1-9]|[12][0-9]|3[01])[ /.](19|20)?[0-9]{2})*$/;
     return reGoodDate.test(dt);
 }
@@ -547,8 +552,8 @@ function isGoodDate(dt){
 e.preventDefault();
 var city = $("#set_city").val();
 if(city==''){alert("inserte la ciudad");return false;}
-var birthday = $("#set_bithday").val();
-if(!isGoodDate(birthday)){alert("inserte fecha de nacimiento mes/dia/año. Ejemplo: 06/09/1988");return false;}
+var birthday = $("#age").html();
+if(!isGoodDate(birthday)){alert("Seleccione la fecha de nacimiento");return false;}
 //return false;
 //aca hago guardado con mongoDB.
 $.ajax( { url: 
@@ -559,6 +564,34 @@ $.ajax( { url:
             $(".box_age_city").hide(600);
           });
   });
+</script>
+<!-- ponemos bootstrap editable -->
+<!-- select2 --> 
+
+ <script src="http://vitalets.github.io/x-editable/assets/momentjs/moment.min.js"></script> 
+
+        <script src="http://vitalets.github.io/x-editable/assets/select2/select2.js"></script> 
+ <link href="http://vitalets.github.io/x-editable/assets/select2/select2.css" rel="stylesheet">
+<script src="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.4.4/bootstrap-editable/js/bootstrap-editable.min.js"></script>
+
+<script>
+$.fn.editable.defaults.mode = 'popup';
+$.fn.editable.defaults.placement = 'right';
+$.fn.editable.defaults.emptytext ='Vacio';
+
+  
+
+ $(function(){
+                           
+                             $('#age').editable({
+                                format: 'yyyy-mm-dd',    
+                                viewformat: 'dd/mm/yyyy',    
+                                datepicker: {
+                                        weekStart: 1
+                                   }
+                                });
+                });
+
 </script>
   </body>
 </html>
