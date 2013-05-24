@@ -578,6 +578,9 @@ app.post('/post', function (req, res) {
         if(req.body.name=="intereses_select2"){
                                       // aca hay que eliminar el interes undefined
                                       var intereses_lista = req.body.value;
+                                      if(typeof(intereses_lista)=="undefined"){
+                                        intereses_lista = [];
+                                      }
                                       var intereses_lista_new =[];
                                       intereses_lista.forEach(function(p){
                                         if(p!='undefined'){
