@@ -88,7 +88,8 @@
   <% } %>
 
 <% if(user_logged==fb_user.username){%>
- <h1><a id="username_editable" data-type="text" data-pk="1" data-url="/post_username" data-original-title="Insert your username"><%= fb_user.username %></a></h1>
+ <h1><%= fb_user.username %></h1>
+ 
   <p id="fb_user_name_id" style="display:none"><%= fb_user.id %></p>
   <p id="fb_user_name" style="display:none"><%= fb_user.username %></p>
   <div class="datos"><p>
@@ -101,7 +102,7 @@
 
 
 
-<a href="#" id="age" data-type="combodate" data-value="<% if(fb_user.birthday){%><%=fb_user.birthday%><%} %>" data-format="MM-DD-YYYY" data-viewformat="DD/MM/YYYY"  data-pk="<%= fb_user.username %>" data-url="/post"  data-original-title="Select Date of birth"></a>
+Fecha de Nacimiento: <a href="#" id="age" data-type="combodate" data-value="<% if(fb_user.birthday){%><%=fb_user.birthday%><%} %>" data-format="MM-DD-YYYY" data-viewformat="DD/MM/YYYY"  data-pk="<%= fb_user.username %>" data-url="/post"  data-original-title="Select Date of birth"></a>
 <br>Intereses: 
 <a href="#" id="intereses_select2" data-value="<%if(fb_user.intereses){%><%= fb_user.intereses %><%}%>" data-type="select2" data-pk="<%= fb_user.username %>"  data-url="/post" data-original-title="Agrega intereses"></a>
   </p>
@@ -399,7 +400,7 @@ $(document).ready(function(){
 <script>
 $.fn.editable.defaults.mode = 'popup';
 $.fn.editable.defaults.placement = 'right';
-
+$.fn.editable.defaults.emptytext ='Vacio';
 $(document).ready(function(){
              
 
