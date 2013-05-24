@@ -120,7 +120,7 @@
 
 ,vivo en <%= fb_user.location %> 
 <%}%>
-<%if(fb_user.birthday!=''){%><br>Cumple años el <%= fb_user.birthday %>, <%}%>
+<%if(fb_user.birthday!='' || fb_user.birthday!='undefined'){%><br>Cumple años el <%= fb_user.birthday %>, <%}%>
     
  
 <%if(typeof(fb_user.intereses)!='undefined'){%>
