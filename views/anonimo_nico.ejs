@@ -115,12 +115,19 @@
   <p id="fb_user_name_id" style="display:none"><%= fb_user.id %></p>
   <div class="datos"><p>
     <span class="replace_with_links"><%= fb_user.displayName %></span>
-
+<% if(typeof(fb_user.location)!="undefined"){%>
 <%if(fb_user.location!=''){%>
 
 ,vivo en <%= fb_user.location %> 
 <%}%>
-<%if(fb_user.birthday!='' || fb_user.birthday!='undefined'){%><br>Cumple años el <%= fb_user.birthday %>, <%}%>
+<%}%>
+<% if(typeof(fb_user.birthday)!="undefined"){%>
+<% if(fb_user.birthday!=""){ %>
+<br>Cumple años el <%= fb_user.birthday %>, 
+<%}%>
+
+
+<%}%>
     
  
 <%if(typeof(fb_user.intereses)!='undefined'){%>
