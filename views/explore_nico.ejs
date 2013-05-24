@@ -118,7 +118,7 @@
 
 </p><p>
 No te volveremos a pedir estos datos una vez guardados<br/>
-<button class="btn btn-info" id="set_city_age">Guardar</button>
+<button class="btn btn-info" id="set_city_age">Continuar ></button>
 </p>
 
   </div>
@@ -337,9 +337,7 @@ $("a.ap-payment-button").html(html_button);
   $('.search-input').typeahead({
 
     source: function (query, process) {
-        // return $.get('/typeahead', { query: query }, function (data) {
-        //     return process(data);
-        // });
+       
           states = [];
             map = {};
         return $.ajax({
@@ -354,12 +352,9 @@ $("a.ap-payment-button").html(html_button);
           success: function( data ) {
             var respuesta = $.map( data.geonames, function( item ) {
               return item.name + (item.adminName1 ? ", " + item.adminName1 : "") + ", " + item.countryName;
-              // return {
-              //  // label: ,
-              //   //value: item.name
-              // }
+              
             });
-            //console.log(respuesta);
+            
             return process(respuesta);
           }
         });
@@ -368,7 +363,7 @@ $("a.ap-payment-button").html(html_button);
     },
     updater: function (item) {
         
-          
+          $("#set_city").attr("data-city",item);
           return item;
       }
 });
@@ -544,16 +539,21 @@ following_user.forEach(function(el,index){
 
 <script type="text/javascript">
 function isGoodDate(dt){
-  alert(dt);
+  //alert(dt);
     var reGoodDate = /^((0?[1-9]|1[012])[ /.](0?[1-9]|[12][0-9]|3[01])[ /.](19|20)?[0-9]{2})*$/;
     return reGoodDate.test(dt);
 }
+
+
   $("#set_city_age").click(function(e){
 e.preventDefault();
-var city = $("#set_city").val();
-if(city==''){alert("inserte la ciudad");return false;}
+var city = $("#set_city").data("city");
+//alert(city);
+if(city=='' || typeof(city)=='undefined'){alert("inserte la ciudad");return false;}
+
 var birthday = $("#age").html();
 if(!isGoodDate(birthday)){alert("Seleccione la fecha de nacimiento");return false;}
+//alert("return false");
 //return false;
 //aca hago guardado con mongoDB.
 $.ajax( { url: 
@@ -582,14 +582,9 @@ $.fn.editable.defaults.emptytext ='Vacio';
   
 
  $(function(){
+
                            
-                             $('#age').editable({
-                                format: 'yyyy-mm-dd',    
-                                viewformat: 'dd/mm/yyyy',    
-                                datepicker: {
-                                        weekStart: 1
-                                   }
-                                });
+                             $('#age').editable({format: 'yyyy-mm-dd',viewformat: 'dd/mm/yyyy',datepicker: {weekStart: 1}});
                 });
 
 </script>
