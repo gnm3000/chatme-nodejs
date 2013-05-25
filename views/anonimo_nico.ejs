@@ -148,7 +148,7 @@ Fecha de Nacimiento: <a href="#" id="age" data-type="combodate" data-value="<% i
 
 <% } %>
 
- 
+ <% if(user_logged==fb_user.username){%>
   <% if(user_logged!=''){%>
 
             <% if(follower==true){%>
@@ -168,39 +168,55 @@ Fecha de Nacimiento: <a href="#" id="age" data-type="combodate" data-value="<% i
     </a>
 
   <%} %>
-    
+ <%} %>   
+
   </p><% if(user_logged==fb_user.username){%><div class="portada">Cambiar Portada</div><%}%>
 </div></div>
-<div class="container">   <div id="iconos"><a class="btn btn-seg" href="#"><strong>125</strong> Seguidores</a>
-<a class="btn btn-pun" href="#"> Puntuación <strong>4/5</strong></a><a class="btn btn-gusta" href="#"><strong>150</strong> Me Gusta</a>
-<a class="btn btn-reg" href="#"><strong>15</strong> Regalos</a>
+<div class="container">  
 
-</div>
-<div id="titulo"><h1>Pregunta lo que quieras. Es anonimo!
-<span style="display:none" id="user"><%= user_anon %></span></h1><div id="botones"><a class="btn btn-puntuar" href="#">Puntuar</a><a class="btn btn-regalo2" href="#">Dar un Regalo</a><a class="btn btn-denunciar" href="#">Denunciar</a></div></div>
-
-<% if(user_online==true){%>
-<div id="channel">
-   <div id="msgs">
-       
-
-        <ul>
-            <li class="message" style="display: none">
-                <span class="user"></span><span class="message"></span>
-                <span class="time"></span>
-            </li>
-            <li class="control" style="display: none">
-                <span class="user"></span>&nbsp;<span class="message"></span>
-                <span class="time"></span>
-            </li>
-        </ul>
-    </div>
- <div id="input">
-        <form id="form-message"><input type="text" data-chat-to="<%= nick %>" id="message"/></form>
-    </div></div>
+<% if(user_logged==fb_user.username){%>
+ <div id="iconos">
+  <h2>Edita tu perfil en esta ventana</h2>
+    
+  </div>
 
 <%}else{%>
-<div id="no-conectado">El usuario no esta conectado en este momento, tomate un café. </div>
+
+<!-- Aca arranca--> 
+  <div id="iconos">
+    <a class="btn btn-seg" href="#"><strong>125</strong> Seguidores</a>
+    <a class="btn btn-pun" href="#"> Puntuación <strong>4/5</strong></a><a class="btn btn-gusta" href="#"><strong>150</strong> Me Gusta</a>
+    <a class="btn btn-reg" href="#"><strong>15</strong> Regalos</a>
+  </div>
+
+  <div id="titulo">
+      <h1>Pregunta lo que quieras. Es anonimo!
+      <span style="display:none" id="user"><%= user_anon %></span></h1><div id="botones"><a class="btn btn-puntuar" href="#">Puntuar</a><a class="btn btn-regalo2" href="#">Dar un Regalo</a><a class="btn btn-denunciar" href="#">Denunciar</a></div>
+  </div>
+
+<% if(user_online==true){%>
+  <div id="channel">
+         <div id="msgs">
+             
+
+              <ul>
+                  <li class="message" style="display: none">
+                      <span class="user"></span><span class="message"></span>
+                      <span class="time"></span>
+                  </li>
+                  <li class="control" style="display: none">
+                      <span class="user"></span>&nbsp;<span class="message"></span>
+                      <span class="time"></span>
+                  </li>
+              </ul>
+          </div>
+          <div id="input">
+              <form id="form-message"><input type="text" data-chat-to="<%= nick %>" id="message"/></form>
+          </div>
+  </div>
+
+<%}else{%>
+  <div id="no-conectado">El usuario no esta conectado en este momento, tomate un café. </div>
 
  <%} %>
 
@@ -232,8 +248,8 @@ Fecha de Nacimiento: <a href="#" id="age" data-type="combodate" data-value="<% i
   </div></div>
 </div>
 
-
-
+<!--aca termina -->
+<%}%>
     <!-- Footer
     ================================================== -->
     
