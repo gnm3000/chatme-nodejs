@@ -91,23 +91,27 @@ app.post('/post_config', function(req,res){
         var objNew = '';
         if(req.body.name=="users_vip"){
                                       // aca viene la lista de los vip
-                                      var intereses_lista = req.body.value;
-                                      var intereses_lista_new =[];
-                                      intereses_lista.forEach(function(p){
-                                        if(p!='undefined'){
-                                          intereses_lista_new.push(p);
-                                        }
-                                      });
-                                      objNew = {'$set':{users_vip: intereses_lista_new}};
-                                    }
-                                    if(req.body.name=="cantidad_horas"){
-                                     objNew = {'$set':{cantidad_horas: req.body.value}};
-                                   }
+            var intereses_lista = req.body.value;
+            var intereses_lista_new =[];
+            intereses_lista.forEach(function(p){
+              if(p!='undefined'){
+                intereses_lista_new.push(p);
+              }
+            });
+            objNew = {'$set':{users_vip: intereses_lista_new}};
+          }
+
+
+    if(req.body.name=="cantidad_horas"){
+     objNew = {'$set':{cantidad_horas: req.body.value}};
+   }
                                   
                                   console.log(JSON.stringify(criteria)+"|"+JSON.stringify(objNew));
                                    collection.update(criteria,objNew, {upsert:true},function(er,rs) {
                                     if(er){console.log("mongoDB"+er);res.send("Error:"+er,400)}
                                     console.log("fin del socket");
+                                    //aca hay un callback, donde agregue a la lista a los usuarios.
+
                                     res.send("OK",200);
                                   });
 
