@@ -250,6 +250,7 @@ a {
 
 a:hover,
 a:focus {
+  color: orange;
   text-decoration: underline;
 }
 
@@ -271,7 +272,13 @@ a:focus {
 	margin-top: 20px;
 	margin-bottom: 20px;
 }
+.img-polaroid:hover {
+cursor: pointer;
+ -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.6);
+     -moz-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.6);
+          box-shadow: 0 1px 3px rgba(0, 0, 0, 0.6);
 
+}
 .img-circle {
   -webkit-border-radius: 500px;
      -moz-border-radius: 500px;
@@ -843,7 +850,8 @@ h3 {
 
 #amigos div.row-fluid ul.thumbnails li.span3 div.thumbnail div.caption h3 {
 	color: black;
-	margin-bottom: 0;
+  margin-bottom: 0;
+  font-size: 20px;
 }
 
 #menu-ab div.navbar div.navbar-inner {
@@ -5589,18 +5597,19 @@ input[type="submit"].btn.btn-mini {
 .popover.left {
   margin-left: -10px;
 }
-
 .popover-title {
   padding: 8px 14px;
   margin: 0;
-  font-size: 14px;
-  font-weight: normal;
+  font-size: 16px;
+  font-weight: bold;
   line-height: 18px;
   background-color: #f7f7f7;
   border-bottom: 1px solid #ebebeb;
   -webkit-border-radius: 5px 5px 0 0;
      -moz-border-radius: 5px 5px 0 0;
           border-radius: 5px 5px 0 0;
+  color: black;
+  text-shadow: white 0px 0px 0px;
 }
 
 .popover-title:empty {

@@ -6499,7 +6499,7 @@ div.face:hover {
 }
 
 .portada:hover {
-	opacity: 1;
+	opacity: 1;cursor: pointer;
 }
 
 #charla
