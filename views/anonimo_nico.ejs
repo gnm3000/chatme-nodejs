@@ -260,8 +260,12 @@ Fecha de Nacimiento: <a href="#" id="age" data-type="combodate" data-value="<% i
     <!-- Placed at the end of the document so the pages load faster -->
     <script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
     <script src="/chatme/js/jquery.js"></script>
+   <% if(user_logged!=fb_user.username){%>
+
     <script src="/socket.io/socket.io.js"></script>
+   
     <script src="/anonimo.js"></script>
+<% } %>
     <script src="/chatme/js/bootstrap-transition.js"></script>
     <script src="/chatme/js/bootstrap-alert.js"></script>
     <script src="/chatme/js/bootstrap-modal.js"></script>
