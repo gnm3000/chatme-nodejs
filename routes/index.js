@@ -30,9 +30,36 @@
   return false;
 }
 
+app.get('/cssfiles/:file', function(req,res){
+  res.writeHead(200, {"Content-Type": "text/css"});
+  if(req.params.file=="file1" || req.params.file=="file2"){
+      mongo.Db.connect(mongoUri, function (err, db) {
+    db.collection('configuration', function(er, collection) {
+                                    // collection.insert({'mykey': 'myvalue'}, {safe: true}, function(er,rs) {
+                                    //     console.log("mongoDB"+er);
+                                    // });
+    collection.findOne({config:1},function(er,configuration){
+      if(configuration){
+        if(typeof(req.params.file)!="undefined" && req.params.file=="file1"){
+          
+          res.end(configuration.file1);
+        }
+        if(typeof(req.params.file)!="undefined" && req.params.file=="file2"){
+          
+          res.end(configuration.file2);
+        }
+         
+        //res.send(configuration)
+      }else{res.end("Error",200);}
+    });
+  });
+  });
 
+  }else{res.end("Error",200);}
+
+});
 app.get('/admin', function(req,res){
-var administrators = ["Martinez.German","gnm3000","josechatelet","Fran376","matias.brugnoli"];
+var administrators = ["Martinez.German","gnm3000","josechatelet","Fran376","matias.brugnoli","elnicotorre"];
 if(req.isAuthenticated() && include(administrators,req.user.username)){
 
 
@@ -105,7 +132,12 @@ app.post('/post_config', function(req,res){
     if(req.body.name=="cantidad_horas"){
      objNew = {'$set':{cantidad_horas: req.body.value}};
    }
-                                  
+     if(req.body.name=="file1"){
+     objNew = {'$set':{file1: req.body.value}};
+   }
+    if(req.body.name=="file2"){
+     objNew = {'$set':{file2: req.body.value}};
+   }                             
                                   console.log(JSON.stringify(criteria)+"|"+JSON.stringify(objNew));
                                    collection.update(criteria,objNew, {upsert:true},function(er,rs) {
                                     if(er){console.log("mongoDB"+er);res.send("Error:"+er,400)}

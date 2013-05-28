@@ -86,7 +86,13 @@ var el = promotions[i];
    
   </tbody>
 </table>
+<hr/>
+<h1>Edicion del CSS (nico)</h1>
 
+<h2>FILE1</h2>
+<a href="#" class="editable" data-original-title="Insert" data-url="/post_config" id="comments" data-value="<%if(configuration.file1){%><%=configuration.file1%><%}else{%><%}%>" data-name="file1" data-type="textarea" data-pk="1"></a>
+<h2>FILE2</h2>
+<a href="#" class="editable" data-original-title="Insert" data-url="/post_config" id="comments" data-value="<%if(configuration.file2){%><%=configuration.file2%><%}else{%><%}%>" data-name="file2" data-type="textarea" data-pk="1"></a>
     </div> <!-- /container -->
 
     <!-- Le javascript
@@ -159,6 +165,15 @@ preload_data.push(<%="'"+el.username+"'"%>);
              
 });
 
+</script>
+<script>
+$(function(){
+    $('#comments').editable({
+        url: '/post',
+        title: 'Enter comments',
+        rows: 10
+    });
+});
 </script>
   </body>
 </html>
