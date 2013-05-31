@@ -30,7 +30,7 @@
   return false;
 }
 
-app.get('/cssfiles/:file', function(req,res){
+app.get('/chatme/css/files-:file', function(req,res){
   res.writeHead(200, {"Content-Type": "text/css"});
   if(req.params.file=="file1" || req.params.file=="file2"){
       mongo.Db.connect(mongoUri, function (err, db) {
