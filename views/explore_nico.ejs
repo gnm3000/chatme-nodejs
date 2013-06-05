@@ -165,8 +165,8 @@ No te volveremos a pedir estos datos una vez guardados<br/>
 
 </div>
 <div class="row-fluid">
-            <ul class="thumbnails">
-             
+            <ul id="columns">
+             <%if(users){%>
  <% for(var i=0; i<users.length; i++) { %>
       
       <%
@@ -177,17 +177,17 @@ No te volveremos a pedir estos datos una vez guardados<br/>
       }
 }); %>
 
- <li class="span3 status_<%=bandera%>">
+ <li class=" status_<%=bandera%> pin">
                 
               
                 <div class=" <%=bandera%>  thumbnail">
                   <a href="/<%= users[i].username %>"><img src="<%= users[i].picture %>" class="img-polaroid" ></a>
                   <div class="caption">
-                    <h3><%= users[i].username%></h3>
+                    <h3><%= users[i].username.substring(0,17)%></h3>
                     <% if(users[i].location!=''){ %>
                       <p>vivo en <%= users[i].location %></p>
                       <%}else{%>
-                      <p style="color:white">...</p>
+                      
                       <%}%>
                     <p><div id="iconos2"><a class="btn btn-seg" href="#"><strong>125</strong></a>
                     <a class="btn btn-pun" href="#"> <strong>4/5</strong></a><a class="btn btn-gusta" href="#"><strong>150</strong></a>
@@ -206,7 +206,7 @@ No te volveremos a pedir estos datos una vez guardados<br/>
     <% } %>
 
 
-             
+         <%}%>    
            
 
             </ul>
@@ -293,41 +293,19 @@ $("a.ap-payment-button").html(html_button);
 });
 </script>
 
-<style type="text/css">
-  #columns {
-    -moz-column-count: 4;
-    -moz-column-gap: 10px;
-    -moz-column-fill: auto;
-    -webkit-column-count: 4;
-    -webkit-column-gap: 10px;
-    -webkit-column-fill: auto;
-    column-count: 4;
-    column-gap: 15px;
-    column-fill: auto;
-}
 
-.pin { -moz-column-break-inside: avoid; -webkit-column-break-inside: avoid; column-break-inside: avoid; display: inline-block; margin: 0 2px 15px; padding: 15px; border: 2px solid #FAFAFA; box-shadow: 0 1px 2px rgba(34, 25, 25, 0.4); background: #FEFEFE; background-image: linear-gradient(45deg, #FFF, #F9F9F9); }
-@media all and (min-width: 960px) {
-    #columns {
-        column-count: 4;
-    }
-}
-@media all and (min-width: 1170px) { #columns { column-count: 5; } }
-
-
-</style>
 <!-- explorar -->
 <script type="text/javascript">
   
   $("#button_explorar").click(function(e){
     e.preventDefault();
-    
+    console.log("explorar");
     var sex_female = $("#sex_female").is(":checked");
     var sex_male = $("#sex_male").is(":checked");
     var ciudad =$.trim($("#search-input").val());
     var edad = $("#select01 option:selected").html();
     var variables = $.param({sex_female:sex_female,sex_male:sex_male,ciudad:ciudad,edad:edad});
-    $(".thumbnails").load("/explore?"+variables+" .thumbnails li");
+    $("#columns").load("/explore?"+variables+" .pin");
   });
 </script>
 
@@ -590,5 +568,6 @@ $.fn.editable.defaults.emptytext ='Vacio';
                 });
 
 </script>
+ <link href="/chatme/css/styles-fix.css" rel="stylesheet">
   </body>
 </html>

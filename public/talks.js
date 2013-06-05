@@ -140,7 +140,7 @@ $("#mostrarc ul.options a").click(function(e){
         socket.on('chat', function (msg) {
             //console.log("MENSAJE CHAT ES:"+msg);
             var message = JSON.parse(msg);
-            console.log("el action es:"+message.action);
+            
             // si el mensaje es para mi o si yo lo escribi entonces que si lo muestre.
             if(message.chat_to==user || message.user==user ){
                              console.log("el chat_to es:"+message.chat_to+" y el user es: "+user);
@@ -189,14 +189,15 @@ $("#mostrarc ul.options a").click(function(e){
 
                 {
                     messageView.find('.user').addClass('self');
-            console.log("la que mando este mensaje es:"+user);
-             //element_insert = $("div.panes div."+message.chat_to+" ul");
-             element_insert = $("div.tab-pane[id="+message.chat_to+"]");
-             element_insert.append(messageView.show());
-            console.log("hace el append!!!"+messageView.show());
-            //$("ul.tabs a."+message.chat_from).click();
-            container.scrollTop(element_insert.innerHeight());
-            return;
+
+                    
+                     //element_insert = $("div.panes div."+message.chat_to+" ul");
+                     element_insert = $("div.tab-pane[id="+message.chat_to+"]");
+                     element_insert.append(messageView.show());
+                   
+                    //$("ul.tabs a."+message.chat_from).click();
+                    container.scrollTop(element_insert.innerHeight());
+                    return;
         }
 
             // append to container and scroll
@@ -205,13 +206,13 @@ $("#mostrarc ul.options a").click(function(e){
             cant_tabs_user = $("div.tab-pane[id="+message.user+"]").length;
             if((cant_tabs_user == 0 && message.user!=user)){
                 //entonces agrega un tab
-                console.log("Entro al IFF!!");
+               
                 //var tabs = $("ul.tabs").tabs("div.panes > div");
                 //agrego el tab
                 //alert("message.chat_from="+message.user);
                 //$("ul.tabs").append("<li><a class='"+message.chat_from+"' href='#'>"+message.chat_from+"</a></li>");
                 $("#myTab").append("<li class='"+message.user+"'><a data-toggle='tab' class='"+message.user+"' href='#"+message.user+"'>"+message.user+"</a><span data-user='"+message.user+"' class='x_close'>X</span></li>");
-                $("div.tab-content").append("<div class='tab-pane' id='"+message.user+"'>"+message.user+" </div>");
+                $("div.tab-content").append("<div class='tab-pane' id='"+message.user+"'>"+''+" </div>");
                 //agrego un DIV - content del tab
                 //$("div.panes").append("<div class='"+message.chat_from+"'><ul></ul></div>");
                 //tabs.tabs( "refresh" );
@@ -235,7 +236,10 @@ $("#mostrarc ul.options a").click(function(e){
             container.scrollTop(element_insert.innerHeight());
 
             if(!$("#myTab li."+message.user).hasClass("active")){
-                $("#myTab a."+message.user).css("color","red");
+                // cuando se pone activo
+                //$("#myTab a."+message.user).css("color","black");
+               // $("#myTab a."+message.user).css("background","orange");
+//$("#myTab li."+message.user).css("background","orange");
                 var beepOne = $("#beep-one")[0];
                 beepOne.load();
                 beepOne.play();
@@ -284,7 +288,13 @@ $("#mostrarc ul.options a").click(function(e){
  
     $("#myTab").on('click','a',function(e){
     e.preventDefault();
-    $(this).css("color","black");
+    var user = $(this).text();
+    //$(this).css("color","#FFFFFF");
+    // $("#myTab a."+user).css("color","black");
+
+    // $("#myTab a."+user).css("background-color","inherit");
+    
+    // $("#myTab li."+user).css("background-color","#FFFFFF");
     
     $("#message").attr("data-chat-to",$(this).html());
 });

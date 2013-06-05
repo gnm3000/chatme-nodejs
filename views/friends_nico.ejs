@@ -88,7 +88,7 @@
         <h1>Seguis a <%=users.length%> Usuarios</h1>
 <h2>Estas personas no saben que las sigues. Esto es completamente anónimo... </h2></div>
 <div class="row-fluid">
-            <ul class="thumbnails" id="columns">
+            <ul  id="columns">
            
  <% for(var i=0; i<users.length; i++) { %>
       
@@ -100,7 +100,7 @@
       }
 }); %>
 
- <li class="pin">
+ <li class="  status_<%=bandera%> pin">
                 
               
                 <div class=" <%=bandera%>  thumbnail">
@@ -204,29 +204,6 @@
 $("a").tooltip();
 </script>
 
-<style type="text/css">
-  #columns {
-    -moz-column-count: 4;
-    -moz-column-gap: 10px;
-    -moz-column-fill: auto;
-    -webkit-column-count: 4;
-    -webkit-column-gap: 10px;
-    -webkit-column-fill: auto;
-    column-count: 4;
-    column-gap: 15px;
-    column-fill: auto;
-}
-
-.pin { -moz-column-break-inside: avoid; -webkit-column-break-inside: avoid; column-break-inside: avoid; display: inline-block; margin: 0 2px 15px; padding: 15px; border: 2px solid #FAFAFA; box-shadow: 0 1px 2px rgba(34, 25, 25, 0.4); background: #FEFEFE; background-image: linear-gradient(45deg, #FFF, #F9F9F9); }
-@media all and (min-width: 960px) {
-    #columns {
-        column-count: 4;
-    }
-}
-@media all and (min-width: 1170px) { #columns { column-count: 5; } }
-
-
-</style>
 <!-- BEGIN SOCKET FOLLOW-->
 <script src="/socket.io/socket.io.js"></script>
     <script type="text/javascript">
@@ -274,5 +251,6 @@ $("a").tooltip();
   });
 </script>
 <!-- END SOCKET FOLLOW-->
+<link href="/chatme/css/styles-fix.css" rel="stylesheet">
   </body>
 </html>
