@@ -88,9 +88,10 @@
         <h1>Seguis a <%=users.length%> Usuarios</h1>
 <h2>Estas personas no saben que las sigues. Esto es completamente anónimo... </h2></div>
 <div class="row-fluid">
-            <ul  id="columns">
-           
- <% for(var i=0; i<users.length; i++) { %>
+
+  <ul class="thumbnails">
+
+<% for(var i=0; i<users.length; i++) { %>
       
       <%
       bandera = "";
@@ -99,37 +100,57 @@
         bandera = "online";
       }
 }); %>
-
- <li class="  status_<%=bandera%> pin">
+<% if(i% 4==0){%>
+</ul><ul class="thumbnails">
+<%}%>
+              <%if(bandera=="online"){%>
+              <li class="span3"><div class="online">
+                <div class="thumbnail">
                 
-              
-                <div class=" <%=bandera%>  thumbnail">
-                  <a href="/<%= users[i].username %>"><img src="<%= users[i].picture %>" class="img-polaroid" ></a>
+                  <a href="/<%= users[i].username %>">
+                    <img src="<%= users[i].picture %>" class="img-polaroid" ></a>
                   <div class="caption">
                     <h3><%= users[i].username %></h3>
-                    <p><% if(users[i].location!=''){ %>vivo en <%= users[i].location %><%}%></p>
-                    <p><div id="iconos2"><a class="btn btn-seg" href="#"><strong>125</strong></a>
-                    <a class="btn btn-pun" href="#"> <strong>4/5</strong></a><a class="btn btn-gusta" href="#"><strong>150</strong></a>
+                   <p style="height:40px;"><% if(users[i].location!=''){ %>
+                      vivo en <%= users[i].location %>
+                    <%}%></p>
+                    <p></p><div id="iconos2"><a class="btn btn-seg" href="#" data-original-title="" title=""><strong>125</strong></a>
+                    <a class="btn btn-pun" href="#" data-original-title="" title=""> <strong>4/5</strong></a><a class="btn btn-gusta" href="#" data-original-title="" title=""><strong>150</strong></a>
                    
                     
-                    </div>
-
-                    <a class="btn btn-info unfollow" data-user="<%= users[i].username %>" >
+                    </div> <a class="btn btn-info unfollow" data-user="<%= users[i].username %>" >
                          Dejar de Seguir
                         </a>
-                    </p>
-                  </div></div>
-                
+                  </div>
+                </div></div>
               </li>
-
-    
-    <% } %>
-
-
+              <%}else{%>
              
-           
-
+              <li class="span3">
+                <div class="thumbnail">
+                   <a href="/<%= users[i].username %>">
+                    <img src="<%= users[i].picture %>" class="img-polaroid" ></a>
+                  <div class="caption">
+                     <h3><%= users[i].username %></h3>
+                   <p style="height:40px;"><% if(users[i].location!=''){ %>
+                      vivo en <%= users[i].location %>
+                      <%}%></p>
+                    <p></p><div id="iconos2"><a class="btn btn-seg" href="#" data-original-title="" title=""><strong>125</strong></a>
+                    <a class="btn btn-pun" href="#" data-original-title="" title=""> <strong>4/5</strong></a><a class="btn btn-gusta" href="#" data-original-title="" title=""><strong>150</strong></a>
+                   
+                    
+                    </div> <a class="btn btn-info unfollow" data-user="<%= users[i].username %>" >
+                         Dejar de Seguir
+                        </a>
+                  </div>
+                </div>
+              </li>
+              <%}%>
+<%}%>
             </ul>
+
+
+
           </div>
 </div>
 

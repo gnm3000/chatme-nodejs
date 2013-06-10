@@ -79,7 +79,6 @@ background-image: url("/chatme/img/glyphicons-halflings.png");
 background-position: 2px 2px;
 background-repeat: no-repeat;
 }
-.pin {color:black;}
 
 
 .status_online{
@@ -92,68 +91,16 @@ border-style: solid;
 border-color: #8EA259;
 padding: 5px;
 }
-.pin{
-	background-color: #FFF;
-text-align: center;
--webkit-border-radius: 6px;
--moz-border-radius: 6px;
-border-radius: 6px;
-border-style: solid;
-border-color: #FFF;
-padding: 5px;
-width: 250px;
-}
 
 #message{
 	width:99%;
 }
 
 
- #columns {
-    -moz-column-count: 4;
-    -moz-column-gap: 10px;
-    -moz-column-fill: auto;
-    -webkit-column-count: 4;
-    -webkit-column-gap: 10px;
-    -webkit-column-fill: auto;
-    column-count: 4;
-    column-gap: 15px;
-    column-fill: auto;
-}
-
-.pin { -moz-column-break-inside: avoid; -webkit-column-break-inside: avoid; column-break-inside: avoid; display: inline-block; margin: 0 2px 15px; padding: 15px; border: 2px solid #FAFAFA; box-shadow: 0 1px 2px rgba(34, 25, 25, 0.4); background: #FEFEFE; background-image: linear-gradient(45deg, #FFF, #F9F9F9); }
-
-
-.pin {
-  /*display: block;*/
-/*padding: 12px 4px 4px;*/
-/*line-height: 20px;*/
-border: 1px solid #DDD;
--webkit-border-radius: 4px;
--moz-border-radius: 4px;
-border-radius: 4px;
--webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.055);
--moz-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.055);
-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.055);
--webkit-transition: all 0.2s ease-in-out;
--moz-transition: all 0.2s ease-in-out;
--o-transition: all 0.2s ease-in-out;
-transition: all 0.2s ease-in-out;
-background-color: white;
-text-align: center;
-}
-.pin h3{color: black;}
-.pin {
-  color: #6DBBC0;
-text-decoration: none;
--ms-transition: all .2s linear;
--webkit-transition: all .2s linear;
--moz-transition: all .2s linear;
-transition: all .2s linear;
-}
 .thumbnail .img-polaroid {
   float: center;
 }
+.thumbnail h3{color:black;}
 .thumbnail{
 
 line-height: 20px;
@@ -169,10 +116,10 @@ box-shadow: 0 1px 3px rgba(0, 0, 0, 0.055);
 -o-transition: all 0.2s ease-in-out;
 transition: all 0.2s ease-in-out;
 background-color: white;
-text-align: center;}
-@media all and (min-width: 960px) {
-    #columns {
-        column-count: 4;
-    }
+text-align: center;
+height: 360px;margin:0;width: 100%; 
 }
-@media all and (min-width: 1170px) { #columns { column-count: 5; } }
+
+
+.usuarios li{ margin-top:5px;}
+.online .thumbnail {padding:0px;}
