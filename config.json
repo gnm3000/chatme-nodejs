@@ -10,7 +10,7 @@
       "clientsecret" : "83fe167c332d25de1961e81db84ca5c8",
       "callback" : "http://chatme.fm/auth/facebook/callback"
     }
-  },
+  }, 
   "theme": {
     "name" : "default"
   },
