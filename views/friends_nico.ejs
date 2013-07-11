@@ -118,7 +118,7 @@
                     <a class="btn btn-pun" href="#" data-original-title="" title=""> <strong>4/5</strong></a><a class="btn btn-gusta" href="#" data-original-title="" title=""><strong>150</strong></a>
                    
                     
-                    </div> <a class="btn btn-info unfollow" data-user="<%= users[i].username %>" >
+                    </div> <a class="btn btn-info unfollow" data-username="<%= users[i].username %>" >
                          Dejar de Seguir
                         </a>
                   </div>
@@ -139,7 +139,7 @@
                     <a class="btn btn-pun" href="#" data-original-title="" title=""> <strong>4/5</strong></a><a class="btn btn-gusta" href="#" data-original-title="" title=""><strong>150</strong></a>
                    
                     
-                    </div> <a class="btn btn-info unfollow" data-user="<%= users[i].username %>" >
+                    </div> <a class="btn btn-info unfollow" data-username="<%= users[i].username %>" >
                          Dejar de Seguir
                         </a>
                   </div>
@@ -224,7 +224,6 @@
   ga('send', 'pageview');
 $("a").tooltip();
 </script>
-
 <!-- BEGIN SOCKET FOLLOW-->
 <script src="/socket.io/socket.io.js"></script>
     <script type="text/javascript">
@@ -243,12 +242,14 @@ $("a").tooltip();
 
 
         </script>
+
+
 <script type="text/javascript">
   $(document).ready(function(){
       /* BEGIN FOLLOW*/
-         $('#columns').on('click', '.follow', function(e) {
+         $('.thumbnails').on('click', '.follow', function(e) {
              e.preventDefault();
-             socket.emit("follow_user",JSON.stringify({"user":'<%=user.username%>',"follow_to":$(this).data("user")}));
+             socket.emit("follow_user",JSON.stringify({"user":'<%=user.username%>',"follow_to":$(this).data("username")}));
              //console.log("socket:"+socket.id);
             console.log("follow");
             $(this).text("Dejar de seguir");
@@ -256,9 +257,9 @@ $("a").tooltip();
             $(this).addClass("unfollow");
             
         });
-          $('#columns').on('click', '.unfollow', function(e) {
+          $('.thumbnails').on('click', '.unfollow', function(e) {
              e.preventDefault();
-             socket.emit("unfollow_user",JSON.stringify({"user":'<%=user.username%>',"follow_to":$(this).data("user")}));
+             socket.emit("unfollow_user",JSON.stringify({"user":'<%=user.username%>',"follow_to":$(this).data("username")}));
             console.log("unfollow");
             $(this).text("Seguir");
             $(this).removeClass("unfollow");
@@ -271,7 +272,7 @@ $("a").tooltip();
        /* END FOLLOW*/
   });
 </script>
-<!-- END SOCKET FOLLOW-->
+<!-- END SOCKET FOLLOWf-->
 <link href="/chatme/css/styles-fix.css" rel="stylesheet">
     <script type="text/javascript">
         var _mfq = _mfq || [];

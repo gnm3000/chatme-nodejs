@@ -433,35 +433,6 @@ $(document).ready(function(){
 
 
         </script>
-<script type="text/javascript">
-  $(document).ready(function(){
-      /* BEGIN FOLLOW*/
-         $('#columns').on('click', '.follow', function(e) {
-             e.preventDefault();
-             socket.emit("follow_user",JSON.stringify({"user":'<%=user.username%>',"follow_to":$(this).data("user")}));
-             //console.log("socket:"+socket.id);
-            console.log("follow");
-            $(this).text("Dejar de seguir");
-            $(this).removeClass("follow");
-            $(this).addClass("unfollow");
-            
-        });
-          $('#columns').on('click', '.unfollow', function(e) {
-             e.preventDefault();
-             socket.emit("unfollow_user",JSON.stringify({"user":'<%=user.username%>',"follow_to":$(this).data("user")}));
-            console.log("unfollow");
-            $(this).text("Seguir");
-            $(this).removeClass("unfollow");
-            $(this).addClass("follow");
-        });
-       $('.not-follow').click(function(e){
-        e.preventDefault();
-        alert("debe loguearse");
-       });
-       /* END FOLLOW*/
-  });
-</script>
-<!-- END SOCKET FOLLOW-->
 
 
 <script type="text/javascript">
@@ -481,25 +452,6 @@ following_user.forEach(function(el,index){
   //y hago $(".following[data-username=elemento]").removeClass("follow").addClass("unfollow");
 });
 </script>
-
-<!-- BEGIN SOCKET FOLLOW-->
-<script src="/socket.io/socket.io.js"></script>
-    <script type="text/javascript">
-
-     var host = window.location.host.split(':')[0];
-        var socket = io.connect('http://' + host, {reconnect:false, 'try multiple transports':false});
-        var intervalID;
-        var reconnectCount = 0;
-
-        socket.on('connect', function () {
-            console.log('connected');
-        });
-        socket.on('connecting', function () {
-            console.log('connecting');
-        });
-
-
-        </script>
 <script type="text/javascript">
   $(document).ready(function(){
       /* BEGIN FOLLOW*/
