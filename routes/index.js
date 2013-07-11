@@ -160,7 +160,15 @@ app.post('/post_config', function(req,res){
     
   } else{
 
-
+function getRandomArrayElements(arr, count) {
+    var randoms = [], clone = arr.slice(0);
+    for (var i = 0, index; i < count; ++i) {
+        index = Math.floor(Math.random() * clone.length);
+        randoms.push(clone[index]);
+        clone[index] = clone.pop();
+    }
+    return randoms;
+}
    mongo.Db.connect(mongoUri, function (err, db) {
     db.collection('users', function(er, collection) {
                                     // collection.insert({'mykey': 'myvalue'}, {safe: true}, function(er,rs) {
@@ -169,8 +177,9 @@ app.post('/post_config', function(req,res){
     collection.find().toArray(function(err, items) {
       rClient.smembers("users_online",function(err,members){
         console.log("users_online_for_home:"+members);
+        var items_random = getRandomArrayElements(items,42);
         res.render('index_nico', { title:'Express',
-          user:'',users:items,users_online:members});
+          user:'',users:items_random,users_online:members});
       })
 
 
