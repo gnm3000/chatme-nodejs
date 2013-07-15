@@ -159,7 +159,12 @@ app.post('/post_config', function(req,res){
     res.redirect('/talks');
     
   } else{
-
+function getRandomNumber(min,max){
+  
+// and the formula is:
+var random = Math.floor(Math.random() * (max - min + 1)) + min;
+ return random;
+}
 function getRandomArrayElements(arr, count) {
     var randoms = [], clone = arr.slice(0);
     for (var i = 0, index; i < count; ++i) {
@@ -178,8 +183,9 @@ function getRandomArrayElements(arr, count) {
       rClient.smembers("users_online",function(err,members){
         console.log("users_online_for_home:"+members);
         var items_random = getRandomArrayElements(items,42);
+        var number_random = getRandomNumber(1,6);
         res.render('index_nico', { title:'Express',
-          user:'',users:items_random,users_online:members});
+          user:'',users:items_random,users_online:members,number_random:number_random});
       })
 
 
