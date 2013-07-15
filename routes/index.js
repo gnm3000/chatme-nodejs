@@ -345,22 +345,21 @@ var callback1 = function(db,items,members,configuration){
             collection.findOne({username:req.user.username},function(er,user_obj){
               console.log("USUARIO="+JSON.stringify(user_obj));
 
-              db.collection("followers",function(er,collection){
-                 if(er!=null){console.log("error:"+er)}else{
-                  collection.findOne({user:req.user.username},function(er,following_user){
-                    if(!following_user){
+              
+                
+                    if(!user_obj.follow){
                       //var follow = null;
                        res.render('explore_nico', {follow:null,user:req.user,users:items,users_online:members,promotions:promotions,user_obj:user_obj});
             
                     }else{
-                      var follow = following_user.follow;
-                       res.render('explore_nico', {follow:following_user.follow,user:req.user,users:items,users_online:members,promotions:promotions,user_obj:user_obj});
+                      var follow = user_obj.follow;
+                       res.render('explore_nico', {follow:follow,user:req.user,users:items,users_online:members,promotions:promotions,user_obj:user_obj});
             
                     }
               
-                  });
-                 }
-              });
+                 
+                
+              
             
 
             });
@@ -509,18 +508,17 @@ app.get('/friends', function(req, res){
 
 
   if(req.isAuthenticated()){
-
     mongo.Db.connect(mongoUri, function (err, db) {
-      db.collection('followers', function(er, followers_collection) {
-        followers_collection.findOne({user:req.user.username},function(err,followers){
-          if(err){
-            console.log(err);
+      var user = db.collection('users').findOne({username:req.user.username},function(er,user){
+        console.log("USER ESSSSSS:"+user.username);
 
-          }
-          if(!followers){
-
-             db.collection('users', function(er, collection) {
-                                                        var condition = {username: {'$in':[]}};
+          db.collection('users', function(er, collection) {
+            if(user.follow){
+              var condition = {username: {'$in':user.follow}};
+            }else{
+              var condition = {username: {'$in':[]}};
+            }
+                                                        
                                                         collection.find(condition).toArray(function(err, items_users) {
                                                           //return items;
                                                                 //BEGIN
@@ -536,39 +534,10 @@ app.get('/friends', function(req, res){
 
 
                                                       });
+      });
+      
+    });
 
-
-          }else{
-             console.log("los amigos de "+followers.user+" son "+followers.follow);
-              //return followers.follow;
-                                                      //
-                                                      db.collection('users', function(er, collection) {
-                                                        var condition = {username: {'$in':followers.follow}};
-                                                        collection.find(condition).toArray(function(err, items_users) {
-                                                          //return items;
-                                                                //BEGIN
-                                                                //console.log(items_users);
-                                                                rClient.smembers("users_online",function(err,members){
-                                                                  console.log("users_online_for_home:"+members);
-                                                                      //var items = ;
-                                                                      res.render('friends_nico', {user:req.user,followers:items_users,users_online:members});
-                                                                    });
-                                                                //END 
-
-                                                              });
-
-
-                                                      });
-                                                      //
-                                                    //followers.follow
-          }
-
-         
-                                                   
-                                                  });
-
-});
-});
 
 
 
@@ -601,20 +570,7 @@ app.get('/logout', function(req, res){
   res.redirect('/');
 });
 
-// app.get('/logout', function(req, res) {
-//     req.session.destroy();
-//     res.redirect('/');
-// });
-app.get('/getGEONAMES', function(req, res) {
 
-  res.json([
-   "John",
-   "Jane",
-   "Alfredo",
-   "Giovanni",
-   "Superman"
-   ]);
-});
 app.get('/channel', function(req, res) {
   res.render('channel', {});
 });
@@ -722,29 +678,20 @@ collection.findOne({username:req.params.nick},function(err,doc){
 
       if(req.user){
         console.log("yo soy user logueado:"+req.user.username);
-                                        //si el usuario esta logueado hay que mirar si es follower.
-                                        db.collection('followers', function(er, followers_collection) {
-                                          console.log("Busco a que usuarios le sigue el usuario:"+req.user.username);
-                                          followers_collection.findOne({user:req.user.username},function(err,followers){
-                                            if(err){
-                                              console.log(err);
 
-                                            }else{
+                                        //si el usuario esta logueado hay que mirar si es follower.
+   
+                                          console.log("Busco a que usuarios le sigue el usuario:"+req.user.username);
+                                          db.collection('users').findOne({username:req.user.username},function(err,usuario_logged){
+                                            console.log("el usuario "+req.user.username+" le sigue a:"+usuario_logged.follow);
                                               var follower=false;
-                                              if(followers){
-                                                console.log("el usuario "+req.user.username+" le sigue a:"+followers.follow);
-                                                var follower = include(followers.follow,req.params.nick);
+                                              if(usuario_logged.follow){
+                                                console.log("el usuario "+req.user.username+" le sigue a:"+usuario_logged.follow);
+                                                var follower = include(usuario_logged.follow,req.params.nick);
                                                 console.log("el usuario "+req.user.username+" es seguidor de "+doc.username+"?="+follower);
 
                                               }
-
-
-                                                        //no es seguidor
-                                                        //console.log("follower=false"+req.user.username);
-                                                        //var follower = false;
-                                                        //req.params.nick
-                                                        
-                                                        rClient.smembers("users_online",function(err,members){
+                                              rClient.smembers("users_online",function(err,members){
                                                           if(err){console.log("error users_online"+err);}
                                                           if(members.indexOf(req.params.nick) != -1){
 
@@ -759,15 +706,10 @@ collection.findOne({username:req.params.nick},function(err,doc){
                                                             server:serverName, user:user_anon,user_anon:req.session.user_anon, fb_user:doc
                                                             ,nick:req.params.nick,user_logged:user_logged,follower:follower,user_online:user_online});
                                                         });
+                                          });
 
 
-
-
-
-}
-});
-
-});
+                                          
                                       //});
 
 }else{

@@ -94,17 +94,26 @@ sessionSockets.on('connection', function (err, socket, session) {
   var msg = JSON.parse(data);
 
    mongo.Db.connect(mongoUri, function (err, db) {
-                                  db.collection('followers', function(er, collection) {
+                                  db.collection('users', function(er, collection) {
                                     // collection.insert({'user':msg.user,'follow':msg.follow_to}, {safe: true}, function(er,rs) {
                                     //     console.log("mongoDB"+er);
                                     // });
-                                  var criteria = {user:msg.user};
+                                  var criteria = {username:msg.user};
                                   var objNew = {$push:{follow:msg.follow_to}};
-
-                                 collection.update(criteria,objNew, {upsert:true},function(er,rs) {
+                                  collection.update(criteria,objNew, {upsert:true},function(er,rs) {
                                         if(er){console.log("mongoDB"+er);}
-                                        console.log("fin del socket");
+                                        console.log("follow1-fin del socket");
                                     });
+
+                                  //ahora guardo el usuario al que le sigue de forma anonima
+                                   var criteria2 = {username:msg.follow_to}; //al user al que le sigue
+                                  var objNew2 = {$push:{followers:msg.user}}; //le agrego que tiene un seguidor
+                                  collection.update(criteria2,objNew2, {upsert:true},function(er,rs) {
+                                        if(er){console.log("mongoDB"+er);}
+                                        console.log("follow2-fin del socket");
+                                    });
+
+
                                   });
                                 });
    
@@ -116,17 +125,26 @@ sessionSockets.on('connection', function (err, socket, session) {
    var msg = JSON.parse(data);
 
    mongo.Db.connect(mongoUri, function (err, db) {
-                                  db.collection('followers', function(er, collection) {
+                                  db.collection('users', function(er, collection) {
                                     // collection.insert({'user':msg.user,'follow':msg.follow_to}, {safe: true}, function(er,rs) {
                                     //     console.log("mongoDB"+er);
                                     // });
-                                  var criteria = {user:msg.user};
+                                  var criteria = {username:msg.user};
                                   var objNew = {$pull:{follow:msg.follow_to}};
 
                                  collection.update(criteria,objNew, {upsert:true},function(er,rs) {
                                         if(er){console.log("mongoDB"+er);}
-                                        console.log("fin del socket");
+                                         console.log("follow1-fin del socket");
                                     });
+                                 //ahora le borro al otro usuario
+                                  var criteria2 = {username:msg.follow_to};
+                                  var objNew2 = {$pull:{followers:msg.user}};
+
+                                 collection.update(criteria2,objNew2, {upsert:true},function(er,rs) {
+                                        if(er){console.log("mongoDB"+er);}
+                                        console.log("follow2-fin del socket");
+                                    });
+
                                   });
                                 });
   

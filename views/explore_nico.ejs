@@ -192,7 +192,8 @@ No te volveremos a pedir estos datos una vez guardados<br/>
                    <p style="height:40px;"><% if(users[i].location!=''){ %>
                       vivo en <%= users[i].location %>
                     <%}%></p>
-                    <p></p><div id="iconos2"><a class="btn btn-seg" href="#" data-original-title="" title=""><strong>125</strong></a>
+                    <p></p><div id="iconos2"><a class="btn btn-seg" href="#" data-original-title="" title="">
+                    <strong><%if(user[i].follow){%>user[i].follow.length<%}else{%>0<%}%></strong></a>
                     <a class="btn btn-pun" href="#" data-original-title="" title=""> <strong>4/5</strong></a><a class="btn btn-gusta" href="#" data-original-title="" title=""><strong>150</strong></a>
                    
                     
@@ -212,7 +213,12 @@ No te volveremos a pedir estos datos una vez guardados<br/>
                    <p style="height:40px;"><% if(users[i].location!=''){ %>
                       vivo en <%= users[i].location %>
                       <%}%></p>
-                    <p></p><div id="iconos2"><a class="btn btn-seg" href="#" data-original-title="" title=""><strong>125</strong></a>
+                    <p></p><div id="iconos2"><a class="btn btn-seg" href="#" data-original-title="" title="">
+                     <strong>
+                     <%if( (typeof users[i].followers != 'undefined')){%>
+                     <%=users[i].followers.length%>
+                     <%}else{%>0<%}%>
+                     </strong></a>
                     <a class="btn btn-pun" href="#" data-original-title="" title=""> <strong>4/5</strong></a><a class="btn btn-gusta" href="#" data-original-title="" title=""><strong>150</strong></a>
                    
                     

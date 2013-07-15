@@ -131,7 +131,7 @@ Fecha de Nacimiento: <a href="#" id="age" data-type="combodate" data-value="<% i
 <%}%>
     
  
-<%if(typeof(fb_user.intereses)!='undefined'){%>
+<%if(typeof(fb_user.intereses)!='undefined' && fb_user.intereses.length>0){%>
 <br>Intereses:
 <%fb_user.intereses.forEach(function(el, index) {%>
 <%if(el!='undefined'){%>
