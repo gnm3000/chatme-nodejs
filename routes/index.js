@@ -553,6 +553,30 @@ app.get('/friends', function(req, res){
 }
 
 });
+/* Pantalla #1 de regalo donde se le hace el listado de los regalos disponibles, seleccionar el que desea y 
+hacer click en regalar
+/////////
+En la misma pantalla se le dice que no tiene credito suficiente. que tiene que enviar un SMS. 
+Al recibir el sms, se redirecciona a la pantalla regalos,
+donde se le informa el saldo que tiene disponible.
+*/
+app.get('/regalar/user/:nick', function(req, res){
+  if(req.isAuthenticated()){
+    res.render("regalo_nico",{user:req.user});
+  } else{
+    res.redirect('/');
+  }
+
+});
+/*Proceso donde segun el regalo_id y el nick a quien regalar. Se verifica si tiene credito, se el descuenta credito
+y al usuario beneficiario se le acredita el regalo. Una vez esto, se le redirecciona a la pantalla del usuario beneficiario */
+app.get('/regalar/:regalo_id/user/:nick', function(req, res){
+  if(req.isAuthenticated()){
+    res.render("regalo_nico",{user:req.user});
+  } else{
+    res.redirect('/');
+  }
+});
 
 app.get('/talks', function(req, res){
   if(req.isAuthenticated()){
