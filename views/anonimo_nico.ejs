@@ -184,7 +184,9 @@ Fecha de Nacimiento: <a href="#" id="age" data-type="combodate" data-value="<% i
 
 <!-- Aca arranca--> 
   <div id="iconos">
-    <a class="btn btn-seg" href="#"><strong>125</strong> Seguidores</a>
+    <a class="btn btn-seg" href="#"><strong><%if( (typeof fb_user.followers != 'undefined')){%>
+                     <%=fb_user.followers.length%>
+                     <%}else{%>0<%}%></strong> Seguidores</a>
     <a class="btn btn-pun" href="#"> Puntuación <strong>4/5</strong></a><a class="btn btn-gusta" href="#"><strong>150</strong> Me Gusta</a>
     <a class="btn btn-reg" href="#"><strong>15</strong> Regalos</a>
   </div>
