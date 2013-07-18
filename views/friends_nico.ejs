@@ -72,8 +72,8 @@
 
 <div class="container">   <div id="amigos"><ul class="nav nav-tabs">
           <li class="active"><a href="amigos.html">Personas a las que Sigo</a></li>
-          <li class=""><a href="buscar-amigos.html">Buscar Amigos</a></li>
-        <li class="dropdown">
+          <li  style="display:none" class=""><a href="buscar-amigos.html">Buscar Amigos</a></li>
+        <li  style="display:none" class="dropdown">
                       <a href="#" class="dropdown-toggle" data-toggle="dropdown">Ordenar por <b class="caret"></b></a>
                       <ul class="dropdown-menu">
                         <li><a href="#">Nombre</a></li>
@@ -118,7 +118,7 @@
                      <%=users[i].follow.length%>
                      <%}else{%>0<%}%>
                      </strong></a>
-                    <a class="btn btn-pun" href="#" data-original-title="" title=""> <strong>4/5</strong></a><a class="btn btn-gusta" href="#" data-original-title="" title=""><strong>150</strong></a>
+                    <a style="display:none" class="btn btn-pun" href="#" data-original-title="" title=""> <strong>4/5</strong></a><a  style="display:none" class="btn btn-gusta" href="#" data-original-title="" title=""><strong>150</strong></a>
                    
                     
                     </div> <a class="btn btn-info unfollow" data-username="<%= users[i].username %>" >
@@ -142,7 +142,7 @@
                      <%=users[i].followers.length%>
                      <%}else{%>0<%}%>
                      </strong></a>
-                    <a class="btn btn-pun" href="#" data-original-title="" title=""> <strong>4/5</strong></a><a class="btn btn-gusta" href="#" data-original-title="" title=""><strong>150</strong></a>
+                    <a class="btn btn-pun" href="#" data-original-title="" title=""  style="display:none"> <strong>4/5</strong></a><a class="btn btn-gusta" href="#" data-original-title="" title=""  style="display:none"><strong>150</strong></a>
                    
                     
                     </div> <a class="btn btn-info unfollow" data-username="<%= users[i].username %>" >
@@ -288,5 +288,10 @@ $("a").tooltip();
         document.getElementsByTagName("head")[0].appendChild(mf);
       })();
     </script>
+     <link href="/chatme/css/sugerencias.css" rel="stylesheet">
+
+<div id="sugerencias">
+  <a href="http://contactme.com/51e8192fdf80cb000200e74e" target="_blank">Sugerencias?</a>
+</div>
   </body>
 </html>

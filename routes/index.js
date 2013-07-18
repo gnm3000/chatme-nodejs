@@ -553,14 +553,11 @@ app.get('/friends', function(req, res){
 }
 
 });
-/* Pantalla #1 de regalo donde se le hace el listado de los regalos disponibles, seleccionar el que desea y 
-hacer click en regalar
-/////////
-En la misma pantalla se le dice que no tiene credito suficiente. que tiene que enviar un SMS. 
-Al recibir el sms, se redirecciona a la pantalla regalos,
-donde se le informa el saldo que tiene disponible.
+/* Pantalla donde el usuario puede ver los regalos que puede hacer, y se le muestra el boton de allopass. para pagar, si paga, se le envia
+a regalar/ok
+
 */
-app.get('/regalar/user/:nick', function(req, res){
+app.get('/regalar', function(req, res){
   if(req.isAuthenticated()){
     res.render("regalo_nico",{user:req.user});
   } else{
@@ -568,16 +565,30 @@ app.get('/regalar/user/:nick', function(req, res){
   }
 
 });
-/*Proceso donde segun el regalo_id y el nick a quien regalar. Se verifica si tiene credito, se el descuenta credito
-y al usuario beneficiario se le acredita el regalo. Una vez esto, se le redirecciona a la pantalla del usuario beneficiario */
-app.get('/regalar/:regalo_id/user/:nick', function(req, res){
+/*pantalla donde se le informa que se acredito el pago, y que ahora puede regalar a los usuarios */
+app.get('/regalar/ok', function(req, res){
+  if(req.isAuthenticated()){
+    res.render("regalo_nico_ok",{user:req.user});
+  } else{
+    res.redirect('/');
+  }
+
+});
+app.get('/regalar/error', function(req, res){
   if(req.isAuthenticated()){
     res.render("regalo_nico",{user:req.user});
   } else{
     res.redirect('/');
   }
+
 });
 
+/*aca envia allopass informacion por GET sobre los pagos del producto*/
+app.get('/regalar/notifications', function(req, res){
+
+ res.send("OK",200);
+
+});
 app.get('/talks', function(req, res){
   if(req.isAuthenticated()){
     res.render("talks_nico",{user:req.user});

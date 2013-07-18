@@ -81,7 +81,10 @@
           <% while(cantidad<=15){ %>
               <% for(var i=0; i<promotions.length; i++) { %>
               <div style="text-align:center;float:left">
-            <a title="Entra y habla con <%=promotions[i].username%> - <%=promotions[i].start%>" data-toggle="tooltip"  alt="" target="_blank" href="/<%=promotions[i].username%>">
+            <a title="Entra y habla con <%=promotions[i].username%>" 
+            data-start="<%=promotions[i].username%>" 
+            data-end="<%=promotions[i].start%>" 
+            ata-toggle="tooltip"  alt="" target="_blank" href="/<%=promotions[i].username%>">
             <img width="100"  src="<%=promotions[i].picture%>" />
             </a> </div>
               <% cantidad++;%>
@@ -194,7 +197,7 @@ No te volveremos a pedir estos datos una vez guardados<br/>
                     <%}%></p>
                     <p></p><div id="iconos2"><a class="btn btn-seg" href="#" data-original-title="" title="">
                     <strong><%if(user[i].follow){%>user[i].follow.length<%}else{%>0<%}%></strong></a>
-                    <a class="btn btn-pun" href="#" data-original-title="" title=""> <strong>4/5</strong></a><a class="btn btn-gusta" href="#" data-original-title="" title=""><strong>150</strong></a>
+                    <a  style="display:none" class="btn btn-pun" href="#" data-original-title="" title=""> <strong>4/5</strong></a><a  style="display:none" class="btn btn-gusta" href="#" data-original-title="" title=""><strong>150</strong></a>
                    
                     
                     </div> 
@@ -219,7 +222,7 @@ No te volveremos a pedir estos datos una vez guardados<br/>
                      <%=users[i].followers.length%>
                      <%}else{%>0<%}%>
                      </strong></a>
-                    <a class="btn btn-pun" href="#" data-original-title="" title=""> <strong>4/5</strong></a><a class="btn btn-gusta" href="#" data-original-title="" title=""><strong>150</strong></a>
+                    <a class="btn btn-pun" href="#" data-original-title="" title=""  style="display:none"> <strong>4/5</strong></a><a class="btn btn-gusta" href="#" data-original-title="" title=""  style="display:none"><strong>150</strong></a>
                    
                     
                     </div> <a href="#" data-username="<%= users[i].username%>" username="<%= users[i].username%>" class="btn btn-info follow following">Seguir</a> 
@@ -548,5 +551,10 @@ $.fn.editable.defaults.emptytext ='Vacio';
         document.getElementsByTagName("head")[0].appendChild(mf);
       })();
     </script>
+     <link href="/chatme/css/sugerencias.css" rel="stylesheet">
+
+<div id="sugerencias">
+  <a href="http://contactme.com/51e8192fdf80cb000200e74e" target="_blank">Sugerencias?</a>
+</div>
   </body>
 </html>

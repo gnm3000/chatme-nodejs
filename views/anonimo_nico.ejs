@@ -187,13 +187,13 @@ Fecha de Nacimiento: <a href="#" id="age" data-type="combodate" data-value="<% i
     <a class="btn btn-seg" href="#"><strong><%if( (typeof fb_user.followers != 'undefined')){%>
                      <%=fb_user.followers.length%>
                      <%}else{%>0<%}%></strong> Seguidores</a>
-    <a class="btn btn-pun" href="#"> Puntuación <strong>4/5</strong></a><a class="btn btn-gusta" href="#"><strong>150</strong> Me Gusta</a>
-    <a class="btn btn-reg" href="#"><strong>15</strong> Regalos</a>
+    <a style="display:none" class="btn btn-pun" href="#"> Puntuación <strong>4/5</strong></a>
+    <a style="display:none" class="btn btn-reg" href="#"><strong>15</strong> Regalos</a>
   </div>
 
   <div id="titulo">
       <h1>Pregunta lo que quieras. Es anonimo!
-      <span style="display:none" id="user"><%= user_anon %></span></h1><div id="botones"><a class="btn btn-puntuar" href="#">Puntuar</a><a class="btn btn-regalo2" href="#">Dar un Regalo</a><a class="btn btn-denunciar" href="#">Denunciar</a></div>
+      <span style="display:none" id="user"><%= user_anon %></span></h1><div style="display:none" id="botones"><a onclick="alert('En pocos dias disponible!')" class="btn btn-puntuar" href="#">Puntuar</a><a onclick="alert('En pocos dias disponible!')"  class="btn btn-regalo2" href="#">Dar un Regalo</a><a onclick="alert('En pocos dias disponible!')"  class="btn btn-denunciar" href="#">Denunciar</a></div>
   </div>
 
 <% if(user_online==true){%>
@@ -588,5 +588,10 @@ var preload_data = [
       })();
     </script>
  <link href="/chatme/css/styles-fix.css" rel="stylesheet">
+  <link href="/chatme/css/sugerencias.css" rel="stylesheet">
+
+<div id="sugerencias">
+  <a href="http://contactme.com/51e8192fdf80cb000200e74e" target="_blank">Sugerencias?</a>
+</div>
   </body>
 </html>
