@@ -81,6 +81,7 @@
 
 <div class="hero-unit">
   <div id="bgavatar">
+ 
   <% if(typeof(fb_user.picture)!='undefined' && fb_user.picture!=''){  %>
   <img id="upload" src="<%=fb_user.picture%>" class="img-polaroid" alt="140x140" style="width: 140px; height: 140px;" />
   <% }else{ %>
@@ -106,9 +107,13 @@ Fecha de Nacimiento: <a href="#" id="age" data-type="combodate" data-value="<% i
 <br>Intereses: 
 <a href="#" id="intereses_select2" data-value="<%if(fb_user.intereses){%><%= fb_user.intereses %><%}%>" data-type="select2" data-pk="<%= fb_user.username %>"  data-url="/post" data-original-title="Agrega intereses"></a>
   </p>
-<p>
-  
-  
+<p style="
+    text-align: left;
+    position: relative;
+    left: -160px;
+">
+  <a class="btn" onclick="$('#upload').click();">Cambiar foto perfil
+  </a>
 </p>
     </div>
 <% }else{ %>
