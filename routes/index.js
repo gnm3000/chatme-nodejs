@@ -58,6 +58,23 @@ app.get('/chatme/css/files-:file', function(req,res){
   }else{res.end("Error",200);}
 
 });
+
+app.get('/admin/users',function(req,res){
+
+
+  var administrators = ["Martinez.German","gnm3000","josechatelet","Fran376","matias.brugnoli","elnicotorre"];
+if(req.isAuthenticated() && include(administrators,req.user.username)){
+
+  mongo.Db.connect(mongoUri, function (err, db) {
+    db.collection('users', function(er, collection) {
+      collection.find().toArray(function(er,usuarios){
+        res.render("admin_users",{usuarios:usuarios});
+      });
+      
+    });
+});
+}
+});
 app.get('/admin', function(req,res){
 var administrators = ["Martinez.German","gnm3000","josechatelet","Fran376","matias.brugnoli","elnicotorre"];
 if(req.isAuthenticated() && include(administrators,req.user.username)){
