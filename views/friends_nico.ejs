@@ -114,10 +114,14 @@
                    <p style="height:40px;"><% if(users[i].location!=''){ %>
                       vivo en <%= users[i].location %>
                     <%}%></p>
-                    <p></p><div id="iconos2"><a class="btn btn-seg" href="#" data-original-title="" title=""><strong><%if( (typeof users[i].follow != 'undefined')){%>
+                    <p></p><div id="iconos2">
+                    <a class="btn btn-seg" href="#" data-original-title="" title="">
+                    <strong>
+                    <%if( (typeof users[i].follow != 'undefined')){%>
                      <%=users[i].follow.length%>
                      <%}else{%>0<%}%>
-                     </strong></a>
+                     </strong>
+                     </a>
                     <a style="display:none" class="btn btn-pun" href="#" data-original-title="" title=""> <strong>4/5</strong></a><a  style="display:none" class="btn btn-gusta" href="#" data-original-title="" title=""><strong>150</strong></a>
                    
                     

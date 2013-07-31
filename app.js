@@ -2,9 +2,11 @@ var options = {
   // time in ms when the event loop is considered blocked
   blockThreshold: 10
 };
-var nodefly = require('nodefly').profile(
-    '6c2a8a36142a74532463a7f19454d715',
-    ['rabbit-chat3','Heroku'],
+
+
+require('strong-agent').profile(
+    'de5d6727-99a5-4690-8d36-eccc2b413af5',
+    [APPLICATION_NAME,'Heroku'],
     options // optional
 );
 var express = require('express')

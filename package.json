@@ -22,6 +22,6 @@
       , "passport-twitter": "0.1.x"
       , "passport-facebook": "0.1.x",
       "restler": "2.x",
-      "nodefly": "stable"
+       "strong-agent": "latest"
     }
 }
