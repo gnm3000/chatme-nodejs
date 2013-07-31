@@ -6,7 +6,7 @@ var options = {
 
 require('strong-agent').profile(
     'de5d6727-99a5-4690-8d36-eccc2b413af5',
-    [APPLICATION_NAME,'Heroku'],
+    ['rabbit-chat3','Heroku'],
     options // optional
 );
 var express = require('express')
