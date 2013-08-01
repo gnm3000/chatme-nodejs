@@ -48,7 +48,8 @@ $(document).ready(function () {
                                 console.log("usuario desconectado:"+JSON.stringify(mensaje));
                                 for (i in mensaje[1])
                                 {
-                                    $('#users').append($('<p>').html( mensaje[1][i]));
+                                     var nick = mensaje[1][i];
+                                    $('#users').append($('<p>').html("<a href='http://chatme.fm/"+nick+"' target='_blank'>"+ nick+"</a>"));
                                     arrayNames[i] = mensaje[1][i];
                                 }
                             }
@@ -61,7 +62,8 @@ $(document).ready(function () {
                 //$("#users").append("<h3>Usuarios Online:</h3>");
                 for (i in data[0])
                 {
-                    $('#users').append($('<p>').html(data[0][i]));
+                    var nick = data[0][i];
+                     $('#users').append($('<p>').html("<a href='http://chatme.fm/"+nick+"' target='_blank'>"+ nick+"</a>"));
                     arrayNames[i] = data[0][i];
                 }
             }
