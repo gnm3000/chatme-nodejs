@@ -30,11 +30,59 @@
       <link rel="apple-touch-icon-precomposed" sizes="72x72" href="/chatme/img/ico/apple-touch-icon-72-precomposed.png">
                     <link rel="apple-touch-icon-precomposed" href="/chatme/img/ico/apple-touch-icon-57-precomposed.png">
                                    <link rel="shortcut icon" href="/chatme/img/ico/favicon.png">
-
+<script src="//connect.facebook.net/en_US/all.js"></script>
   </head>
 
   <body data-spy="scroll" data-target=".bs-docs-sidebar">
+<div id="fb-root"></div>
+<script>
+  window.fbAsyncInit = function() {
+    // init the FB JS SDK
+    FB.init({
+      appId      : '275093569291809',                        // App ID from the app dashboard
+      channelUrl : 'http://chatme.fm/channel.html', // Channel file for x-domain comms
+      status     : true,                                 // Check Facebook Login status
+      xfbml      : true                                  // Look for social plugins on the page
+    });
 
+    // Additional initialization code such as adding Event Listeners goes here
+      <% if(typeof(user.picture)!='undefined' && user.picture!=''){  %>
+  var image_user = '<%=fb_user.picture%>';
+  <% }else{ %>
+
+  var image_user = "http://chatme.fm/chatme/img/logo.png";
+  <% } %>
+    $("#share").click(function(e){
+      e.preventDefault();
+      FB.ui(
+  {
+    method: 'feed',
+    name: 'Chatea con <%= user.username %>! Entra! y chatea conmigo anonimamente!',
+    link: 'http://chatme.fm/<%= user.username %>',
+    picture: image_user,
+   
+    description: 'En Chatme.fm vas a chatear anonimamente conmigo!!.'
+  },
+  function(response) {
+    if (response && response.post_id) {
+      console.log('Post was published.');
+    } else {
+      console.log('Post was not published.');
+    }
+  }
+);
+    });
+  };
+
+  // Load the SDK asynchronously
+  (function(d, s, id){
+     var js, fjs = d.getElementsByTagName(s)[0];
+     if (d.getElementById(id)) {return;}
+     js = d.createElement(s); js.id = id;
+     js.src = "//connect.facebook.net/en_US/all.js";
+     fjs.parentNode.insertBefore(js, fjs);
+   }(document, 'script', 'facebook-jssdk'));
+</script>
     <!-- Navbar
     ================================================== -->
     <div class="navbar navbar-inverse navbar-fixed-top">
@@ -101,33 +149,12 @@ cursor: pointer;
                             <h3 style="color:black;margin-top:10px;">Aceptando nuevas conversaciones... (No cierres esta página, si no la gente te verá desconectado.)</h3>
                           </div>
                           <div class="span6">
-                            <span id="user" style="display:none"><%= user.username %></span>Comparte este link en las redes sociales: <strong id="copy-link">http://chatme.fm/<%= user.username %></strong> <button class="copy-button" class="btn btn-small">Copiar link</button>
+                            <span id="user" style="display:none"><%= user.username %></span>Comparte este link en las redes sociales: 
+                            <strong>http://chatme.fm/<%= user.username %></strong> <button id="share" class="share">Compartir en mi muro</button>
                           </div>
 
                           <div class="span4">
-                            <!-- AddThis Button BEGIN -->
-<div class="addthis_toolbox addthis_default_style addthis_32x32_style"
-addthis:url="http://chatme.fm/<%= user.username %>"
-addthis:title="Mira esto! Habla conmigo anonimamente!"
-addthis:description="Chatme.fm te permite chatear con usuarios anonimamente"> 
-
-<a class="addthis_button_facebook"></a>
-<a class="addthis_button_twitter"></a>
-<a class="addthis_button_google_plusone_share"></a>
-<a class="addthis_button_compact"></a><a class="addthis_counter addthis_bubble_style"></a>
-</div>
-<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=undefined">
-  
-  var addthis_config =
-{
-   // ... members go here
-}
-var addthis_share =
-{
-   url:
-}
-</script>
-<!-- AddThis Button END -->
+                           
                            <!--  <div class="facebook"><a href="facebok.html">Facebook</a></div>
                                     <div class="twitter"><a href="twitter.html">Twitter</a></div>
                                 <div class="google"><a href="google.html">Google +</a></div> -->
@@ -323,7 +350,38 @@ $("a").tooltip();
       })();
     </script>
     <link href="/chatme/css/sugerencias.css" rel="stylesheet">
-
+<style type="text/css">
+.share {
+  -moz-box-shadow:inset 0px 1px 0px 0px #97c4fe;
+  -webkit-box-shadow:inset 0px 1px 0px 0px #97c4fe;
+  box-shadow:inset 0px 1px 0px 0px #97c4fe;
+  background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #3d94f6), color-stop(1, #1e62d0) );
+  background:-moz-linear-gradient( center top, #3d94f6 5%, #1e62d0 100% );
+  filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#3d94f6', endColorstr='#1e62d0');
+  background-color:#3d94f6;
+  -moz-border-radius:6px;
+  -webkit-border-radius:6px;
+  border-radius:6px;
+  border:1px solid #337fed;
+  display:inline-block;
+  color:#ffffff;
+  font-family:arial;
+  font-size:15px;
+  font-weight:bold;
+  padding:6px 24px;
+  text-decoration:none;
+  text-shadow:1px 1px 0px #1570cd;
+}.share:hover {
+  background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #1e62d0), color-stop(1, #3d94f6) );
+  background:-moz-linear-gradient( center top, #1e62d0 5%, #3d94f6 100% );
+  filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#1e62d0', endColorstr='#3d94f6');
+  background-color:#1e62d0;
+}.share:active {
+  position:relative;
+  top:1px;
+}
+/* This imageless css button was generated by CSSButtonGenerator.com */
+</style>
 <div id="sugerencias">
   <a href="http://contactme.com/51e8192fdf80cb000200e74e" target="_blank">Sugerencias?</a>
 </div>

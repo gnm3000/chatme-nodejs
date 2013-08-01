@@ -623,8 +623,8 @@ app.get('/logout', function(req, res){
 });
 
 
-app.get('/channel', function(req, res) {
-  res.render('channel', {});
+app.get('/channel.html', function(req, res) {
+  res.send('<script src="//connect.facebook.net/en_US/all.js"></script>',200);
 });
 app.post('/post', function (req, res) {
     //req.session.user = .user;
