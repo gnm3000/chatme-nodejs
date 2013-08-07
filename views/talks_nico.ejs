@@ -47,7 +47,7 @@
 
     // Additional initialization code such as adding Event Listeners goes here
       <% if(typeof(user.picture)!='undefined' && user.picture!=''){  %>
-  var image_user = '<%=fb_user.picture%>';
+  var image_user = '<%=user.picture%>';
   <% }else{ %>
 
   var image_user = "http://chatme.fm/chatme/img/logo.png";
